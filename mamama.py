@@ -5,7 +5,8 @@ Spyder Editor
 This is a temporary script file.
 """
 #!/usr/bin/python
-
+import gi
+gi.require_version('Gtk','3.0')
 from gi.repository import Gtk as gtk
 
 
@@ -25,7 +26,7 @@ class HelloWorld:
 
 
     def on_mainwindow_destroy(self, widget):
-
+        print(1)
         gtk.main_quit()
 
 
