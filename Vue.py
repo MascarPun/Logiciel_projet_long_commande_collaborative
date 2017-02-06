@@ -13,6 +13,7 @@ from gi.repository import Gtk as gtk
 class Vue:
 
     def __init__(self):
+        self.controleur = 0
 
         interface = gtk.Builder()
 
@@ -53,7 +54,14 @@ class Vue:
         if self.posBoutonSinus.get_active():
             print('posSinus')
             # controleur.setMode(posSinus)
-        #
+
+
+        # On met a jour les correcteurs
+        self.controleur.setCorPos([])
+        self.controleur.setCorVit()
+        self.controleur.setCorCour()
+
+
         # print(self.posEntryAmplitude.get_text())
         # print(self.posEntryFreq.get_text())
         # print(self.posEntryRampe.get_text())
@@ -63,6 +71,7 @@ class Vue:
         # print(self.posEntryTd.get_text())
         print("running")
         #controleur.runPostion()
+
 
 #   changer affichage valeur actuelle position
 #
