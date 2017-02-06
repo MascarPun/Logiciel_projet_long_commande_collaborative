@@ -22,13 +22,47 @@ class HelloWorld:
         self.posLabelValeurPosAct.set_text('1')
 
 
+        self.posEntryFreq = interface.get_object("posEntryFreq")
+        self.posEntryAmplitude = interface.get_object("posEntryAmplitude")
+        self.posEntryRampe = interface.get_object("posEntryRampe")
+        self.posEntryEchelon = interface.get_object("posEntryEchelon")
+        self.posEntryK = interface.get_object("posEntryK")
+        self.posEntryTi = interface.get_object("posEntryTi")
+        self.posEntryTd = interface.get_object("posEntryTd")
 
+        self.posBoutonEchelon = interface.get_object("posBoutonEchelon")
+        self.posBoutonRampe = interface.get_object("posBoutonRampe")
+        self.posBoutonSinus = interface.get_object("posBoutonSinus")
+
+        self.posBoutonRun = interface.get_object("posBoutonRun")
 
         interface.connect_signals(self)
 
     def on_mainWindow_destroy(self, widget):
         print(1)
         gtk.main_quit()
+
+
+    def on_posBoutonRun_clicked(self, widget):
+        if self.posBoutonEchelon.get_active():
+            print('posEchelon')
+            # controleur.setMode(posEchelon)
+        if self.posBoutonRampe.get_active():
+            print('posRampe')
+            # controleur.setMode(posRampe)
+        if self.posBoutonSinus.get_active():
+            print('posSinus')
+            # controleur.setMode(posSinus)
+        #
+        # print(self.posEntryAmplitude.get_text())
+        # print(self.posEntryFreq.get_text())
+        # print(self.posEntryRampe.get_text())
+        # print(self.posEntryEchelon.get_text())
+        # print(self.posEntryK.get_text())
+        # print(self.posEntryTi.get_text())
+        # print(self.posEntryTd.get_text())
+        print("running")
+        #controleur.runPostion()
 
 #   changer affichage valeur actuelle position
 #
