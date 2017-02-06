@@ -10,7 +10,7 @@ gi.require_version('Gtk','3.0')
 from gi.repository import Gtk as gtk
 
 
-class HelloWorld:
+class Vue:
 
     def __init__(self):
 
@@ -71,7 +71,7 @@ class HelloWorld:
 
 if __name__ == "__main__":
 
-    HelloWorld()
+    Vue()
 
     gtk.main()
 
