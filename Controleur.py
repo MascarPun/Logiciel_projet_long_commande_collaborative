@@ -1,4 +1,5 @@
 import Parametre
+import Vue
 from EposData import *
 import Initialisation_CoMax
 
@@ -13,7 +14,7 @@ class Controleur:
         self.vue.controleur = self
 
     def run(self):
-
+        return
 
     def setMode(self, i):
         self.parametres.setMode(i)
