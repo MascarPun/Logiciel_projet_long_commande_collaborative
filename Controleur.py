@@ -29,3 +29,32 @@ class Controleur:
 
     def setCascade(self, i):
         self.parametres.setCascade(i)
+
+    def setKpos(self, k):
+        self.parametres.setKpos(k)
+
+    def setTipos(self, ti):
+        self.parametres.setTipos(ti)
+
+    def setTdpos(self, td):
+        self.parametres.setTdpos(td)
+
+    def setKvit(self, kv):
+        self.parametres.setKvit(kv)
+
+    def setTdvit(self, td):
+        self.parametres.setTdvit(td)
+
+    def setTivit(self, ti):
+        self.parametres.setTivit(ti)
+
+    def setKcour(self, kc):
+        self.parametres.setKcour(kc)
+
+    def setTicour(self, ti):
+        self.parametres.setTicour(ti)
+
+    def setTdcour(self, td):
+        self.parametres.setTdcour(td)
+
+

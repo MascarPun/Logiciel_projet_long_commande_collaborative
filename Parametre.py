@@ -20,65 +20,65 @@ class Parametre:
         self.ticour = 1
         self.tdcour = 1
 
-        self.cascade = 0    # si est egale a 0 on ne fait pas de corection en cascade
+        self.cascade = 0    # si est egale a 0 on ne fait pas de correction en cascade
 
         self.mode = 0       # si 0 position si 1 vitesse si 2 courant si 3 collaboratif
 
 
 
-        def getkpos(self):
+        def getKpos(self):
             return (self.kpos)
-        def setkpos(self,k):
+        def setKpos(self,k):
             self.kpos = k
 
-        def gettipos(self):
+        def getTipos(self):
             return (self.tipos)
-        def settipos(self,k):
+        def setTipos(self,k):
             self.tipos = k
 
-        def gettdpos(self):
+        def getTdpos(self):
             return (self.tdpos)
-        def settdpos(self,k):
+        def setTdpos(self,k):
             self.tspos = k
 
-        def getkvit(self):
+        def getKvit(self):
             return (self.kvit)
-        def setkvit(self,k):
+        def setKvit(self,k):
             self.kvit = k
 
-        def gettivit(self):
+        def getTivit(self):
             return (self.tivit)
-        def settivit(self,k):
+        def setTivit(self,k):
             self.tivit = k
 
-        def gettdvit(self):
+        def getTdvit(self):
             return (self.tdvit)
-        def settdvit(self,k):
+        def setTdvit(self,k):
             self.tdvit = k
 
-        def getkcour(self):
+        def getKcour(self):
             return (self.kcour)
-        def setkcour(self,k):
+        def setKcour(self,k):
             self.kcour = k
 
-        def getticour(self):
+        def getTicour(self):
             return (self.ticour)
-        def setticour(self,k):
+        def setTicour(self,k):
             self.ticour = k
 
-        def gettdcour(self):
+        def getTdcour(self):
             return (self.tdcour)
-        def settdcour(self,k):
+        def setTdcour(self,k):
             self.tdcour = k
 
-        def getcascade(self):
+        def getCascade(self):
             return (self.cascade)
         def setCascade(self, a):
             self.cascade = a
 
-        def getmode(self):
+        def getMode(self):
             return (self.mode)
-        def setmode(self, mode):
+        def setMode(self, mode):
             self.mode = mode
 
 
