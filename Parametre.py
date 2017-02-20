@@ -26,10 +26,11 @@ class Parametre:
 
         self.dureeExp = 1
 
-        self.NominalCurrent = 5000  # Parametre du logiciel Comax
-        self.MaxOutputCurrent = 7500  # Parametre du logiciel Comax
-        self.ThermalTimeConstant = 70  # Parametre du logiciel Comax
-        self.MaxAcceleration = 10000  # Parametre du logiciel Comax
+        # Parametres du logiciel Comax
+        self.NominalCurrent = 5000
+        self.MaxOutputCurrent = 7500
+        self.ThermalTimeConstant = 70
+        self.MaxAcceleration = 10000
 
         global pErrorCode_i
         pErrorCode = ctypes.POINTER(ctypes.c_long)
@@ -156,3 +157,14 @@ class Parametre:
             self.ticour = tab[1]
             self.tdcour = tab[2]
 
+        def getNominalCurrent(self):
+            return self.NominalCurrent
+
+        def getMaxOutputCurrent(self):
+            return self.MaxOutputCurrent
+
+        def getThermalTimeConstant(self):
+            return self.ThermalTimeConstant
+
+        def getMaxAcceleration(self):
+            return self.MaxAcceleration
