@@ -24,6 +24,8 @@ class Parametre:
 
         self.mode = 0       # si 0 position si 1 vitesse si 2 courant si 3 collaboratif
 
+        self.dureeExp = 1
+
 
 
         def getKpos(self):
@@ -81,6 +83,10 @@ class Parametre:
         def setMode(self, mode):
             self.mode = mode
 
+        def getDureeExp(self):
+            return(self.dureeExp)
+        def setDureeExp(self,d):
+            self.dureeExp = d
 
         def getCorPos(self):
             tab = []
