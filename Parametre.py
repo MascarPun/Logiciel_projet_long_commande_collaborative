@@ -32,6 +32,14 @@ class Parametre:
         self.ThermalTimeConstant = 70
         self.MaxAcceleration = 10000
 
+        #parametre de commande
+        self.position
+        self.posfinale
+        self.frequence
+        self.amplitude
+
+
+
         global pErrorCode_i
         pErrorCode = ctypes.POINTER(ctypes.c_long)
         pErrorCode2 = ctypes.c_long(0)
@@ -168,3 +176,23 @@ class Parametre:
 
         def getMaxAcceleration(self):
             return self.MaxAcceleration
+
+        def setPosition(self,p):
+            self.position = p
+        def getPosition(self):
+            return(self.position)
+
+        def setPosFinale(self,p):
+            self.posfinale = p
+        def getPosFinale(self):
+            return(self.posfinale)
+
+        def setFrequence(self,f):
+            self.frequence = f
+        def getFrequence(self):
+            return (self.frequence)
+
+        def setAmplitude(self,a):
+            self.amplitude = a
+        def getAmplitude(self):
+            return (self.amplitude)
