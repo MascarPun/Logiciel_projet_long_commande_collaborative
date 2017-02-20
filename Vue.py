@@ -35,6 +35,8 @@ class Vue:
         self.posBoutonRampe = interface.get_object("posBoutonRampe")
         self.posBoutonSinus = interface.get_object("posBoutonSinus")
 
+        self.posDureeExp = interface.get_object("posEntryDuree")
+
         self.posBoutonRun = interface.get_object("posBoutonRun")
 
         interface.connect_signals(self)
@@ -69,6 +71,7 @@ class Vue:
         # print(self.posEntryK.get_text())
         # print(self.posEntryTi.get_text())
         # print(self.posEntryTd.get_text())
+        # print(self.posDureeExp.get_text())
 
         print("running")
         self.controleur.run()
