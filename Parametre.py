@@ -1,6 +1,6 @@
 
 # classe definissant tous les parametre utile pour le controleur
-
+import ctypes
 
 class Parametre:
     def __init__(self):
