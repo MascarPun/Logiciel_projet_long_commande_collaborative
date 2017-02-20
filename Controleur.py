@@ -21,9 +21,11 @@ class Controleur:
         self.carteEpos = Initialisation_CoMax.MyEpos #PAS PROPRE
         self.vue = Vue()
         self.vue.controleur = self
+        self.carteEpos.exitEpos(pErrorCode_i)
+        self.carteEpos.initEpos(pErrorCode_i)
 
     def run(self):
-        dureeExp = 3
+        self.parametres.setDureeExp(3)
         qc2mm = 294
 
         MyEpos = Initialisation_CoMax.MyEpos
