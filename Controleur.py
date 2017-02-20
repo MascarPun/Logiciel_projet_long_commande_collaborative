@@ -1,12 +1,11 @@
 import Parametre
 import Vue
 from EposData import *
-import Initialisation_CoMax
 import numpy as np
 import numpy.linalg as alg
 import time
 import math
-import control
+
 import ctypes
 from ctypes import *
 from matplotlib.pylab import *
