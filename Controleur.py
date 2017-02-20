@@ -36,10 +36,10 @@ class Controleur:
         pVelocityIs_i = self.parametres.pVelocityIs_i
         Mode = c_int(-1)
 
-        NominalCurrent = 5000  # Parametre du logiciel Comax
-        MaxOutputCurrent = 7500  # Parametre du logiciel Comax
-        ThermalTimeConstant = 70  # Parametre du logiciel Comax
-        MaxAcceleration = 10000  # Parametre du logiciel Comax
+        NominalCurrent = self.parametres.getNominalCurrent()  # Parametre du logiciel Comax
+        MaxOutputCurrent = self.parametres.getMaxOutputCurrent()  # Parametre du logiciel Comax
+        ThermalTimeConstant = self.parametres.getThermalTimeConstant()  # Parametre du logiciel Comax
+        MaxAcceleration = self.parametres.getMaxAcceleration()  # Parametre du logiciel Comax
 
         self.carteEpos.setDcMotorParameter(NominalCurrent, MaxOutputCurrent, ThermalTimeConstant, pErrorCode_i)
         self.carteEpos.setMaxAcceleration(MaxAcceleration, pErrorCode_i)
