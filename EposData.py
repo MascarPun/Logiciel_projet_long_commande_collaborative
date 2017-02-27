@@ -2,7 +2,7 @@ import ctypes
 
 from ctypes import *
 
-EposCmd = ctypes.windll.LoadLibrary("C:/Users/Robot/Desktop/Commande_Collabo_avec_Python/EposCmd.dll")
+EposCmd = ctypes.windll.LoadLibrary("C:\\Users\Vic\Logiciel_projet_long_commande_collaborative\EposCmd64.dll")
 
 class EposData:
 
