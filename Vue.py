@@ -8,12 +8,12 @@ This is a temporary script file.
 import gi
 gi.require_version('Gtk','3.0')
 from gi.repository import Gtk as gtk
-
+import Controleur
 
 class Vue:
 
     def __init__(self):
-        self.controleur = 0
+        self.controleur
 
         interface = gtk.Builder()
 
@@ -34,6 +34,8 @@ class Vue:
         self.posBoutonEchelon = interface.get_object("posBoutonEchelon")
         self.posBoutonRampe = interface.get_object("posBoutonRampe")
         self.posBoutonSinus = interface.get_object("posBoutonSinus")
+
+        self.posDureeExp = interface.get_object("posEntryDuree")
 
         self.posBoutonRun = interface.get_object("posBoutonRun")
 
@@ -58,8 +60,8 @@ class Vue:
 
         # On met a jour les correcteurs
         self.controleur.setCorPos([])
-        self.controleur.setCorVit()
-        self.controleur.setCorCour()
+        #self.controleur.setCorVit()   Faire attention si case vide
+        #self.controleur.setCorCour()
 
 
         # print(self.posEntryAmplitude.get_text())
@@ -69,8 +71,10 @@ class Vue:
         # print(self.posEntryK.get_text())
         # print(self.posEntryTi.get_text())
         # print(self.posEntryTd.get_text())
+        # print(self.posDureeExp.get_text())
+
         print("running")
-        #controleur.runPostion()
+        self.controleur.run()
 
 
 #   changer affichage valeur actuelle position
