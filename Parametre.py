@@ -1,6 +1,6 @@
 
 # classe definissant tous les parametre utile pour le controleur
-
+import ctypes
 
 class Parametre:
     def __init__(self):
@@ -25,6 +25,50 @@ class Parametre:
         self.mode = 0       # si 0 position si 1 vitesse si 2 courant si 3 collaboratif
 
         self.dureeExp = 1
+
+        # Parametres du logiciel Comax
+        self.NominalCurrent = 5000
+        self.MaxOutputCurrent = 7500
+        self.ThermalTimeConstant = 70
+        self.MaxAcceleration = 10000
+
+        #parametre de commande
+        self.position
+        self.posfinale
+        self.frequence
+        self.amplitude
+
+
+
+        global pErrorCode_i
+        pErrorCode = ctypes.POINTER(ctypes.c_long)
+        pErrorCode2 = ctypes.c_long(0)
+        pErrorCode_i = ctypes.cast(ctypes.addressof(pErrorCode2), pErrorCode)
+
+        global pIsEnabled_i
+        pIsEnabled = ctypes.POINTER(ctypes.c_bool)
+        pIsEnabled2 = ctypes.c_bool(0)
+        pIsEnabled_i = ctypes.cast(ctypes.addressof(pIsEnabled2), pIsEnabled)
+
+        global pPositionIs_i
+        pPositionIs = ctypes.POINTER(ctypes.c_long)
+        pPositionIs2 = ctypes.c_long(0)
+        pPositionIs_i = ctypes.cast(ctypes.addressof(pPositionIs2), pPositionIs)
+
+        global pAnalogValue
+        pAnalogValue_i = ctypes.POINTER(ctypes.c_int)
+        pAnalogValue2 = ctypes.c_int(0)
+        pAnalogValue = ctypes.cast(ctypes.addressof(pAnalogValue2), pAnalogValue_i)
+
+        global pVelocityIs_i
+        pVelocityIs = ctypes.POINTER(ctypes.c_long)
+        pVelocityIs2 = ctypes.c_long(0)
+        pVelocityIs_i = ctypes.cast(ctypes.addressof(pVelocityIs2), pVelocityIs)
+
+        global pCurrentIs_i
+        pCurrentIs = ctypes.POINTER(ctypes.c_short)
+        pCurrentIs2 = ctypes.c_short(0)
+        pCurrentIs_i = ctypes.cast(ctypes.addressof(pCurrentIs2), pCurrentIs)
 
 
 
@@ -121,3 +165,34 @@ class Parametre:
             self.ticour = tab[1]
             self.tdcour = tab[2]
 
+        def getNominalCurrent(self):
+            return self.NominalCurrent
+
+        def getMaxOutputCurrent(self):
+            return self.MaxOutputCurrent
+
+        def getThermalTimeConstant(self):
+            return self.ThermalTimeConstant
+
+        def getMaxAcceleration(self):
+            return self.MaxAcceleration
+
+        def setPosition(self,p):
+            self.position = p
+        def getPosition(self):
+            return(self.position)
+
+        def setPosFinale(self,p):
+            self.posfinale = p
+        def getPosFinale(self):
+            return(self.posfinale)
+
+        def setFrequence(self,f):
+            self.frequence = f
+        def getFrequence(self):
+            return (self.frequence)
+
+        def setAmplitude(self,a):
+            self.amplitude = a
+        def getAmplitude(self):
+            return (self.amplitude)

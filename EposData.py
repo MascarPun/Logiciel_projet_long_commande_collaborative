@@ -1,22 +1,47 @@
 import ctypes
 
 from ctypes import *
+
 EposCmd = ctypes.windll.LoadLibrary("C:/Users/Robot/Desktop/Commande_Collabo_avec_Python/EposCmd.dll")
 
 class EposData:
 
-     def __init__(self,EposDLL,EposHeader,DeviceName,ProtocolStackName,InterfaceName,PortName,Baudrate,NodeId):
-        self.EposDLL =EposDLL
-        self.EposHeader=EposHeader
-        self.DeviceName=DeviceName
-        self.ProtocolStackName=ProtocolStackName
-        self.InterfaceName=InterfaceName
-        self.PortName=PortName
-        self.Baudrate = Baudrate
-        self.NodeId = NodeId
-  
-            
-#Classe EposData (hérite de la classe handle)
+     def __init__(self):
+
+        Mode = c_int(1)
+
+        EPOS_i = c_char_p(b'EPOS2')
+        EPOS = byref(EPOS_i)
+
+        MAXON_SERIAL_V2_i = c_char_p(b'MAXON SERIAL V2')
+        MAXON_SERIAL_V2 = byref(MAXON_SERIAL_V2_i)
+
+        USB_i = c_char_p(b'USB')
+        USB = byref(USB_i)
+
+        USB0_i = c_char_p(b'USB0')
+        USB0 = byref(USB0_i)
+
+        Baudrate_i = c_long(100000)
+
+        NodeId_i = c_int(1)
+
+
+
+
+        self.EposDLL = 'EposCmd'
+        self.EposHeader = 'Definition.h'
+        self.DeviceName = EPOS_i
+        self.ProtocolStackName = MAXON_SERIAL_V2_i
+        self.InterfaceName = USB_i
+        self.PortName = USB0_i
+        self.Baudrate = Baudrate_i
+        self.NodeId = NodeId_i
+
+
+
+
+     #Classe EposData (hérite de la classe handle)
 #
 #PROPRIETES :    
 #    EposDLL : nom du fichier dll
