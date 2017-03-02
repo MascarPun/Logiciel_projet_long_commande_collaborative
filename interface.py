@@ -62,6 +62,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.runPos.clicked.connect(self.test)
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -76,6 +78,13 @@ class Ui_MainWindow(object):
         self.menuOption.setTitle(_translate("MainWindow", "option"))
         self.menuAffichage.setTitle(_translate("MainWindow", "affichage"))
         self.menuAide.setTitle(_translate("MainWindow", "aide"))
+
+
+
+    def test(self):
+        self.runpos.setObjectName("test")
+
+
 
 
 if __name__ == "__main__":
