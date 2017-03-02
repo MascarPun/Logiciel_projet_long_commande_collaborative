@@ -82,7 +82,8 @@ class Ui_MainWindow(object):
 
 
     def test(self):
-        self.runpos.setObjectName("test")
+        print("fonctionne")
+        sys.exit(app.exec_())
 
 
 
