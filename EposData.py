@@ -2,7 +2,7 @@ import ctypes
 
 from ctypes import *
 
-EposCmd = ctypes.windll.LoadLibrary("C:\\Users\Vic\Logiciel_projet_long_commande_collaborative\EposCmd64.dll")
+EposCmd = ctypes.windll.LoadLibrary("C:\\Users\Enoni\Documents\GitHub\Logiciel_projet_long_commande_collaborative\EposCmd64.dll")
 
 class EposData:
 
@@ -26,8 +26,35 @@ class EposData:
 
         NodeId_i = c_int(1)
 
+        global pErrorCode_i
+        pErrorCode = ctypes.POINTER(ctypes.c_long)
+        pErrorCode2 = ctypes.c_long(0)
+        pErrorCode_i = ctypes.cast(ctypes.addressof(pErrorCode2), pErrorCode)
 
+        global pIsEnabled_i
+        pIsEnabled = ctypes.POINTER(ctypes.c_bool)
+        pIsEnabled2 = ctypes.c_bool(0)
+        pIsEnabled_i = ctypes.cast(ctypes.addressof(pIsEnabled2), pIsEnabled)
 
+        global pPositionIs_i
+        pPositionIs = ctypes.POINTER(ctypes.c_long)
+        pPositionIs2 = ctypes.c_long(0)
+        pPositionIs_i = ctypes.cast(ctypes.addressof(pPositionIs2), pPositionIs)
+
+        global pAnalogValue
+        pAnalogValue_i = ctypes.POINTER(ctypes.c_int)
+        pAnalogValue2 = ctypes.c_int(0)
+        pAnalogValue = ctypes.cast(ctypes.addressof(pAnalogValue2), pAnalogValue_i)
+
+        global pVelocityIs_i
+        pVelocityIs = ctypes.POINTER(ctypes.c_long)
+        pVelocityIs2 = ctypes.c_long(0)
+        pVelocityIs_i = ctypes.cast(ctypes.addressof(pVelocityIs2), pVelocityIs)
+
+        global pCurrentIs_i
+        pCurrentIs = ctypes.POINTER(ctypes.c_short)
+        pCurrentIs2 = ctypes.c_short(0)
+        pCurrentIs_i = ctypes.cast(ctypes.addressof(pCurrentIs2), pCurrentIs)
 
         self.EposDLL = 'EposCmd'
         self.EposHeader = 'Definition.h'
@@ -37,7 +64,8 @@ class EposData:
         self.PortName = USB0_i
         self.Baudrate = Baudrate_i
         self.NodeId = NodeId_i
-
+        self.exitEpos(pErrorCode_i)
+        self.initEpos(pErrorCode_i)
 
 
 

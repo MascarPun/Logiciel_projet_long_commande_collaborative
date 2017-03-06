@@ -1,5 +1,5 @@
-import Parametre
-import Vue
+from Parametre import Parametre
+from Interface import *
 from EposData import *
 import numpy as np
 import numpy.linalg as alg
@@ -14,14 +14,15 @@ from matplotlib.pylab import *
 
 class Controleur:
 
+
+
     def __init__(self):
 
         self.parametres = Parametre()
         self.carteEpos = EposData()
-        self.vue = Vue()
-        self.vue.controleur = self
-        self.carteEpos.exitEpos(pErrorCode_i)
-        self.carteEpos.initEpos(pErrorCode_i)
+        self.interface = Ui_MainWindow()
+        self.interface.controleur = self
+
 
     def run(self):
         self.parametres.setDureeExp(3)
@@ -123,3 +124,4 @@ class Controleur:
         self.parametres.setTdcour(td)
 
 
+Controleur()
