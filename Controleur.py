@@ -123,9 +123,12 @@ class Controleur:
     def setTdcour(self, td):
         self.parametres.setTdcour(td)
 
-    def test(self):
+    def launch(self):
         self.interface.launch()
+
+    def test(self):
+        print("ca marche")
 
 
 c=Controleur()
-c.test()
+c.launch()

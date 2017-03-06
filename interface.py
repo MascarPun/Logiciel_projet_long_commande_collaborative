@@ -6,10 +6,16 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+from Controleur import *
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        self.controleur = 0
+
+
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -82,8 +88,7 @@ class Ui_MainWindow(object):
 
 
     def test(self):
-        print("fonctionne")
-        #sys.exit(app.exec_())
+        self.controleur.test()
 
     def launch(self):
 
