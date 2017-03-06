@@ -6,13 +6,17 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from Controleur import *
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
+
+    def __init__(self,controleur):
+        self.controleur = controleur
+
+
     def setupUi(self, MainWindow):
-        self.controleur = 0
 
 
 
@@ -90,12 +94,12 @@ class Ui_MainWindow(object):
     def test(self):
         self.controleur.test()
 
-    def launch(self):
+    def launch(self,controleur):
 
         import sys
         app = QtWidgets.QApplication(sys.argv)
         MainWindow = QtWidgets.QMainWindow()
-        ui = Ui_MainWindow()
+        ui = Ui_MainWindow(controleur)
         ui.setupUi(MainWindow)
         MainWindow.show()
         sys.exit(app.exec_())

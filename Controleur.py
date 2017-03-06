@@ -20,7 +20,7 @@ class Controleur:
 
         self.parametres = Parametre()
         self.carteEpos = EposData()
-        self.interface = Ui_MainWindow()
+        self.interface = Ui_MainWindow(self)
         self.interface.controleur = self
 
 
@@ -124,7 +124,7 @@ class Controleur:
         self.parametres.setTdcour(td)
 
     def launch(self):
-        self.interface.launch()
+        self.interface.launch(self)
 
     def test(self):
         print("ca marche")
