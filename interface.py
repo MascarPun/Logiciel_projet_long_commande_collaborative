@@ -58,11 +58,11 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuOption.menuAction())
         self.menubar.addAction(self.menuAffichage.menuAction())
         self.menubar.addAction(self.menuAide.menuAction())
+        self.runPos.clicked.connect(self.test)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.runPos.clicked.connect(self.test)
 
 
     def retranslateUi(self, MainWindow):
