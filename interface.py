@@ -83,9 +83,17 @@ class Ui_MainWindow(object):
 
     def test(self):
         print("fonctionne")
+        #sys.exit(app.exec_())
+
+    def launch(self):
+
+        import sys
+        app = QtWidgets.QApplication(sys.argv)
+        MainWindow = QtWidgets.QMainWindow()
+        ui = Ui_MainWindow()
+        ui.setupUi(MainWindow)
+        MainWindow.show()
         sys.exit(app.exec_())
-
-
 
 
 if __name__ == "__main__":
