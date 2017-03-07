@@ -128,6 +128,8 @@ class Controleur:
 
     def test(self):
         print("ca marche")
+        self.run()
+
 
 
 c=Controleur()
