@@ -29,6 +29,7 @@ class Controleur:
         self.parametres.setTivit(300)
         self.parametres.getTivit()
         self.parametres.setDureeExp(3)
+        self.parametres.setPosFinale(100)
         qc2mm = 294
 
 
@@ -72,10 +73,10 @@ class Controleur:
         #    answer = inputdlg(prompt,dlg_title,1) # création de la boite de dialogue
         #    positionInitialeMm = str2num(answer{1}) # conversion de la chaine de caractère en entier
         #    positionInitialeMm = float(input("Position initiale voulue en mm : "))
-        positionInitialeMm = positionEchelonConsigne
+        positionFinaleMm = self.parametres.getPosFinale()
 
 
-        if (positionFinaleMm > 500 or positionInitialeMm < 0):  # Il faut définir des conditions de sécurité
+        if (positionFinaleMm > 500 or positionFinaleMm < 0):  # Il faut définir des conditions de sécurité
             print('Cette valeur est interdite')
         else:
             positionFinaleQc = c_long(math.floor(positionFinaleMm * qc2mm))
