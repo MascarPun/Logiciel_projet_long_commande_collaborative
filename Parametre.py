@@ -43,127 +43,127 @@ class Parametre:
 
 
 
-        def getKpos(self):
-            return (self.kpos)
-        def setKpos(self,k):
-            self.kpos = k
+    def getKpos(self):
+        return (self.kpos)
+    def setKpos(self,k):
+        self.kpos = k
 
-        def getTipos(self):
-            return (self.tipos)
-        def setTipos(self,k):
-            self.tipos = k
+    def getTipos(self):
+        return (self.tipos)
+    def setTipos(self,k):
+        self.tipos = k
 
-        def getTdpos(self):
-            return (self.tdpos)
-        def setTdpos(self,k):
-            self.tspos = k
+    def getTdpos(self):
+        return (self.tdpos)
+    def setTdpos(self,k):
+        self.tspos = k
 
-        def getKvit(self):
-            return (self.kvit)
-        def setKvit(self,k):
-            self.kvit = k
+    def getKvit(self):
+        return (self.kvit)
+    def setKvit(self,k):
+        self.kvit = k
 
-        def getTivit(self):
-            return (self.tivit)
-        def setTivit(self,k):
-            self.tivit = k
+    def getTivit(self):
+        return (self.tivit)
+    def setTivit(self,k):
+        self.tivit = k
 
-        def getTdvit(self):
-            return (self.tdvit)
-        def setTdvit(self,k):
-            self.tdvit = k
+    def getTdvit(self):
+        return (self.tdvit)
+    def setTdvit(self,k):
+        self.tdvit = k
 
-        def getKcour(self):
-            return (self.kcour)
-        def setKcour(self,k):
-            self.kcour = k
+    def getKcour(self):
+        return (self.kcour)
+    def setKcour(self,k):
+        self.kcour = k
 
-        def getTicour(self):
-            return (self.ticour)
-        def setTicour(self,k):
-            self.ticour = k
+    def getTicour(self):
+        return (self.ticour)
+    def setTicour(self,k):
+        self.ticour = k
 
-        def getTdcour(self):
-            return (self.tdcour)
-        def setTdcour(self,k):
-            self.tdcour = k
+    def getTdcour(self):
+        return (self.tdcour)
+    def setTdcour(self,k):
+        self.tdcour = k
 
-        def getCascade(self):
-            return (self.cascade)
-        def setCascade(self, a):
-            self.cascade = a
+    def getCascade(self):
+        return (self.cascade)
+    def setCascade(self, a):
+        self.cascade = a
 
-        def getMode(self):
-            return (self.mode)
-        def setMode(self, mode):
-            self.mode = mode
+    def getMode(self):
+        return (self.mode)
+    def setMode(self, mode):
+        self.mode = mode
 
-        def getDureeExp(self):
-            return(self.dureeExp)
-        def setDureeExp(self,d):
-            self.dureeExp = d
+    def getDureeExp(self):
+        return(self.dureeExp)
+    def setDureeExp(self,d):
+        self.dureeExp = d
 
-        def getCorPos(self):
-            tab = []
-            tab[0] = self.kpos
-            tab[1] = self.tipos
-            tab[2] = self.tdpos
-            return tab
-        def setCorPos(self, tab):
-            self.kpos = tab[0]
-            self.tipos = tab[1]
-            self.tdpos = tab[2]
+    def getCorPos(self):
+        tab = []
+        tab[0] = self.kpos
+        tab[1] = self.tipos
+        tab[2] = self.tdpos
+        return tab
+    def setCorPos(self, tab):
+        self.kpos = tab[0]
+        self.tipos = tab[1]
+        self.tdpos = tab[2]
 
-        def getCorVit(self):
-            tab = []
-            tab[0] = self.kvit
-            tab[1] = self.tivit
-            tab[2] = self.tdvit
-            return tab
-        def setCorVit(self, tab):
-            self.kvit = tab[0]
-            self.tivit = tab[1]
-            self.tdvit = tab[2]
+    def getCorVit(self):
+        tab = []
+        tab[0] = self.kvit
+        tab[1] = self.tivit
+        tab[2] = self.tdvit
+        return tab
+    def setCorVit(self, tab):
+        self.kvit = tab[0]
+        self.tivit = tab[1]
+        self.tdvit = tab[2]
 
-        def getCorCour(self):
-            tab = []
-            tab[0] = self.kcour
-            tab[1] = self.ticour
-            tab[2] = self.tdcour
-            return tab
-        def setCorCour(self, tab):
-            self.kcour = tab[0]
-            self.ticour = tab[1]
-            self.tdcour = tab[2]
+    def getCorCour(self):
+        tab = []
+        tab[0] = self.kcour
+        tab[1] = self.ticour
+        tab[2] = self.tdcour
+        return tab
+    def setCorCour(self, tab):
+        self.kcour = tab[0]
+        self.ticour = tab[1]
+        self.tdcour = tab[2]
 
-        def getNominalCurrent(self):
-            return self.NominalCurrent
+    def getNominalCurrent(self):
+        return self.NominalCurrent
 
-        def getMaxOutputCurrent(self):
-            return self.MaxOutputCurrent
+    def getMaxOutputCurrent(self):
+        return self.MaxOutputCurrent
 
-        def getThermalTimeConstant(self):
-            return self.ThermalTimeConstant
+    def getThermalTimeConstant(self):
+        return self.ThermalTimeConstant
 
-        def getMaxAcceleration(self):
-            return self.MaxAcceleration
+    def getMaxAcceleration(self):
+        return self.MaxAcceleration
 
-        def setPosition(self,p):
-            self.position = p
-        def getPosition(self):
-            return(self.position)
+    def setPosition(self,p):
+        self.position = p
+    def getPosition(self):
+        return(self.position)
 
-        def setPosFinale(self,p):
-            self.posfinale = p
-        def getPosFinale(self):
-            return(self.posfinale)
+    def setPosFinale(self,p):
+        self.posfinale = p
+    def getPosFinale(self):
+        return(self.posfinale)
 
-        def setFrequence(self,f):
-            self.frequence = f
-        def getFrequence(self):
-            return (self.frequence)
+    def setFrequence(self,f):
+        self.frequence = f
+    def getFrequence(self):
+        return (self.frequence)
 
-        def setAmplitude(self,a):
-            self.amplitude = a
-        def getAmplitude(self):
-            return (self.amplitude)
+    def setAmplitude(self,a):
+        self.amplitude = a
+    def getAmplitude(self):
+        return (self.amplitude)

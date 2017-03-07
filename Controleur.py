@@ -25,6 +25,9 @@ class Controleur:
 
 
     def run(self):
+        print("setTiVit")
+        self.parametres.setTiVit(300)
+        self.parametres.getTiVit()
         self.parametres.setDureeExp(3)
         qc2mm = 294
 
