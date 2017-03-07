@@ -35,8 +35,8 @@ class Controleur:
         pErrorCode_i = self.carteEpos.pErrorCode_i
         pIsEnabled_i = self.carteEpos.pIsEnabled_i
         pPositionIs_i = self.carteEpos.pPositionIs_i
-        pCurrentIs_i = self.carteEpos.pCurrentIs_i
-        pVelocityIs_i = self.carteEpos.pVelocityIs_i
+        pCulocityIrrentIs_i = self.carteEpos.pCurrentIs_i
+        pVes_i = self.carteEpos.pVelocityIs_i
         Mode = c_int(-1)
 
         NominalCurrent = self.parametres.getNominalCurrent()  # Parametre du logiciel Comax
