@@ -26,17 +26,17 @@ class Controleur:
 
     def run(self):
         print("setTiVit")
-        self.parametres.setTiVit(300)
-        self.parametres.getTiVit()
+        self.parametres.setTivit(300)
+        self.parametres.getTivit()
         self.parametres.setDureeExp(3)
         qc2mm = 294
 
 
-        pErrorCode_i = self.parametres.pErrorCode_i
-        pIsEnabled_i = self.parametres.pIsEnabled_i
-        pPositionIs_i = self.parametres.pPositionIs_i
-        pCurrentIs_i = self.parametres.pCurrentIs_i
-        pVelocityIs_i = self.parametres.pVelocityIs_i
+        pErrorCode_i = self.carteEpos.pErrorCode_i
+        pIsEnabled_i = self.carteEpos.pIsEnabled_i
+        pPositionIs_i = self.carteEpos.pPositionIs_i
+        pCurrentIs_i = self.carteEpos.pCurrentIs_i
+        pVelocityIs_i = self.carteEpos.pVelocityIs_i
         Mode = c_int(-1)
 
         NominalCurrent = self.parametres.getNominalCurrent()  # Parametre du logiciel Comax
@@ -136,4 +136,5 @@ class Controleur:
 
 
 c=Controleur()
+c.run()
 c.launch()

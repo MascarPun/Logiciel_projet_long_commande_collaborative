@@ -45,36 +45,43 @@ class Parametre:
 
     def getKpos(self):
         return (self.kpos)
+
     def setKpos(self,k):
         self.kpos = k
 
     def getTipos(self):
         return (self.tipos)
+
     def setTipos(self,k):
         self.tipos = k
 
     def getTdpos(self):
         return (self.tdpos)
+
     def setTdpos(self,k):
         self.tspos = k
 
     def getKvit(self):
         return (self.kvit)
+
     def setKvit(self,k):
         self.kvit = k
 
     def getTivit(self):
         return (self.tivit)
+
     def setTivit(self,k):
         self.tivit = k
 
     def getTdvit(self):
         return (self.tdvit)
+
     def setTdvit(self,k):
         self.tdvit = k
 
     def getKcour(self):
         return (self.kcour)
+
     def setKcour(self,k):
         self.kcour = k
 
@@ -85,21 +92,25 @@ class Parametre:
 
     def getTdcour(self):
         return (self.tdcour)
+
     def setTdcour(self,k):
         self.tdcour = k
 
     def getCascade(self):
         return (self.cascade)
+
     def setCascade(self, a):
         self.cascade = a
 
     def getMode(self):
         return (self.mode)
+
     def setMode(self, mode):
         self.mode = mode
 
     def getDureeExp(self):
         return(self.dureeExp)
+
     def setDureeExp(self,d):
         self.dureeExp = d
 
@@ -109,6 +120,7 @@ class Parametre:
         tab[1] = self.tipos
         tab[2] = self.tdpos
         return tab
+
     def setCorPos(self, tab):
         self.kpos = tab[0]
         self.tipos = tab[1]
@@ -120,6 +132,7 @@ class Parametre:
         tab[1] = self.tivit
         tab[2] = self.tdvit
         return tab
+
     def setCorVit(self, tab):
         self.kvit = tab[0]
         self.tivit = tab[1]
@@ -131,6 +144,7 @@ class Parametre:
         tab[1] = self.ticour
         tab[2] = self.tdcour
         return tab
+
     def setCorCour(self, tab):
         self.kcour = tab[0]
         self.ticour = tab[1]
@@ -150,20 +164,24 @@ class Parametre:
 
     def setPosition(self,p):
         self.position = p
+
     def getPosition(self):
         return(self.position)
 
     def setPosFinale(self,p):
         self.posfinale = p
+
     def getPosFinale(self):
         return(self.posfinale)
 
     def setFrequence(self,f):
         self.frequence = f
+
     def getFrequence(self):
         return (self.frequence)
 
     def setAmplitude(self,a):
         self.amplitude = a
+
     def getAmplitude(self):
         return (self.amplitude)
