@@ -2,74 +2,22 @@ import ctypes
 
 from ctypes import *
 
-EposCmd = ctypes.windll.LoadLibrary("EposCmd64.dll")
+EposCmd = ctypes.windll.LoadLibrary("C:\\Users\Robot\Logiciel_projet_long_commande_collaborative\EposCmd64.dll")
 
 class EposData:
 
-     def __init__(self):
-
-        Mode = c_int(1)
-
-        EPOS_i = c_char_p(b'EPOS2')
-        EPOS = byref(EPOS_i)
-
-        MAXON_SERIAL_V2_i = c_char_p(b'MAXON SERIAL V2')
-        MAXON_SERIAL_V2 = byref(MAXON_SERIAL_V2_i)
-
-        USB_i = c_char_p(b'USB')
-        USB = byref(USB_i)
-
-        USB0_i = c_char_p(b'USB0')
-        USB0 = byref(USB0_i)
-
-        Baudrate_i = c_long(100000)
-
-        NodeId_i = c_int(1)
-
-        #global pErrorCode_i
-        pErrorCode = ctypes.POINTER(ctypes.c_long)
-        pErrorCode2 = ctypes.c_long(0)
-        self.pErrorCode_i = ctypes.cast(ctypes.addressof(pErrorCode2), pErrorCode)
-
-        #global pIsEnabled_i
-        pIsEnabled = ctypes.POINTER(ctypes.c_bool)
-        pIsEnabled2 = ctypes.c_bool(0)
-        self.pIsEnabled_i = ctypes.cast(ctypes.addressof(pIsEnabled2), pIsEnabled)
-
-        #global pPositionIs_i
-        pPositionIs = ctypes.POINTER(ctypes.c_long)
-        pPositionIs2 = ctypes.c_long(0)
-        self.pPositionIs_i = ctypes.cast(ctypes.addressof(pPositionIs2), pPositionIs)
-
-        #global pAnalogValue
-        pAnalogValue_i = ctypes.POINTER(ctypes.c_int)
-        pAnalogValue2 = ctypes.c_int(0)
-        self.pAnalogValue = ctypes.cast(ctypes.addressof(pAnalogValue2), pAnalogValue_i)
-
-        #global pVelocityIs_i
-        pVelocityIs = ctypes.POINTER(ctypes.c_long)
-        pVelocityIs2 = ctypes.c_long(0)
-        self.pVelocityIs_i = ctypes.cast(ctypes.addressof(pVelocityIs2), pVelocityIs)
-
-        #global pCurrentIs_i
-        pCurrentIs = ctypes.POINTER(ctypes.c_short)
-        pCurrentIs2 = ctypes.c_short(0)
-        self.pCurrentIs_i = ctypes.cast(ctypes.addressof(pCurrentIs2), pCurrentIs)
-
-        self.EposDLL = 'EposCmd'
-        self.EposHeader = 'Definition.h'
-        self.DeviceName = EPOS_i
-        self.ProtocolStackName = MAXON_SERIAL_V2_i
-        self.InterfaceName = USB_i
-        self.PortName = USB0_i
-        self.Baudrate = Baudrate_i
-        self.NodeId = NodeId_i
-        self.exitEpos(self.pErrorCode_i)
-        self.initEpos(self.pErrorCode_i)
+     def __init__(self,EposDLL,EposHeader,DeviceName,ProtocolStackName,InterfaceName,PortName,Baudrate,NodeId):
+        self.EposDLL =EposDLL
+        self.EposHeader=EposHeader
+        self.DeviceName=DeviceName
+        self.ProtocolStackName=ProtocolStackName
+        self.InterfaceName=InterfaceName
+        self.PortName=PortName
+        self.Baudrate = Baudrate
+        self.NodeId = NodeId
 
 
-
-     #Classe EposData (hérite de la classe handle)
+#Classe EposData (hérite de la classe handle)
 #
 #PROPRIETES :    
 #    EposDLL : nom du fichier dll

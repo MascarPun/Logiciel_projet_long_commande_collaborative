@@ -5,7 +5,7 @@ import math
 import ctypes
 from ctypes import *
 
-EposCmd = ctypes.windll.LoadLibrary("C:/Users/Robot/Desktop/Commande_Collabo_avec_Python/EposCmd.dll")
+#EposCmd = ctypes.windll.LoadLibrary("C:/Users/Robot/Desktop/Commande_Collabo_avec_Python/EposCmd.dll")
 from EposData import *
 
 
@@ -69,6 +69,5 @@ MyEpos = EposData('EposCmd','Definitions.h',EPOS_i,MAXON_SERIAL_V2_i,USB_i,USB0_
 MyEpos.exitEpos(pErrorCode_i)
 
 MyEpos.initEpos(pErrorCode_i)
-
 
 

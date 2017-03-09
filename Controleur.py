@@ -5,7 +5,7 @@ import numpy as np
 import numpy.linalg as alg
 import time
 import math
-
+import Initialisation_CoMax
 import ctypes
 from ctypes import *
 from matplotlib.pylab import *
@@ -19,7 +19,7 @@ class Controleur:
     def __init__(self):
 
         self.parametres = Parametre()
-        self.carteEpos = EposData()
+        self.carteEpos = Initialisation_CoMax.MyEpos
         self.interface = Ui_MainWindow(self)
         self.interface.controleur = self
 
@@ -29,16 +29,23 @@ class Controleur:
         self.parametres.setTivit(300)
         self.parametres.getTivit()
         self.parametres.setDureeExp(3)
-        self.parametres.setPosFinale(100)
+        self.parametres.setPosFinale(150)
         qc2mm = 294
 
 
-        pErrorCode_i = self.carteEpos.pErrorCode_i
-        pIsEnabled_i = self.carteEpos.pIsEnabled_i
-        pPositionIs_i = self.carteEpos.pPositionIs_i
-        pCulocityIrrentIs_i = self.carteEpos.pCurrentIs_i
-        pVes_i = self.carteEpos.pVelocityIs_i
+        pErrorCode_i = Initialisation_CoMax.pErrorCode_i
+        pIsEnabled_i = Initialisation_CoMax.pIsEnabled_i
+        pPositionIs_i = Initialisation_CoMax.pPositionIs_i
+        pCurrentIs_i = Initialisation_CoMax.pCurrentIs_i
+        pVelocityIs_i = Initialisation_CoMax.pVelocityIs_i
         Mode = c_int(-1)
+
+#        pErrorCode_i = self.carteEpos.pErrorCode_i
+#        pIsEnabled_i = self.carteEpos.pIsEnabled_i
+#        pPositionIs_i = self.carteEpos.pPositionIs_i
+#        pCulocityIrrentIs_i = self.carteEpos.pCurrentIs_i
+#        pVes_i = self.carteEpos.pVelocityIs_i
+#        Mode = c_int(-1)
 
         NominalCurrent = self.parametres.getNominalCurrent()  # Parametre du logiciel Comax
         MaxOutputCurrent = self.parametres.getMaxOutputCurrent()  # Parametre du logiciel Comax
@@ -54,8 +61,9 @@ class Controleur:
         pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
         self.carteEpos.getOperationMode(pMode2, pErrorCode_i)
         self.carteEpos.getOperationMode2(pMode2.contents, pErrorCode_i)
-
+        print('lala')
         # set enable state
+        self.carteEpos.setDisableState(pErrorCode_i)
         self.carteEpos.setEnableState(pErrorCode_i)
 
         # get enabled state
