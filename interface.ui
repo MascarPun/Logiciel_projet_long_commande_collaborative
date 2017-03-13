@@ -34,7 +34,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -340,7 +340,7 @@
          </widget>
         </item>
         <item row="0" column="7">
-         <widget class="QLabel" name="poLabelValeurPosAct">
+         <widget class="QLabel" name="poLabelValeurPosAct_p">
           <property name="text">
            <string>poLabelValeurPosAct</string>
           </property>
@@ -371,7 +371,7 @@
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QLabel" name="poLabelValeurPosAct_2">
+         <widget class="QLabel" name="poLabelValeurPosAct_v">
           <property name="text">
            <string>poLabelValeurPosAct</string>
           </property>
@@ -666,7 +666,7 @@
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QLabel" name="poLabelValeurPosAct_3">
+         <widget class="QLabel" name="poLabelValeurPosAct_c">
           <property name="text">
            <string>poLabelValeurPosAct</string>
           </property>
@@ -961,7 +961,7 @@
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QLabel" name="poLabelValeurPosAct_4">
+         <widget class="QLabel" name="poLabelValeurPosAct_col">
           <property name="text">
            <string>poLabelValeurPosAct</string>
           </property>
