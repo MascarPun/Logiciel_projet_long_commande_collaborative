@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>894</width>
-    <height>478</height>
+    <width>813</width>
+    <height>616</height>
    </rect>
   </property>
   <property name="font">
@@ -74,18 +74,17 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="3" colspan="3">
-         <widget class="QLineEdit" name="lineEditAmp_p">
+        <item row="4" column="0" colspan="2">
+         <widget class="QRadioButton" name="radioButton">
           <property name="text">
-           <string/>
+           <string>Echelon</string>
           </property>
-         </widget>
-        </item>
-        <item row="4" column="3" colspan="3">
-         <widget class="QLineEdit" name="lineEditPosFEch_p">
-          <property name="text">
-           <string/>
+          <property name="checked">
+           <bool>true</bool>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroupPos</string>
+          </attribute>
          </widget>
         </item>
         <item row="6" column="0" colspan="2">
@@ -106,26 +105,6 @@
           <attribute name="buttonGroup">
            <string notr="true">buttonGroupPos</string>
           </attribute>
-         </widget>
-        </item>
-        <item row="4" column="0" colspan="2">
-         <widget class="QRadioButton" name="radioButton">
-          <property name="text">
-           <string>Echelon</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroupPos</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="8" column="5" colspan="2">
-         <widget class="QLabel" name="label_13">
-          <property name="text">
-           <string>Durée expérimentale</string>
-          </property>
          </widget>
         </item>
         <item row="7" column="0" colspan="11">
@@ -181,16 +160,6 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="2">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>position finale</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
         <item row="6" column="2">
          <widget class="QLabel" name="label_6">
           <property name="text">
@@ -201,10 +170,13 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="7">
-         <widget class="QLineEdit" name="lineEditDur_p">
+        <item row="5" column="2">
+         <widget class="QLabel" name="label_5">
           <property name="text">
-           <string/>
+           <string>position finale</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -215,8 +187,8 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="3" colspan="3">
-         <widget class="QLineEdit" name="lineEditPosFRam_p">
+        <item row="8" column="7">
+         <widget class="QLineEdit" name="lineEditDur_p">
           <property name="text">
            <string/>
           </property>
@@ -236,25 +208,6 @@
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="11">
-         <widget class="Line" name="line_2">
-          <property name="autoFillBackground">
-           <bool>true</bool>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
-          <property name="lineWidth">
-           <number>0</number>
-          </property>
-          <property name="midLineWidth">
-           <number>3</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -292,6 +245,25 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="3" column="0" colspan="11">
+         <widget class="Line" name="line_2">
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="lineWidth">
+           <number>0</number>
+          </property>
+          <property name="midLineWidth">
+           <number>3</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
         </item>
         <item row="4" column="7">
          <spacer name="verticalSpacer">
@@ -346,10 +318,38 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="3" colspan="4">
+         <widget class="QLineEdit" name="lineEditPosFRam_p">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="3" colspan="4">
+         <widget class="QLineEdit" name="lineEditPosFEch_p">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="5">
          <widget class="QLabel" name="label">
           <property name="text">
            <string>position actuelle</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="3" colspan="4">
+         <widget class="QLineEdit" name="lineEditAmp_p">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="5" colspan="2">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Durée expérimentale</string>
           </property>
          </widget>
         </item>
@@ -363,6 +363,43 @@
         <string>Vitesse</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
+        <item row="9" column="3">
+         <widget class="QPushButton" name="runPos_2">
+          <property name="text">
+           <string>run</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QRadioButton" name="radioButton_4">
+          <property name="text">
+           <string>Echelon</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QLineEdit" name="lineEditPosFEch_v">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="3">
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>94</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="0" column="2">
          <widget class="QLabel" name="label_16">
           <property name="text">
@@ -377,10 +414,54 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>position finale</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <widget class="QLineEdit" name="lineEditPosFTri_v">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="3">
+         <spacer name="verticalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>94</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="0" column="4">
          <widget class="QLabel" name="label_12">
           <property name="text">
            <string>cm</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="6">
+         <widget class="QLineEdit" name="lineEditCoefDir_v">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QRadioButton" name="radioButton_5">
+          <property name="text">
+           <string>Sinus</string>
           </property>
          </widget>
         </item>
@@ -403,10 +484,35 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="3">
-         <widget class="QLabel" name="label_20">
+        <item row="4" column="3">
+         <spacer name="verticalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>94</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="6" column="6">
+         <widget class="QLineEdit" name="lineEditFreq_v">
           <property name="text">
-           <string>Choix du profil de commande</string>
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="label_18">
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>position finale</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -432,50 +538,31 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QRadioButton" name="radioButton_4">
-          <property name="text">
-           <string>Echelon</string>
+        <item row="8" column="6">
+         <spacer name="verticalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="checked">
-           <bool>true</bool>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
           </property>
-         </widget>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>94</height>
+           </size>
+          </property>
+         </spacer>
         </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="label_18">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
+        <item row="2" column="3">
+         <widget class="QLabel" name="label_20">
           <property name="text">
-           <string>position finale</string>
+           <string>Choix du profil de commande</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
-        </item>
-        <item row="4" column="2">
-         <widget class="QLineEdit" name="lineEditPosFEch_v">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="3">
-         <spacer name="verticalSpacer_8">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>60</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item row="5" column="0">
          <widget class="QRadioButton" name="radioButton_6">
@@ -483,36 +570,6 @@
            <string>triangle</string>
           </property>
          </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>position finale</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="2">
-         <widget class="QLineEdit" name="lineEditPosFTri_v">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="3">
-         <spacer name="verticalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>59</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item row="5" column="4" colspan="2">
          <widget class="QLabel" name="label_10">
@@ -524,62 +581,8 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="6">
-         <widget class="QLineEdit" name="lineEditCoefDir_v">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QRadioButton" name="radioButton_5">
-          <property name="text">
-           <string>Sinus</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QLabel" name="label_15">
-          <property name="text">
-           <string>amplitude</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
         <item row="6" column="2">
          <widget class="QLineEdit" name="lineEditAmp_v">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="3">
-         <spacer name="verticalSpacer_6">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>60</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="6" column="5">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>fréquence</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="6">
-         <widget class="QLineEdit" name="lineEditFreq_v">
           <property name="text">
            <string/>
           </property>
@@ -604,10 +607,13 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="2">
-         <widget class="QLabel" name="label_19">
+        <item row="6" column="5">
+         <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>Durée expérimentale</string>
+           <string>fréquence</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -625,26 +631,20 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="6">
-         <spacer name="verticalSpacer_7">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>59</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="9" column="3">
-         <widget class="QPushButton" name="runPos_2">
+        <item row="6" column="1">
+         <widget class="QLabel" name="label_15">
           <property name="text">
-           <string>run</string>
+           <string>amplitude</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="2">
+         <widget class="QLabel" name="label_19">
+          <property name="text">
+           <string>Durée expérimentale</string>
           </property>
          </widget>
         </item>
@@ -767,7 +767,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>60</height>
+            <height>94</height>
            </size>
           </property>
          </spacer>
@@ -804,7 +804,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>59</height>
+            <height>94</height>
            </size>
           </property>
          </spacer>
@@ -858,7 +858,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>60</height>
+            <height>94</height>
            </size>
           </property>
          </spacer>
@@ -931,7 +931,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>59</height>
+            <height>94</height>
            </size>
           </property>
          </spacer>
@@ -1062,7 +1062,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>60</height>
+            <height>94</height>
            </size>
           </property>
          </spacer>
@@ -1099,7 +1099,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>59</height>
+            <height>94</height>
            </size>
           </property>
          </spacer>
@@ -1153,7 +1153,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>60</height>
+            <height>94</height>
            </size>
           </property>
          </spacer>
@@ -1226,7 +1226,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>59</height>
+            <height>94</height>
            </size>
           </property>
          </spacer>
@@ -1254,7 +1254,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>894</width>
+     <width>813</width>
      <height>21</height>
     </rect>
    </property>
