@@ -142,7 +142,7 @@ class Controleur:
         print("ca marche")
         self.run()
 
-# pouet
+
 
 c=Controleur()
 c.run()
