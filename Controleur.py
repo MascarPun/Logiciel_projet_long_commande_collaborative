@@ -29,9 +29,8 @@ class Controleur:
         print("setTiVit")
         self.parametres.setTivit(300)
         self.parametres.getTivit()
-        self.parametres.setDureeExp(3)
+        self.parametres.setDureeExp(10)
         mm2qc = 294
-
 
         pErrorCode_i = Initialisation_CoMax.pErrorCode_i
         pIsEnabled_i = Initialisation_CoMax.pIsEnabled_i
@@ -46,7 +45,6 @@ class Controleur:
 
         self.carteEpos.setDcMotorParameter(NominalCurrent, MaxOutputCurrent, ThermalTimeConstant, pErrorCode_i)
         self.carteEpos.setMaxAcceleration(MaxAcceleration, pErrorCode_i)
-
 
 
     def setMode(self, i):
@@ -170,7 +168,7 @@ class Controleur:
         TabCourant = []
         Temps = []
         t = time.time()
-        while (time.time() - t < dureeExp):
+        while (time.time() - t < self.parametres.getDureeExp()):
             if (positionInitialeMm > 500 or positionInitialeMm < 0):  # Il faut définir des conditions de sécurité
                 print('Cette valeur est interdite')
             else:
@@ -215,9 +213,90 @@ class Controleur:
         xlabel('Temps (s)')
         show()
 
+    def echelonVitesse(self, vitesseConsigne):
 
 
+        # imposer Mode Velocity
+        self.carteEpos.setOperationMode(c_int(-2), pErrorCode_i)
 
+        # initialiser le pointeur pMode
+        pMode = ctypes.POINTER(ctypes.c_int)
+        pMode_i = ctypes.c_int(0)
+        pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
+
+        # récupérer le Mode acutuel
+        self.carteEpos.getOperationMode(pMode2, pErrorCode_i)
+        self.carteEpos.getOperationMode2(pMode2.contents, pErrorCode_i)
+
+        # set enable state
+        self.carteEpos.setEnableState(pErrorCode_i)
+        # get enabled state
+        res = self.carteEpos.getEnableState(pIsEnabled_i, pErrorCode_i)
+
+        # Phase de commande du bras pour aller d'une position à une autre
+        pPositionIs = c_long(0)
+        self.carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
+
+        # durée de l'expérimentation
+        Timeout_i = c_long(5000)
+
+        Temps = []
+        TabPosition = []
+        TabVitesse = []
+        TabCourant = []
+
+        # sécurité
+        t = time.time()
+        while (time.time() - t < self.parametres.getDureeExp()):
+            self.carteEpos.getPositionIs(pPositionIs_i, pErrorCode_i)
+            if ((pPositionIs_i.contents.value / mm2qc) > 490):
+                if vitesseConsigne > 0:
+                    self.carteEpos.setVelocityMust(c_long(0), pErrorCode_i)
+                    print("Le bras ne peut pas monter car il va taper la butée !!!")
+                    break
+                else:
+                    self.carteEpos.setVelocityMust(c_long(vitesseConsigne), pErrorCode_i)
+
+            if ((pPositionIs_i.contents.value / mm2qc) < 10):
+                if vitesseConsigne < 0:
+                    self.carteEpos.setVelocityMust(c_long(0), pErrorCode_i)
+                    print("Le bras ne peut pas descendre car il va taper la butée !!!")
+                    break
+                else:
+                    self.carteEpos.setVelocityMust(c_long(vitesseConsigne), pErrorCode_i)
+
+            else:
+                self.carteEpos.setVelocityMust(c_long(vitesseConsigne), pErrorCode_i)
+
+            t1 = time.time() - t
+            Temps.append(t1)
+            self.carteEpos.getPositionIs(pPositionIs_i, pErrorCode_i)
+            self.carteEpos.getVelocityIs(pVelocityIs_i, pErrorCode_i)
+            self.carteEpos.getCurrentIs(pCurrentIs_i, pErrorCode_i)
+            TabPosition.append(float(pPositionIs_i.contents.value) / float(mm2qc))
+            TabVitesse.append(pVelocityIs_i.contents.value)
+            TabCourant.append(pCurrentIs_i.contents.value)
+
+        plot(Temps, TabPosition, 'green')
+        grid(True)
+        title('Position instantanée du bras')
+        ylabel('Position (mm)')
+        xlabel('Temps (s)')
+        show()
+
+        plot(Temps, TabVitesse, 'red')
+        grid(True)
+        title('Vitesse instantanée du bras')
+        ylabel('Vitesse (rpm)')
+        xlabel('Temps (s)')
+        show()
+
+        plot(Temps, TabCourant, 'blue')
+        grid(True)
+        title('Courant instantané du bras')
+        ylabel('Courant (mA)')
+        xlabel('Temps (s)')
+        show()
 
 
 c=Controleur()
