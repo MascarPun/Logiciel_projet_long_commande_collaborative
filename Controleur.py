@@ -257,7 +257,7 @@ class Controleur:
                 else:
                     self.carteEpos.setVelocityMust(c_long(vitesseConsigne), pErrorCode_i)
 
-            if ((pPositionIs_i.contents.value / mm2qc) < 10):
+            if ((pPositionIs_i.contents.value / mm2q) < 10):
                 if vitesseConsigne < 0:
                     self.carteEpos.setVelocityMust(c_long(0), pErrorCode_i)
                     print("Le bras ne peut pas descendre car il va taper la butée !!!")
