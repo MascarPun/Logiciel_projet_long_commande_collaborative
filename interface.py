@@ -9,9 +9,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
-
+    # début code ajouté
     def __init__(self, controleur):
         self.controleur = controleur
+# fin code ajouté
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -615,6 +616,14 @@ class Ui_MainWindow(object):
         self.tabs.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+
+        # début code ajouté
+        self.run_p.clicked.connect(self.runpos)
+        self.Slider_col.setMinimum(0)
+        self.Slider_col.setMaximum(500)
+        self.Slider_col.setDisabled(True)
+        # fin code ajouté
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -697,6 +706,7 @@ class Ui_MainWindow(object):
         self.menuAffichage.setTitle(_translate("MainWindow", "Affichage"))
         self.menuAide.setTitle(_translate("MainWindow", "Aide"))
 
+    # début code ajouté
     def launch(self, controleur):
         import sys
         app = QtWidgets.QApplication(sys.argv)
@@ -706,6 +716,19 @@ class Ui_MainWindow(object):
         MainWindow.show()
         sys.exit(app.exec_())
 
+
+    def actualisationAffichage(self,pos):
+        self.poLabelValeurPosAct_c.setText(str(pos))
+        self.poLabelValeurPosAct_col.setText(str(pos))
+        self.poLabelValeurPosAct_p.setText(str(pos))
+        self.poLabelValeurPosAct_v.setText(str(pos))
+        self.Slider_col.setValue(pos*10)
+
+
+    def runpos(self):
+        self.actualisationAffichage(12)
+
+    # fin code ajouté
 
 if __name__ == "__main__":
     import sys

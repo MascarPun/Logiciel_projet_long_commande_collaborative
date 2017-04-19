@@ -300,5 +300,6 @@ class Controleur:
 
 
 c=Controleur()
-c.run()
+#c.run()
 c.launch()
+c.interface.actualisationAffichage(c.interface,12)
