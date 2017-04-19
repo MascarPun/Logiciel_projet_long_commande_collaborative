@@ -726,7 +726,8 @@ class Ui_MainWindow(object):
 
 
     def runpos(self):
-        self.getposfinechelonpos()
+        self.groupebuttonpos()
+
 
     def getposfinechelonpos(self):
         return(self.lineEditPosFEch_p.text())
@@ -814,6 +815,40 @@ class Ui_MainWindow(object):
 
     def getTdcour(self):
         return self.lineEdit_9.text()
+
+    def groupebuttonpos(self):
+        if self.radioButtonEch_p.isChecked() == True:
+            return 1
+        if self.radioButtonRam_p.isChecked() ==True:
+            return 2
+        if self.radioButtonSin_p.isChecked() ==True:
+            return 3
+
+    def groupebuttonvit(self):
+        if self.radioButtonEch_v.isChecked() == True:
+            return 1
+        if self.radioButtonTri_v.isChecked() ==True:
+            return 2
+        if self.radioButtonSin_v.isChecked() ==True:
+            return 3
+
+    def groupebuttoncour(self):
+        if self.radioButtonEch_c.isChecked() == True:
+            return 1
+        if self.radioButtonRam_c_c.isChecked() == True:
+            return 2
+        if self.radioButtonSin_c.isChecked() == True:
+            return 3
+
+    def groupebuttoncor(self):
+        if self.radioButtonPos_cor.isChecked() == True:
+            return 1
+        if self.radioButton_13.isChecked() == True:
+            return 2
+        if self.radioButtonCour_col.isChecked() == True:
+            return 3
+        if self.radioButtonCas_col.isChecked() ==True:
+            return 4
 
 
     # fin code ajouté
