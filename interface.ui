@@ -34,7 +34,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -1439,10 +1439,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_p"/>
-  <buttongroup name="buttonGroup_col"/>
-  <buttongroup name="buttonGroup_c"/>
-  <buttongroup name="buttonGroup_v"/>
   <buttongroup name="buttonGroup_cor"/>
+  <buttongroup name="buttonGroup_c"/>
+  <buttongroup name="buttonGroup_p"/>
+  <buttongroup name="buttonGroup_v"/>
  </buttongroups>
 </ui>
