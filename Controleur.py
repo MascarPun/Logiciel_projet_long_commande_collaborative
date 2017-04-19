@@ -1,5 +1,5 @@
 from Parametre import Parametre
-from Interface import *
+from interface import *
 from EposData import *
 import numpy as np
 import numpy.linalg as alg
@@ -20,7 +20,7 @@ class Controleur:
     def __init__(self):
 
         self.parametres = Parametre()
-        self.carteEpos = Initialisation_CoMax.self.carteEpos
+        self.carteEpos = Initialisation_CoMax.MyEpos
         self.interface = Ui_MainWindow(self)
         self.interface.controleur = self
 
