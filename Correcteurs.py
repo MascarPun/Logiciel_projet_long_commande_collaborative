@@ -7,6 +7,7 @@ import matplotlib as mat
 from EposData import *
 import ctypes
 from ctypes import *
+import Initialisation_CoMax
 from Parametre import Parametre
 
 #K,Ti,Td les parametres du correcteur
@@ -50,6 +51,9 @@ def pid(K,Ti,Td,err):
     result=K*err[-1]+(K/Ti)*somme_err+(K*Td)*delta_err
     return result
 
+def prop(K,err):
+    return K*err[-1]
+
 #version de correction qui n'utlise pas de transformation bilinéaire
 #prend en argument un tableau avec les valeurs de la commande et la periode d echantillonnage
 #On suppose que la carte epos est deja initialisee
@@ -65,14 +69,54 @@ def toc():
     if 'startTime_for_tictoc' in globals():
         return (time.time() - startTime_for_tictoc)
 
-def pos2current(Kpid,Tipid,Tdpid,cmd,Te,carteEpos,S,current,err):
+#permet d'avoir en sortie un courant qu'il faudra ensuite corriger avec current_cmd()
+def pos2current(K,Ti,Td,cmd,carteEpos,S,courant,err):
     qc2mm = 294
-    pPositionIs = c_long(0)
+    pPositionIs_i = Initialisation_CoMax.pPositionIs_i
+    pErrorCode_i = Initialisation_CoMax.pErrorCode_i
     carteEpos.getPositionIs(pPositionIs, pErrorCode_i) # mesure de position initiale
     positionDepartLueMm = pPositionIs.value/qc2mm # conversion qc en mm
     S.append(positionDepartLueMm)
     err.append(cmd-S[-1])
-    current.append(pid(Kpid,Tipid,Tdpid,cmd,S,err))
-    return [current,S,err]
+    if Td=='none' and Ti!='none':
+        courant.append(pi(K,Ti,err))
+    elif Td=='none' and Ti=='none':
+        courant.append(prop(K,err))
+    else:
+        courant.append(pid(K,Ti,Td,cmd,S,err))
+    return [courant,S,err]
+
+def vit2current(K,Ti,Td,cmd,carteEpos,S,courant,err):
+    pErrorCode_i = Initialisation_CoMax.pErrorCode_i
+    pVelocityIs_i = Initialisation_CoMax.pVelocityIs_i
+    S.append(carteEpos.getVelocityIs(pVelocityIs_i, pErrorCode_i))
+    err.append(cmd-S[-1])
+    if Td=='none' and Ti!='none':
+        courant.append(pi(K,Ti,err))
+    elif Td=='none' and Ti=='none':
+        courant.append(prop(K,err))
+    else:
+        courant.append(pid(K,Ti,Td,cmd,S,err))
+    return [courant,S,err]
+
+#boucle de courant avec pi courant
+def courant_cmd(cmd,S,err,carteEpos,K,Ti,Td,courantC):
+    pErrorCode_i = Initialisation_CoMax.pErrorCode_i
+    pCurrentIs_i = Initialisation_CoMax.pCurrentIs_i
+    S.append(carteEpos.getCurrentIs(pCurrentIs_i, pErrorCode_i)) #je reprends la notation du controleur
+    err.append(cmd-S[-1])
+    if Td=='none' and Ti!='none':
+        courantC.append(pi(K,Ti,err))
+    elif Td=='none' and Ti=='none':
+        courantC.append(prop(K,err))
+    else:
+        courantC.append(pid(K,Ti,Td,cmd,S,err))
+    return [courantC,S,err]
+
+
+
+
+
+
 
 
