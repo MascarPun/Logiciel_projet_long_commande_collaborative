@@ -7,7 +7,6 @@ import matplotlib as mat
 from EposData import *
 import ctypes
 from ctypes import *
-import Initialisation_CoMax
 from Parametre import Parametre
 
 
@@ -48,6 +47,17 @@ def pi(K,Ti,err):
     result=K*err[-1]+(K/Ti)*somme_err
     return result
 
+
+
+def pi_sat(K,Ti,err,Sat,ValParDefaut):
+    somme_err = sum(err[k] for k in range(len(err) - 1))
+    result = K * err[-1] + (K / Ti) * somme_err
+    if Sat==0:
+        Sat=ValParDefaut
+    if result>Sat:
+        result = K*err[-1] + ((Sat-result)/Ti+(K / Ti))*somme_err
+    return result
+
 #pid bourrin (mais qui marche bien)
 def pid(K,Ti,Td,err):
     somme_err=sum(err[k] for k in range(len(err)-1))
@@ -55,6 +65,16 @@ def pid(K,Ti,Td,err):
     result=K*err[-1]+(K/Ti)*somme_err+(K*Td)*delta_err
     return result
 
+
+def pid_sat(K,Ti,Td,err,Sat,ValParDefaut):
+    somme_err=sum(err[k] for k in range(len(err)-1))
+    delta_err=err[-1]-err[-2]
+    result=K*err[-1]+(K/Ti)*somme_err+(K*Td)*delta_err
+    if Sat==0:
+        Sat=ValParDefaut
+    if result>Sat:
+        result = K*err[-1] + ((Sat-result)/Ti+(K / Ti))*somme_err + (K*Td)*delta_err
+    return result
 
 #correcteur proportionnel
 def prop(K,err):
@@ -66,19 +86,9 @@ def prop(K,err):
 #prend en argument un tableau avec les valeurs de la commande et la periode d echantillonnage
 #On suppose que la carte epos est deja initialisee
 
-def tic():
-    #Homemade version of matlab tic and toc functions
-    import time
-    global startTime_for_tictoc
-    startTime_for_tictoc = time.time()
 
 
-
-def toc():
-    import time
-    if 'startTime_for_tictoc' in globals():
-        return (time.time() - startTime_for_tictoc)
-
+#LES FONCTIONS SUIVANTES SONT A ITERER
 
 #permet d'avoir en sortie un courant qu'il faudra ensuite corriger avec current_cmd()
 def pos2current(K,Ti,Td,cmd,carteEpos,S,courant,err,pErrorCode_i):
@@ -93,7 +103,23 @@ def pos2current(K,Ti,Td,cmd,carteEpos,S,courant,err,pErrorCode_i):
     elif Td=='' and Ti=='':
         courant.append(prop(K,err))
     else:
-        courant.append(pid(K,Ti,Td,cmd,S,err))
+        courant.append(pid(K,Ti,Td,err))
+    return [courant,S,err]
+
+
+def pos2current_sat(K,Ti,Td,Sat,ValParDefaut,cmd,carteEpos,S,courant,err,pErrorCode_i):
+    qc2mm = 294
+    pPositionIs = c_long(0)
+    carteEpos.getPositionIs(pPositionIs, pErrorCode_i) # mesure de position initiale
+    positionDepartLueMm = pPositionIs.value/qc2mm # conversion qc en mm
+    S.append(positionDepartLueMm)
+    err.append(cmd-S[-1])
+    if Td=='' and Ti!='':
+        courant.append(pi_sat(K,Ti,err,Sat,ValParDefaut))
+    elif Td=='' and Ti=='':
+        courant.append(prop(K,err))
+    else:
+        courant.append(pid_sat(K,Ti,Td,err,Sat,ValParDefaut))
     return [courant,S,err]
 
 
@@ -111,7 +137,23 @@ def pos2velocity(K,Ti,Td,cmd,carteEpos,S,vitesse,err,pErrorCode_i):
     elif Td==0 and Ti==0:
         vitesse.append(prop(K,err))
     else:
-        vitesse.append(pid(K,Ti,Td,cmd,S,err))
+        vitesse.append(pid(K,Ti,Td,err))
+    return [vitesse,S,err]
+
+
+def pos2velocity_sat(K,Ti,Td,Sat,ValParDefaut,cmd,carteEpos,S,vitesse,err,pErrorCode_i):
+    qc2mm = 294
+    pPositionIs = c_long(0)
+    carteEpos.getPositionIs(pPositionIs, pErrorCode_i) # mesure de position initiale
+    positionDepartLueMm = pPositionIs.value/qc2mm # conversion qc en mm
+    S.append(positionDepartLueMm)
+    err.append(cmd-S[-1])
+    if Td==0 and Ti!=0:
+        vitesse.append(pi_sat(K,Ti,err,Sat,ValParDefaut))
+    elif Td==0 and Ti==0:
+        vitesse.append(prop(K,err))
+    else:
+        vitesse.append(pid_sat(K,Ti,Td,err,Sat,ValParDefaut))
     return [vitesse,S,err]
 
 
@@ -124,9 +166,19 @@ def velocity2current(K,Ti,Td,cmd,carteEpos,S,courant,err,pErrorCode_i,pVelocityI
     elif Td==0 and Ti==0:
         courant.append(prop(K,err))
     else:
-        courant.append(pid(K,Ti,Td,cmd,S,err))
+        courant.append(pid(K,Ti,Td,err))
     return [courant,S,err]
 
+def velocity2current_sat(K,Ti,Td,Sat,ValParDefaut,cmd,carteEpos,S,courant,err,pErrorCode_i,pVelocityIs_i):
+    S.append(carteEpos.getVelocityIs(pVelocityIs_i, pErrorCode_i))
+    err.append(cmd-S[-1])
+    if Td==0 and Ti!=0:
+        courant.append(pi_sat(K,Ti,err,Sat,ValParDefaut))
+    elif Td==0 and Ti==0:
+        courant.append(prop(K,err))
+    else:
+        courant.append(pid_sat(K,Ti,Td,err,Sat,ValParDefaut))
+    return [courant,S,err]
 
 
 #boucle de courant avec pi courant
@@ -139,7 +191,19 @@ def courant_cmd(cmd,S,err,carteEpos,K,Ti,Td,courantC,pErrorCode_i,pCurrentIs_i):
     elif Td==0 and Ti==0:
         courantC.append(prop(K,err))
     else:
-        courantC.append(pid(K,Ti,Td,cmd,S,err))
+        courantC.append(pid(K,Ti,Td,err))
+    return [courantC,S,err]
+
+
+def courant_cmd_sat(cmd,S,err,Sat,ValParDefaut,carteEpos,K,Ti,Td,courantC,pErrorCode_i,pCurrentIs_i):
+    S.append(carteEpos.getCurrentIs(pCurrentIs_i, pErrorCode_i)) #je reprends la notation du controleur
+    err.append(cmd-S[-1])
+    if Td==0 and Ti!=0:
+        courantC.append(pi_sat(K,Ti,err,Sat,ValParDefaut))
+    elif Td==0 and Ti==0:
+        courantC.append(prop(K,err))
+    else:
+        courantC.append(pid_sat(K,Ti,Td,err,Sat,ValParDefaut))
     return [courantC,S,err]
 
 #pour l instant bcp d'arguments mais visuellement c est plsu simple a comprendre que des tableaux
