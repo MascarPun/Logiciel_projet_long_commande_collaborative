@@ -726,95 +726,108 @@ class Ui_MainWindow(object):
 
 
     def runpos(self):
-        self.groupebuttonpos()
+        a=self.getposfinechelonpos()
+        print(a)
+        if (a=='NONE'):
+            print(1)
 
+        if (a==''):
+            print(2)
+        print(type(a))
+
+    def num(self,a):
+        if (a == ''):
+            return (0)
+        else:
+            return float(a)
 
     def getposfinechelonpos(self):
-        return(self.lineEditPosFEch_p.text())
+        return self.num(self.lineEditPosFEch_p.text())
+
 
     def getposfinrampepos(self):
-        return self.lineEditPosFRam_p.text()
+        return self.num(self.lineEditPosFRam_p.text())
 
     def getcoefdirrampepos(self):
-        return self.lineEditCoefDir_p.text()
+        return self.num(self.lineEditCoefDir_p.text())
 
     def getampcospos(self):
-        return self.lineEditAmp_p.text()
+        return self.num(self.lineEditAmp_p.text())
 
     def getfreqcospos(self):
-        return self.lineEditFreq_p.text()
+        return self.num(self.lineEditFreq_p.text())
 
     def getdurexppos(self):
-        return self.lineEditDur_p.text()
+        return self.num(self.lineEditDur_p.text())
 
     def getposfinechelonvit(self):
-        return self.lineEditPosFEch_v.text()
+        return self.num(self.lineEditPosFEch_v.text())
 
     def getposfintrapvit(self):
-        return self.lineEditPosFTri_v.text()
+        return self.num(self.lineEditPosFTri_v.text())
 
     def getplattrapvit(self):
-        return self.lineEdit_10.text()
+        return self.num(self.lineEdit_10.text())
 
     def getcoefdirtrapvit(self):
-        return self.lineEditCoefDir_v.text()
+        return self.num(self.lineEditCoefDir_v.text())
 
     def getampcosvit(self):
-        return self.lineEditAmp_v.text()
+        return self.num(self.lineEditAmp_v.text())
 
     def getfreqcosvit(self):
-        return self.lineEditFreq_v.text()
+        return self.num(self.lineEditFreq_v.text())
 
     def getdurexpvit(self):
-        return self.lineEditDur_v.text()
+        return self.num(self.lineEditDur_v.text())
 
     def getposfinecheloncour(self):
-        return self.lineEditPosFEch_c.text()
+        return self.num(self.lineEditPosFEch_c.text())
 
     def getposfintrapcour(self):
-        return self.lineEditPosFRam_c.text()
+        return self.num(self.lineEditPosFRam_c.text())
 
     def getplateautrapcour(self):
-        return self.lineEdit_11.text()
+        return self.num(self.lineEdit_11.text())
 
     def getcoefdirtrapcour(self):
-        return self.lineEditCoefDir_c.text()
+        return self.num(self.lineEditCoefDir_c.text())
 
     def getampcoscour(self):
-        return self.lineEditAmp_c.text()
+        return self.num(self.lineEditAmp_c.text())
 
     def getfreqcoscour(self):
-        return self.lineEditFreq_c.text()
+        return self.num(self.lineEditFreq_c.text())
 
     def getdurexpcour(self):
-        return self.lineEditDur_c.text()
+        return self.num(self.lineEditDur_c.text())
 
     def getKpos(self):
-        return self.lineEdit.text()
+        return self.num(self.lineEdit.text())
 
     def getTipos(self):
-        return self.lineEdit_2.text()
+        return self.num(self.lineEdit_2.text())
 
     def getTdpos(self):
-        return self.lineEdit_3.text()
+        return self.num(self.lineEdit_3.text())
 
     def getKvit(self):
-        return self.lineEdit_4.text()
+        return self.num(self.lineEdit_4.text())
 
     def getTivit(self):
-        return self.lineEdit_5.text()
+        return self.num(self.lineEdit_5.text())
 
     def getTdvit(self):
-        return self.lineEdit_6.text()
+        return self.num(self.lineEdit_6.text())
 
     def getKcour(self):
-        return self.lineEdit_8.text()
+        return self.num(self.lineEdit_8.text())
 
     def getTicour(self):
-        return self.lineEdit_7.text()
+        return self.num(self.lineEdit_7.text())
 
     def getTdcour(self):
-        return self.lineEdit_9.text()
+        return self.num(self.lineEdit_9.text())
 
     def groupebuttonpos(self):
         if self.radioButtonEch_p.isChecked() == True:
