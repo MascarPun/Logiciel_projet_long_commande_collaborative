@@ -10,7 +10,7 @@ import ctypes
 from ctypes import *
 from matplotlib.pylab import *
 import time
-
+import Correcteurs
 
 
 class Controleur:
@@ -335,9 +335,26 @@ class Controleur:
             nombrePasEchantillonage = int(self.parametres.getDureeExp()/Te)
             consignePos = [coef_dir*Te*i for i in range(nombrePasEchantillonage)]
             i=0
+            Positions = []
+            Vitesses = []
+            Courants = []
+            Consigne = []
+            mm2qc = 294
+            pPositionIs = c_long(0)
+            erreurPos = [0,0]
+            erreurVit = [0,0]
+            erreurCour = [0,0]
+            sommeErreurPos = 0
+            sommeErreurVit = 0
+            sommeErreurCour = 0
             while t-t0 < dureeExp:
                 while time.time()-t < Te:
-                    consigneVit = (consignePos[i]-self.carteEpos.getPositionIs())
+                    carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
+                    positionDepartLueMm = pPositionIs.value / mm2qc  # conversion qc en mm
+                    Positions.append(positionDepartLueMm)
+                    consigneVit = Correcteurs.pos2velocity(self.parametres.getKpos(), self.parametres.getTipos(),
+                                                           self.parametres.getTdpos(), consignePos[i], positionDepartLueMm,
+                                                           )
 
             return ("fini")
 
