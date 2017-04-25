@@ -298,6 +298,49 @@ class Controleur:
         xlabel('Temps (s)')
         show()
 
+    def rampePosition(self, coef_dir, posFinale):
+        Mode = c_int(-3)
+        self.carteEpos.setOperationMode(Mode, pErrorCode_i)
+        self.parametres.setRampe(coef_dir)
+        if posFinale > 490 or posFinale < 10:
+            return ('Cette valeur est interdite')
+        else:
+            self.parametres.setPosFinale(posFinale)
+            self.parametres.setDureeExp(dureeExp)
+
+            Te = self.parametres.getTe()
+
+
+            pMode = ctypes.POINTER(ctypes.c_int)
+            pMode_i = ctypes.c_int(0)
+            pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
+            self.carteEpos.getOperationMode(pMode2, pErrorCode_i)
+            self.carteEpos.getOperationMode2(pMode2.contents, pErrorCode_i)
+
+        # set enable state
+            self.carteEpos.setDisableState(pErrorCode_i)
+            self.carteEpos.setEnableState(pErrorCode_i)
+
+        # get enabled state
+            res = self.carteEpos.getEnableState(pIsEnabled_i, pErrorCode_i)
+
+        # Phase de commande du bras pour aller d'une position à une autre
+            pPositionIs = c_long(0)
+            self.carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
+
+            Timeout_i = c_long(5000)
+            positionFinaleMm = self.parametres.getPosFinale()
+            t0= time.time()
+            t=time.time()
+            nombrePasEchantillonage = int(self.parametres.getDureeExp()/Te)
+            consignePos = [coef_dir*Te*i for i in range(nombrePasEchantillonage)]
+            i=0
+            while t-t0 < dureeExp:
+                while time.time()-t < Te:
+                    consigneVit = (consignePos[i]-self.carteEpos.getPositionIs())
+
+            return ("fini")
+
 
 c=Controleur()
 #c.run()
