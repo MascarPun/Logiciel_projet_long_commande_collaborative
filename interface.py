@@ -12,7 +12,7 @@ class Ui_MainWindow(object):
     # début code ajouté
     def __init__(self, controleur):
         self.controleur = controleur
-# fin code ajouté
+    # fin code ajouté
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -622,6 +622,36 @@ class Ui_MainWindow(object):
         self.Slider_col.setMinimum(0)
         self.Slider_col.setMaximum(500)
         self.Slider_col.setDisabled(True)
+        self.lineEditPosFEch_p.setText('0')
+        self.lineEditPosFRam_p.setText('0')
+        self.lineEditCoefDir_p.setText('0')
+        self.lineEditAmp_p.setText('0')
+        self.lineEditFreq_p.setText('0')
+        self.lineEditDur_p.setText('0')
+        self.lineEditPosFEch_v.setText('0')
+        self.lineEditPosFTri_v.setText('0')
+        self.lineEdit_10.setText('0')
+        self.lineEditCoefDir_v.setText('0')
+        self.lineEditAmp_v.setText('0')
+        self.lineEditFreq_v.setText('0')
+        self.lineEditDur_v.setText('0')
+        self.lineEditPosFEch_c.setText('0')
+        self.lineEditPosFRam_c.setText('0')
+        self.lineEdit_11.setText('0')
+        self.lineEditCoefDir_c.setText('0')
+        self.lineEditAmp_c.setText('0')
+        self.lineEditFreq_c.setText('0')
+        self.lineEditDur_c.setText('0')
+        self.lineEdit.setText('0')
+        self.lineEdit_2.setText('0')
+        self.lineEdit_3.setText('0')
+        self.lineEdit_4.setText('0')
+        self.lineEdit_5.setText('0')
+        self.lineEdit_6.setText('0')
+        self.lineEdit_7.setText('0')
+        self.lineEdit_8.setText('0')
+        self.lineEdit_9.setText('0')
+
         # fin code ajouté
 
     def retranslateUi(self, MainWindow):
@@ -830,37 +860,37 @@ class Ui_MainWindow(object):
         return self.num(self.lineEdit_9.text())
 
     def groupebuttonpos(self):
-        if self.radioButtonEch_p.isChecked() == True:
+        if self.radioButtonEch_p.isChecked() == True:       #rends 1 si le bouton d'echellon est coché dans la page position
             return 1
-        if self.radioButtonRam_p.isChecked() ==True:
+        if self.radioButtonRam_p.isChecked() ==True:        #rends 2 si le bouton de rampe est coché dans la page position
             return 2
-        if self.radioButtonSin_p.isChecked() ==True:
+        if self.radioButtonSin_p.isChecked() ==True:        #rends 3 si le bouton sinus est coché dans la page position
             return 3
 
     def groupebuttonvit(self):
-        if self.radioButtonEch_v.isChecked() == True:
+        if self.radioButtonEch_v.isChecked() == True:       #rends 1 si le bouton d'echellon est coché dans la page vitesse
             return 1
-        if self.radioButtonTri_v.isChecked() ==True:
+        if self.radioButtonTri_v.isChecked() ==True:        #rends 2 si le bouton de rampe est coché dans la page vitesse
             return 2
-        if self.radioButtonSin_v.isChecked() ==True:
+        if self.radioButtonSin_v.isChecked() ==True:        #rends 3 si le bouton sinus est coché dans la page vitesse
             return 3
 
     def groupebuttoncour(self):
-        if self.radioButtonEch_c.isChecked() == True:
+        if self.radioButtonEch_c.isChecked() == True:       #rends 1 si le bouton d'echellon est coché dans la page courant
             return 1
-        if self.radioButtonRam_c_c.isChecked() == True:
+        if self.radioButtonRam_c_c.isChecked() == True:     #rends 2 si le bouton de rampe est coché dans la page courant
             return 2
-        if self.radioButtonSin_c.isChecked() == True:
+        if self.radioButtonSin_c.isChecked() == True:       #rends 3 si le bouton sinus est coché dans la page courant
             return 3
 
     def groupebuttoncor(self):
-        if self.radioButtonPos_cor.isChecked() == True:
+        if self.radioButtonPos_cor.isChecked() == True:     #rends 1 si correction en posistion
             return 1
-        if self.radioButton_13.isChecked() == True:
+        if self.radioButton_13.isChecked() == True:         #rends 2 si correction en vitesse
             return 2
-        if self.radioButtonCour_col.isChecked() == True:
+        if self.radioButtonCour_col.isChecked() == True:    #rends 3 si correction en courant
             return 3
-        if self.radioButtonCas_col.isChecked() ==True:
+        if self.radioButtonCas_col.isChecked() ==True:      #rends 4 si correction en cascade
             return 4
 
 
