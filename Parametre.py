@@ -37,9 +37,9 @@ class Parametre:
         self.posfinale = 0
         self.frequence = 0
         self.amplitude = 0
+        self.rampe = 0
 
-
-
+        self.Te = 0.01
 
 
 
@@ -185,3 +185,15 @@ class Parametre:
 
     def getAmplitude(self):
         return (self.amplitude)
+
+    def setRampe(self, r):
+        self.rampe = r
+
+    def getRampe(self):
+        return (self.rampe)
+
+    def setTe(self, t):
+        self.Te = t
+
+    def getTe(self):
+        return (self.Te)
