@@ -35,7 +35,7 @@ def mainCourant(courantConsigne):
     pCurrentIs_i = Initialisation_CoMax.pCurrentIs_i
     pVelocityIs_i = Initialisation_CoMax.pVelocityIs_i
 
-    #imposer Mode Velocity
+    #imposer Mode Courant
     MyEpos.setOperationMode(c_int(-3),pErrorCode_i)
     
     #initialiser le pointeur pMode
@@ -82,11 +82,11 @@ def mainCourant(courantConsigne):
     #sécurité
     tic()
     while (toc() < dureeExp):
-        
-        
+
+
         t1=toc()
         Temps.append(t1)
-         
+
         MyEpos.getPositionIs(pPositionIs_i,pErrorCode_i)
         if ((pPositionIs_i.contents.value/qc2mm) > 490)  :
             MyEpos.setOperationMode(c_int(3),pErrorCode_i)
@@ -103,10 +103,10 @@ def mainCourant(courantConsigne):
             print("Le bras ne peut pas descendre car il va taper la butée !!!")
             break
 
-        
-        else : 
+
+        else :
              MyEpos.setCurrentMust(c_short(courantConsigne),pErrorCode_i)
-        
+
         MyEpos.getPositionIs(pPositionIs_i, pErrorCode_i)
         MyEpos.getVelocityIs(pVelocityIs_i, pErrorCode_i)
         MyEpos.getCurrentIs(pCurrentIs_i, pErrorCode_i)
