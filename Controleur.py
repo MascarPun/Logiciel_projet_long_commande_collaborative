@@ -298,10 +298,11 @@ class Controleur:
         xlabel('Temps (s)')
         show()
 
-    def rampePosition(self, coef_dir, posFinale):
+    def rampePosition(self, coef_dir, posFinale, dureeExp):
         Mode = c_int(-3)
         self.carteEpos.setOperationMode(Mode, pErrorCode_i)
         self.parametres.setRampe(coef_dir)
+
         if posFinale > 490 or posFinale < 10:
             return ('Cette valeur est interdite')
         else:
@@ -332,13 +333,21 @@ class Controleur:
             positionFinaleMm = self.parametres.getPosFinale()
             t0= time.time()
             t=time.time()
-            nombrePasEchantillonage = int(self.parametres.getDureeExp()/Te)
-            consignePos = [coef_dir*Te*i for i in range(nombrePasEchantillonage)]
+            hauteur = positionFinaleMm - (pPositionIs_i.contents.value / mm2qc)
+            dureeDeplacement = hauteur / coef_dir
+            nombrePasEchantillonageMontee = int(dureeDeplacement/Te)
+            #offset ou pas ? -> on met juste le deplacement relatif
+            consignePos = [coef_dir*Te*i for i in range(nombrePasEchantillonageMontee)]
+            nombrePasEchantillonageStatique = int((self.parametres.getDureeExp() - dureeDeplacement)/Te)
+            for i in range(nombrePasEchantillonageStatique):
+                consignePos.append(hauteur)
+
             i=0
-            Positions = []
-            Vitesses = []
-            Courants = []
-            Consigne = []
+            positions = []
+            vitesses = []
+            courants = []
+            consigneVit = []
+            consigneCour = []
             mm2qc = 294
             pPositionIs = c_long(0)
             erreurPos = [0,0]
@@ -349,12 +358,23 @@ class Controleur:
             sommeErreurCour = 0
             while t-t0 < dureeExp:
                 while time.time()-t < Te:
-                    carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
-                    positionDepartLueMm = pPositionIs.value / mm2qc  # conversion qc en mm
-                    Positions.append(positionDepartLueMm)
-                    consigneVit = Correcteurs.pos2velocity(self.parametres.getKpos(), self.parametres.getTipos(),
-                                                           self.parametres.getTdpos(), consignePos[i], positionDepartLueMm,
-                                                           )
+                    a=0
+                t=time.time()
+                carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
+                positionLueMm = pPositionIs_i.contents.value / mm2qc  # conversion qc en mm
+                positions.append(positionLueMm)
+                consigneVit.append(Correcteurs.pos2velocity(self.parametres.getKpos(), self.parametres.getTipos(),
+                                                        self.parametres.getTdpos(), consignePos[i], positionLueMm,
+                                                       erreurPos, sommeErreurPos))
+
+                carteEpos.getVelocityIs(pVelocityIs, pErrorCode_i)
+                vitesseLue = pVelocityIs_i.contents.value/mm2qc
+                vitesses.append(vitesseLue)
+                consigneCour.append(Correcteurs.velocity2current(self.parametres.getKvit(), self.parametres.getTivit(),
+                                                                 self.parametres.getTdvit(),consigneVit[-1], vitesseLue,
+                                                                 erreurVit, sommeErreurVit))
+
+                i=i+1
 
             return ("fini")
 
