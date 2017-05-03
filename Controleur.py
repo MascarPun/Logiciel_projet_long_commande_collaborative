@@ -342,61 +342,105 @@ class Controleur:
             for i in range(nombrePasEchantillonageStatique):
                 consignePos.append(hauteur)
 
-            Kpos = self.parametres.getKpos()
-            Tipos = self.parametres.getTipos()
-            Tdpos = self.parametres.getTdpos()
+            return self.commandeCascade(consignePos)
 
-            Kvit = self.parametres.getKvit()
-            Tivit = self.parametres.getTivit()
-            Tdvit = self.parametres.getTdvit()
+    def sinusPosition(self, Frequence, Amplitude):
+        self.echelonPosition(250)
 
-            Kcour = self.parametres.getKcour()
-            Ticour = self.parametres.getTicour()
-            Tdcour = self.parametres.getTdcour()
+        Mode = c_int(-3)
+        self.carteEpos.setOperationMode(Mode, pErrorCode_i)
+        self.parametres.setFrequence(Frequence)
 
-            i=0
-            positions = []
-            vitesses = []
-            courants = []
-            consigneVit = []
-            consigneCour = []
-            courantImposePI = []
-            mm2qc = 294
-            #pPositionIs = c_long(0)
-            erreurPos = [0,0]
-            erreurVit = [0,0]
-            erreurCour = [0,0]
-            sommeErreurPos = 0
-            sommeErreurVit = 0
-            sommeErreurCour = 0
-            while t-t0 < dureeExp:
-                while time.time()-t < Te:
-                    a=0
-                t=time.time()
+        if Amplitude > 200:
+            return ('Amplitude trop grande')
+        else:
+            self.parametres.setAmplitude(Amplitude)
 
-                carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
-                positionLueMm = pPositionIs_i.contents.value / mm2qc  # conversion qc en mm
-                positions.append(positionLueMm)
-                consigneVit.append(Correcteurs.pos2velocity(Kpos, Tipos,Tdpos, consignePos[i], positionLueMm,
-                                                       erreurPos, sommeErreurPos))
+            Te = self.parametres.getTe()
 
-                carteEpos.getVelocityIs(pVelocityIs, pErrorCode_i)
-                vitesseLue = pVelocityIs_i.contents.value #en tour par minute ATTENTION ERREUR UNITE SOMMATEUR!
-                vitesses.append(vitesseLue)
-                consigneCour.append(Correcteurs.velocity2current(Kvit, Tivit,Tdvit,consigneVit[-1], vitesseLue,
+            pMode = ctypes.POINTER(ctypes.c_int)
+            pMode_i = ctypes.c_int(0)
+            pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
+            self.carteEpos.getOperationMode(pMode2, pErrorCode_i)
+            self.carteEpos.getOperationMode2(pMode2.contents, pErrorCode_i)
+
+            # set enable state
+            self.carteEpos.setDisableState(pErrorCode_i)
+            self.carteEpos.setEnableState(pErrorCode_i)
+
+            # get enabled state
+            res = self.carteEpos.getEnableState(pIsEnabled_i, pErrorCode_i)
+
+            # Phase de commande du bras pour aller d'une position à une autre
+            pPositionIs = c_long(0)
+            self.carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
+
+            Timeout_i = c_long(5000)
+            t0 = time.time()
+            t = time.time()
+
+            nombrePasEchantillonage = int(self.parametres.getDureeExp() / Te)
+
+            consignePos = [Amplitude * sinus(2*pi*Frequence*i*Te) for i in range(nombrePasEchantillonage)]
+
+        return self.commandeCascade(consignePos)
+
+    def commandeCascade(self, consignePos):
+
+        Kpos = self.parametres.getKpos()
+        Tipos = self.parametres.getTipos()
+        Tdpos = self.parametres.getTdpos()
+
+        Kvit = self.parametres.getKvit()
+        Tivit = self.parametres.getTivit()
+        Tdvit = self.parametres.getTdvit()
+
+        Kcour = self.parametres.getKcour()
+        Ticour = self.parametres.getTicour()
+        Tdcour = self.parametres.getTdcour()
+
+        i = 0
+        positions = []
+        vitesses = []
+        courants = []
+        consigneVit = []
+        consigneCour = []
+        courantImposePI = []
+        mm2qc = 294
+        # pPositionIs = c_long(0)
+        erreurPos = [0, 0]
+        erreurVit = [0, 0]
+        erreurCour = [0, 0]
+        sommeErreurPos = 0
+        sommeErreurVit = 0
+        sommeErreurCour = 0
+        while t - t0 < dureeExp:
+            while time.time() - t < Te:
+                a = 0
+            t = time.time()
+
+            carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
+            positionLueMm = pPositionIs_i.contents.value / mm2qc  # conversion qc en mm
+            positions.append(positionLueMm)
+            consigneVit.append(Correcteurs.pos2velocity(Kpos, Tipos, Tdpos, consignePos[i], positionLueMm,
+                                                            erreurPos, sommeErreurPos))
+
+            carteEpos.getVelocityIs(pVelocityIs, pErrorCode_i)
+            vitesseLue = pVelocityIs_i.contents.value  # en tour par minute ATTENTION ERREUR UNITE SOMMATEUR!
+            vitesses.append(vitesseLue)
+            consigneCour.append(Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1], vitesseLue,
                                                                  erreurVit, sommeErreurVit))
 
-                carteEpos.getCurrentIs(pCurrentIs_i, pErrorCode_i)
-                courantLu = pCurrentIs_i.contents.value/1000 #en A
-                courants.append(courantLu)
-                courantImposePI.append(Correcteurs.courant_cmd(consigneCour[-1], courantLu, erreurCour, sommeErreurCour,
-                                                               Kcour, Ticour,Tdcour))
-                self.carteEpos.setCurrentMust(courantImposePI[-1], pErrorCode_i)
+            carteEpos.getCurrentIs(pCurrentIs_i, pErrorCode_i)
+            courantLu = pCurrentIs_i.contents.value / 1000  # en A
+            courants.append(courantLu)
+            courantImposePI.append(Correcteurs.courant_cmd(consigneCour[-1], courantLu, erreurCour, sommeErreurCour,
+                                                           Kcour, Ticour, Tdcour))
+            self.carteEpos.setCurrentMust(courantImposePI[-1], pErrorCode_i)
 
-                i=i+1
+            i = i + 1
 
-            return ("fini")
-
+        return ("fini")
 
 c=Controleur()
 #c.run()
