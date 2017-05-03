@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>836</width>
-    <height>542</height>
+    <width>920</width>
+    <height>586</height>
    </rect>
   </property>
   <property name="font">
@@ -34,7 +34,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -59,52 +59,24 @@
         <string>Position</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="4" column="2">
-         <widget class="QLabel" name="label_4">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
+        <item row="5" column="8" colspan="2">
+         <widget class="QLabel" name="label_8">
           <property name="text">
-           <string>position finale</string>
+           <string>coefficient directeur</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="4" column="0" colspan="2">
-         <widget class="QRadioButton" name="radioButtonEch_p">
+        <item row="6" column="9">
+         <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>Echelon</string>
+           <string>fréquence</string>
           </property>
-          <property name="checked">
-           <bool>true</bool>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_p</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="6" column="0" colspan="2">
-         <widget class="QRadioButton" name="radioButtonSin_p">
-          <property name="text">
-           <string>Sinus</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_p</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="5" column="0" colspan="2">
-         <widget class="QRadioButton" name="radioButtonRam_p">
-          <property name="text">
-           <string>Rampe</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_p</string>
-          </attribute>
          </widget>
         </item>
         <item row="7" column="0" colspan="11">
@@ -126,16 +98,6 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="9">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>fréquence</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
         <item row="6" column="10">
          <widget class="QLineEdit" name="lineEditFreq_p">
           <property name="text">
@@ -143,21 +105,14 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="8" colspan="2">
-         <widget class="QLabel" name="label_8">
+        <item row="5" column="0" colspan="2">
+         <widget class="QRadioButton" name="radioButtonRam_p">
           <property name="text">
-           <string>coefficient directeur</string>
+           <string>Rampe</string>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="9">
-         <widget class="QLabel" name="label_14">
-          <property name="text">
-           <string>secondes</string>
-          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_p</string>
+          </attribute>
          </widget>
         </item>
         <item row="6" column="2">
@@ -187,27 +142,17 @@
           </property>
          </widget>
         </item>
+        <item row="8" column="9">
+         <widget class="QLabel" name="label_14">
+          <property name="text">
+           <string>secondes</string>
+          </property>
+         </widget>
+        </item>
         <item row="8" column="7">
          <widget class="QLineEdit" name="lineEditDur_p">
           <property name="text">
            <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="7">
-         <widget class="QPushButton" name="run_p">
-          <property name="text">
-           <string>run</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="7">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Choix du profil de commande</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -246,6 +191,55 @@
           </property>
          </spacer>
         </item>
+        <item row="5" column="7">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="7">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="7">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Choix du profil de commande</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="7">
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="3" column="0" colspan="11">
          <widget class="Line" name="line_2">
           <property name="autoFillBackground">
@@ -265,56 +259,24 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="7">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="9" column="7">
+         <widget class="QPushButton" name="run_p">
+          <property name="text">
+           <string>run</string>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
+         </widget>
         </item>
-        <item row="5" column="7">
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="4" column="3" colspan="4">
+         <widget class="QLineEdit" name="lineEditPosFEch_p">
+          <property name="text">
+           <string/>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="6" column="7">
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
+         </widget>
         </item>
         <item row="0" column="8">
          <widget class="QLabel" name="label_3">
           <property name="text">
            <string>cm</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="7">
-         <widget class="QLabel" name="poLabelValeurPosAct_p">
-          <property name="text">
-           <string>poLabelValeurPosAct</string>
           </property>
          </widget>
         </item>
@@ -325,15 +287,15 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="5" colspan="2">
-         <widget class="QLabel" name="label_13">
+        <item row="0" column="7">
+         <widget class="QLabel" name="poLabelValeurPosAct_p">
           <property name="text">
-           <string>Durée expérimentale</string>
+           <string>poLabelValeurPosAct</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="3" colspan="4">
-         <widget class="QLineEdit" name="lineEditPosFEch_p">
+        <item row="5" column="3" colspan="4">
+         <widget class="QLineEdit" name="lineEditPosFRam_p">
           <property name="text">
            <string/>
           </property>
@@ -346,10 +308,48 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="3" colspan="4">
-         <widget class="QLineEdit" name="lineEditPosFRam_p">
+        <item row="4" column="2">
+         <widget class="QLabel" name="label_4">
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
           <property name="text">
-           <string/>
+           <string>position finale</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QRadioButton" name="radioButtonEch_p">
+          <property name="text">
+           <string>Echelon</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_p</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="6" column="0" colspan="2">
+         <widget class="QRadioButton" name="radioButtonSin_p">
+          <property name="text">
+           <string>Sinus Asin(2pi*f*t)</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_p</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="8" column="3" colspan="3">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Durée expérimentale</string>
           </property>
          </widget>
         </item>
@@ -551,7 +551,7 @@
         <item row="6" column="0">
          <widget class="QRadioButton" name="radioButtonSin_v">
           <property name="text">
-           <string>Sinus</string>
+           <string>Sinus Asin(2pi*f*t)</string>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup_v</string>
@@ -624,7 +624,7 @@
          </spacer>
         </item>
         <item row="5" column="4">
-         <widget class="QLineEdit" name="lineEdit_10"/>
+         <widget class="QLineEdit" name="lineEditPlat_v"/>
         </item>
         <item row="2" column="3" colspan="3">
          <widget class="QLabel" name="label_20">
@@ -917,7 +917,7 @@
         <item row="6" column="0">
          <widget class="QRadioButton" name="radioButtonSin_c">
           <property name="text">
-           <string>Sinus</string>
+           <string>Sinus Asin(2pi*f*t)</string>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup_c</string>
@@ -979,7 +979,7 @@
          </widget>
         </item>
         <item row="5" column="4">
-         <widget class="QLineEdit" name="lineEdit_11"/>
+         <widget class="QLineEdit" name="lineEditPlat_c"/>
         </item>
        </layout>
       </widget>
@@ -1095,6 +1095,9 @@
         <string>Correcteur</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
+        <item row="12" column="1">
+         <widget class="QLineEdit" name="lineEditTdPos_cor"/>
+        </item>
         <item row="9" column="4">
          <widget class="QLabel" name="label_44">
           <property name="text">
@@ -1112,6 +1115,9 @@
           </attribute>
          </widget>
         </item>
+        <item row="10" column="7">
+         <widget class="QLineEdit" name="lineEditKCour_cor"/>
+        </item>
         <item row="10" column="3">
          <widget class="QLabel" name="label_48">
           <property name="text">
@@ -1119,33 +1125,10 @@
           </property>
          </widget>
         </item>
-        <item row="10" column="7">
-         <widget class="QLineEdit" name="lineEdit_8"/>
-        </item>
         <item row="11" column="0">
          <widget class="QLabel" name="label_46">
           <property name="text">
            <string>Ti</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="2" rowspan="3">
-         <widget class="Line" name="line_16">
-          <property name="lineWidth">
-           <number>2</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="5" rowspan="3">
-         <widget class="Line" name="line_17">
-          <property name="lineWidth">
-           <number>2</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -1156,41 +1139,12 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0" colspan="2">
-         <widget class="QRadioButton" name="radioButton_13">
+        <item row="10" column="0">
+         <widget class="QLabel" name="label_45">
           <property name="text">
-           <string>regulation en vitesse</string>
+           <string>K</string>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_cor</string>
-          </attribute>
          </widget>
-        </item>
-        <item row="10" column="8">
-         <spacer name="verticalSpacer_17">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="7" rowspan="2">
-         <spacer name="verticalSpacer_20">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item row="9" column="7">
          <widget class="QLabel" name="label_54">
@@ -1212,17 +1166,62 @@
           </attribute>
          </widget>
         </item>
-        <item row="10" column="0">
-         <widget class="QLabel" name="label_45">
+        <item row="3" column="0" colspan="2">
+         <widget class="QRadioButton" name="radioButton_13">
           <property name="text">
-           <string>K</string>
+           <string>regulation en vitesse</string>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_cor</string>
+          </attribute>
          </widget>
         </item>
-        <item row="9" column="1">
-         <widget class="QLabel" name="label_43">
+        <item row="2" column="7" rowspan="2">
+         <spacer name="verticalSpacer_20">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="10" column="8">
+         <spacer name="verticalSpacer_17">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="7" rowspan="2">
+         <spacer name="verticalSpacer_21">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="10" column="4">
+         <widget class="QLineEdit" name="lineEditKVit_cor"/>
+        </item>
+        <item row="10" column="6">
+         <widget class="QLabel" name="label_51">
           <property name="text">
-           <string>Position</string>
+           <string>K</string>
           </property>
          </widget>
         </item>
@@ -1239,31 +1238,22 @@
           </property>
          </widget>
         </item>
-        <item row="10" column="6">
-         <widget class="QLabel" name="label_51">
+        <item row="10" column="1">
+         <widget class="QLineEdit" name="lineEditKPos_cor"/>
+        </item>
+        <item row="9" column="1">
+         <widget class="QLabel" name="label_43">
           <property name="text">
-           <string>K</string>
+           <string>Position</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="7" rowspan="2">
-         <spacer name="verticalSpacer_21">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="7" column="3" colspan="2">
+         <widget class="QLabel" name="label_42">
+          <property name="text">
+           <string>Choix des parametres des correcteurs</string>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="10" column="1">
-         <widget class="QLineEdit" name="lineEdit"/>
-        </item>
-        <item row="10" column="4">
-         <widget class="QLineEdit" name="lineEdit_4"/>
+         </widget>
         </item>
         <item row="6" column="0" colspan="8">
          <widget class="Line" name="line_14">
@@ -1275,13 +1265,6 @@
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="3" colspan="2">
-         <widget class="QLabel" name="label_42">
-          <property name="text">
-           <string>Choix des parametres des correcteurs</string>
           </property>
          </widget>
         </item>
@@ -1312,30 +1295,14 @@
           </property>
          </widget>
         </item>
-        <item row="12" column="1">
-         <widget class="QLineEdit" name="lineEdit_3"/>
-        </item>
-        <item row="11" column="1">
-         <widget class="QLineEdit" name="lineEdit_2"/>
+        <item row="12" column="4">
+         <widget class="QLineEdit" name="lineEditTdVit_cor"/>
         </item>
         <item row="11" column="4">
-         <widget class="QLineEdit" name="lineEdit_5"/>
+         <widget class="QLineEdit" name="lineEditTiVit_cor"/>
         </item>
-        <item row="12" column="8">
-         <spacer name="verticalSpacer_19">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="12" column="4">
-         <widget class="QLineEdit" name="lineEdit_6"/>
+        <item row="11" column="1">
+         <widget class="QLineEdit" name="lineEditTiPos_cor"/>
         </item>
         <item row="12" column="3">
          <widget class="QLabel" name="label_50">
@@ -1344,23 +1311,26 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="0" colspan="2">
+         <widget class="QRadioButton" name="radioButtonCas_col">
+          <property name="text">
+           <string>regulation cascade</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_cor</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="12" column="7">
+         <widget class="QLineEdit" name="lineEditTdCour_cor"/>
+        </item>
+        <item row="11" column="7">
+         <widget class="QLineEdit" name="lineEditTiCour_cor"/>
+        </item>
         <item row="12" column="6">
          <widget class="QLabel" name="label_52">
           <property name="text">
            <string>Td</string>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="7">
-         <widget class="QLineEdit" name="lineEdit_9"/>
-        </item>
-        <item row="11" column="7">
-         <widget class="QLineEdit" name="lineEdit_7"/>
-        </item>
-        <item row="0" column="3" colspan="2">
-         <widget class="QLabel" name="label_41">
-          <property name="text">
-           <string>Choix du mode de correction</string>
           </property>
          </widget>
         </item>
@@ -1377,20 +1347,100 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="0" colspan="2">
-         <widget class="QRadioButton" name="radioButtonCas_col">
+        <item row="0" column="3" colspan="2">
+         <widget class="QLabel" name="label_41">
           <property name="text">
-           <string>regulation cascade</string>
+           <string>Choix du mode de correction</string>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_cor</string>
-          </attribute>
          </widget>
         </item>
-        <item row="2" column="4" rowspan="3">
+        <item row="10" column="2" rowspan="4">
+         <widget class="Line" name="line_16">
+          <property name="lineWidth">
+           <number>2</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="5" rowspan="4">
+         <widget class="Line" name="line_17">
+          <property name="lineWidth">
+           <number>2</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="0">
+         <widget class="QLabel" name="label_35">
+          <property name="text">
+           <string>Saturation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="4">
+         <widget class="QLineEdit" name="lineEditSatVit_cor"/>
+        </item>
+        <item row="13" column="7">
+         <widget class="QLineEdit" name="lineEditSatCour_cor"/>
+        </item>
+        <item row="13" column="1">
+         <widget class="QLineEdit" name="lineEditSatPos_cor"/>
+        </item>
+        <item row="13" column="3">
+         <widget class="QLabel" name="label_36">
+          <property name="text">
+           <string>Saturation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="6">
+         <widget class="QLabel" name="label_37">
+          <property name="text">
+           <string>Saturation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="8">
+         <spacer name="verticalSpacer_19">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="13" column="8">
+         <spacer name="verticalSpacer_13">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="3" rowspan="3" colspan="4">
          <widget class="QLabel" name="label_34">
           <property name="text">
            <string>K(1 + 1/(Ti*p) + Td*p/(1+Td*p/16 ))</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="0" colspan="8">
+         <widget class="QLabel" name="label_38">
+          <property name="text">
+           <string>La saturation n'est pas prise en compte si elle est mise à 0</string>
           </property>
          </widget>
         </item>
@@ -1405,7 +1455,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>836</width>
+     <width>920</width>
      <height>21</height>
     </rect>
    </property>
@@ -1439,9 +1489,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_cor"/>
-  <buttongroup name="buttonGroup_c"/>
-  <buttongroup name="buttonGroup_p"/>
   <buttongroup name="buttonGroup_v"/>
+  <buttongroup name="buttonGroup_c"/>
+  <buttongroup name="buttonGroup_cor"/>
+  <buttongroup name="buttonGroup_p"/>
  </buttongroups>
 </ui>
