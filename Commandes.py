@@ -8,55 +8,46 @@ import math
 import ctypes
 from ctypes import *
 from matplotlib.pylab import *
-import interface
+from interface import *
 import sys
+from Correcteurs import *
 
-def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
+def echelon_position(controleur,dureeExp,posFinale,MyEpos,Interface):
     #initialisation des constantes
     ValMaxCourEpos=5 #on s'arrange pour ne pas depasser 5A en courant dans tous les cas
     qc2mm = 294
 
+    if posFinale > 490 or posFinale < 10:
+        return ('Cette valeur est interdite')
+    else:
+        controleur.parametres.setPosFinale(posFinale)
+        controleur.parametres.setDureeExp(dureeExp)
+
+        Te = controleur.parametres.getTe()
+
     #on verifie que la bonne correction est activee
-    if groupebuttoncor(interface) == 2:  # si correction en vitesse
+    if interface.groupebuttoncor(Interface) == 2:  # si correction en vitesse
         print("erreur il faut une commande en vitesse pour faire une correction en vitesse")
         sys.exit() #voir si cela ne va pas faire tomber le bras
 
-    if groupebuttoncor(interface) == 3:  # si correction en courant
+    if interface.groupebuttoncor(Interface) == 3:  # si correction en courant
         print("erreur il faut une commande en vitesse pour faire une correction en vitesse")
         sys.exit()
 
 
-    def tic():
-        # Homemade version of matlab tic and toc functions
-        import time
-        global startTime_for_tictoc
-        startTime_for_tictoc = time.time()
-
-    def toc():
-        import time
-        if 'startTime_for_tictoc' in globals():
-            return (time.time() - startTime_for_tictoc)
-
-
     #Recuperation des paramètres des correcteurs
-    Kpos= getKpos(interface)
-    Tipos=getTipos(interface)
-    Tdpos=getTdpos(interface)
+    Kpos= interface.getKpos(interface)
+    Tipos=interface.getTipos(interface)
+    Tdpos=interface.getTdpos(interface)
     Satpos=1 #en attente de l'interface
-    ValParDefautSatPos=1
-    optionSatPos=False
     Kvit=getKvit(interface)
     Tivit=getTivit(interface)
     Tdvit=getTdvit(interface)
     Satvit=1 #en attente de l'interface
-    ValParDefautSatVit=1
-    optionSatVit=False
     Kcour=getKcour(interface)
     Ticour=getTicour(interface)
     Tdcour=getTdcour(interface)
     Satcour=1 #en attente de l'interface
-    ValParDefautSatCour=1
-    optionSatCour=False
 
     # imposer Mode Courant
     MyEpos.setOperationMode(c_int(-3), pErrorCode_i)
@@ -100,7 +91,7 @@ def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
     compt=0
 
     debut=time.time()
-    while (time.time()-debut < dureeExp and compt<=nombreEch-1): #a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+    while (compt<=nombreEch-1): #a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
         t=time.time()
         #On verfie que le mouvement est possible
         MyEpos.getPositionIs(pPositionIs_i, pErrorCode_i)
@@ -129,8 +120,8 @@ def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
 
             if groupebuttoncor(interface)==1:#si correction en position
 
-                if optionSatPos:
-                    consigneCour.append(pos2current_sat(Kpos, Tipos, Tdpos,Satpos,ValParDefautSatPos, consignePos[-1], pPositionIs_i.contents.value / qc2mm, errPos, sommeErrPos))
+                if SatPos!=0:
+                    consigneCour.append(pos2current_sat(Kpos, Tipos, Tdpos,Satpos, consignePos[-1], pPositionIs_i.contents.value / qc2mm, errPos, sommeErrPos))
                     if consigneCour[-1]>ValMaxCourEpos:
                         consigneCour[-1]=5
                     MyEpos.setCurrentMust(c_short(consigneCour[-1]), pErrorCode_i)
@@ -144,20 +135,20 @@ def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
 
             elif groupebuttoncor(interface) ==4:#si correction en cascade
 
-                if optionSatPos:
-                    consigneVit.append(pos2velocity_sat(Kpos, Tipos, Tdpos,Satpos,ValParDefautSatPos, consignePos[-1], pPositionIs_i.contents.value / qc2mm, errPos, sommeErrPos))
+                if SatPos!=0:
+                    consigneVit.append(pos2velocity_sat(Kpos, Tipos, Tdpos,Satpos, consignePos[-1], pPositionIs_i.contents.value / qc2mm, errPos, sommeErrPos))
                 else:
                     consigneVit.append(pos2velocity(Kpos, Tipos, Tdpos, consignePos[-1], pPositionIs_i.contents.value / qc2mm, errPos, sommeErrPos))
 
                 MyEpos.getVelocityIs(pVelocityIs_i, pErrorCode_i)
-                if optionSatVit:
-                    consigneCour.append(velocity2current_sat(Kvit, Tivit, Tdvit, Satvit, ValParDefautSatVit, consigneVit[-1],pVelocityIs_i.contents.value, errVit, sommeErrVit))
+                if SatVit!=0:
+                    consigneCour.append(velocity2current_sat(Kvit, Tivit, Tdvit, Satvit, consigneVit[-1],pVelocityIs_i.contents.value, errVit, sommeErrVit))
                 else:
                     consigneCour.append(velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1], pVelocityIs_i.contents.value, errVit,sommeErrVit))
 
                 MyEpos.getCurrentIs(pCurrentIs_i,pErrorCode_i)
-                if optionSatCour:
-                    courantCorrige.append(courant_cmd_sat(Kcour, Ticour, Tdcour, Satcour, ValParDefautSatCour, consigneCour[-1],pCurrentIs_i.contents.value, errCour, sommeErrCour))
+                if SatCour!=0:
+                    courantCorrige.append(courant_cmd_sat(Kcour, Ticour, Tdcour, Satcour, consigneCour[-1],pCurrentIs_i.contents.value, errCour, sommeErrCour))
                     if courantCorrige[-1]>ValMaxCourEpos:
                         courantCorrige[-1]=5
                     MyEpos.setCurrentMust(c_short(courantCorrige[-1]), pErrorCode_i)
