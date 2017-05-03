@@ -342,14 +342,27 @@ class Controleur:
             for i in range(nombrePasEchantillonageStatique):
                 consignePos.append(hauteur)
 
+            Kpos = self.parametres.getKpos()
+            Tipos = self.parametres.getTipos()
+            Tdpos = self.parametres.getTdpos()
+
+            Kvit = self.parametres.getKvit()
+            Tivit = self.parametres.getTivit()
+            Tdvit = self.parametres.getTdvit()
+
+            Kcour = self.parametres.getKcour()
+            Ticour = self.parametres.getTicour()
+            Tdcour = self.parametres.getTdcour()
+
             i=0
             positions = []
             vitesses = []
             courants = []
             consigneVit = []
             consigneCour = []
+            courantImposePI = []
             mm2qc = 294
-            pPositionIs = c_long(0)
+            #pPositionIs = c_long(0)
             erreurPos = [0,0]
             erreurVit = [0,0]
             erreurCour = [0,0]
@@ -360,19 +373,25 @@ class Controleur:
                 while time.time()-t < Te:
                     a=0
                 t=time.time()
+
                 carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
                 positionLueMm = pPositionIs_i.contents.value / mm2qc  # conversion qc en mm
                 positions.append(positionLueMm)
-                consigneVit.append(Correcteurs.pos2velocity(self.parametres.getKpos(), self.parametres.getTipos(),
-                                                        self.parametres.getTdpos(), consignePos[i], positionLueMm,
+                consigneVit.append(Correcteurs.pos2velocity(Kpos, Tipos,Tdpos, consignePos[i], positionLueMm,
                                                        erreurPos, sommeErreurPos))
 
                 carteEpos.getVelocityIs(pVelocityIs, pErrorCode_i)
-                vitesseLue = pVelocityIs_i.contents.value/mm2qc
+                vitesseLue = pVelocityIs_i.contents.value #en tour par minute ATTENTION ERREUR UNITE SOMMATEUR!
                 vitesses.append(vitesseLue)
-                consigneCour.append(Correcteurs.velocity2current(self.parametres.getKvit(), self.parametres.getTivit(),
-                                                                 self.parametres.getTdvit(),consigneVit[-1], vitesseLue,
+                consigneCour.append(Correcteurs.velocity2current(Kvit, Tivit,Tdvit,consigneVit[-1], vitesseLue,
                                                                  erreurVit, sommeErreurVit))
+
+                carteEpos.getCurrentIs(pCurrentIs_i, pErrorCode_i)
+                courantLu = pCurrentIs_i.contents.value/1000 #en A
+                courants.append(courantLu)
+                courantImposePI.append(Correcteurs.courant_cmd(consigneCour[-1], courantLu, erreurCour, sommeErreurCour,
+                                                               Kcour, Ticour,Tdcour))
+                self.carteEpos.setCurrentMust(courantImposePI[-1], pErrorCode_i)
 
                 i=i+1
 
