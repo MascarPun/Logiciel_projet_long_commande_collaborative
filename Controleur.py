@@ -11,6 +11,7 @@ from ctypes import *
 from matplotlib.pylab import *
 import time
 import Correcteurs
+from Commandes import *
 
 
 class Controleur:
