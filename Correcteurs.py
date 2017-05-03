@@ -48,10 +48,8 @@ def pi(K,Ti,err,somme_err):
 
 
 
-def pi_sat(K,Ti,err,somme_err,Sat,ValParDefaut):
+def pi_sat(K,Ti,err,somme_err,Sat):
     result = K * err + (K / Ti) * somme_err
-    if Sat==0:
-        Sat=ValParDefaut
     if result>Sat:
         result = K*err + ((Sat-result)/Ti+(K / Ti))*somme_err
     return result
@@ -63,11 +61,9 @@ def pid(K,Ti,Td,err,somme_err):
     return result
 
 
-def pid_sat(K,Ti,Td,err,somme_err,Sat,ValParDefaut):
+def pid_sat(K,Ti,Td,err,somme_err,Sat):
     delta_err=err[-1]-err[-2]
     result=K*err[-1]+(K/Ti)*somme_err+(K*Td)*delta_err
-    if Sat==0:
-        Sat=ValParDefaut
     if result>Sat:
         result = K*err[-1] + ((Sat-result)/Ti+(K / Ti))*somme_err + (K*Td)*delta_err
     return result
@@ -100,16 +96,16 @@ def pos2current(K,Ti,Td,cmd,S,err,somme_err):
     return courant
 
 
-def pos2current_sat(K,Ti,Td,Sat,ValParDefaut,cmd,S,err,somme_err):
+def pos2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
     if Td=='' and Ti!='':
-        courant=pi_sat(K,Ti,err[-1],somme_err,Sat,ValParDefaut)
+        courant=pi_sat(K,Ti,err[-1],somme_err,Sat)
     elif Td=='' and Ti=='':
         courant=prop(K,err[-1])
     else:
-        courant=pid_sat(K,Ti,Td,err,somme_err,Sat,ValParDefaut)
+        courant=pid_sat(K,Ti,Td,err,somme_err,Sat)
     return courant
 
 
@@ -128,16 +124,16 @@ def pos2velocity(K,Ti,Td,cmd,S,err,somme_err):
     return vitesse
 
 
-def pos2velocity_sat(K,Ti,Td,Sat,ValParDefaut,cmd,S,err,somme_err):
+def pos2velocity_sat(K,Ti,Td,Sat,cmd,S,err,somme_err):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
     if Td==0 and Ti!=0:
-        vitesse=pi_sat(K,Ti,err[-1],somme_err,Sat,ValParDefaut)
+        vitesse=pi_sat(K,Ti,err[-1],somme_err,Sat)
     elif Td==0 and Ti==0:
         vitesse=prop(K,err[-1])
     else:
-        vitesse=pid_sat(K,Ti,Td,err,somme_err,Sat,ValParDefaut)
+        vitesse=pid_sat(K,Ti,Td,err,somme_err,Sat)
     return vitesse
 
 
@@ -154,16 +150,16 @@ def velocity2current(K,Ti,Td,cmd,S,err,somme_err):
         courant=pid(K,Ti,Td,err,somme_err)
     return courant
 
-def velocity2current_sat(K,Ti,Td,Sat,ValParDefaut,cmd,S,err,somme_err):
+def velocity2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
     if Td==0 and Ti!=0:
-        courant=pi_sat(K,Ti,err[-1],somme_err,Sat,ValParDefaut)
+        courant=pi_sat(K,Ti,err[-1],somme_err,Sat)
     elif Td==0 and Ti==0:
         courant=prop(K,err[-1])
     else:
-        courant=pid_sat(K,Ti,Td,err,somme_err,Sat,ValParDefaut)
+        courant=pid_sat(K,Ti,Td,err,somme_err,Sat)
     return courant
 
 
@@ -182,16 +178,16 @@ def courant_cmd(cmd,S,err,somme_err,K,Ti,Td):
     return courantC
 
 
-def courant_cmd_sat(cmd,S,err,somme_err,Sat,ValParDefaut,K,Ti,Td):
+def courant_cmd_sat(cmd,S,err,somme_err,Sat,K,Ti,Td):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
     if Td==0 and Ti!=0:
-        courantC=pi_sat(K,Ti,err[-1],somme_err,Sat,ValParDefaut)
+        courantC=pi_sat(K,Ti,err[-1],somme_err,Sat)
     elif Td==0 and Ti==0:
         courantC=prop(K,err[-1])
     else:
-        courantC=pid_sat(K,Ti,Td,err,somme_err,Sat,ValParDefaut)
+        courantC=pid_sat(K,Ti,Td,err,somme_err,Sat)
     return courantC
 
 #pour l instant bcp d'arguments mais visuellement c est plsu simple a comprendre que des tableaux
