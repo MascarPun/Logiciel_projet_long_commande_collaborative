@@ -1,22 +1,29 @@
+
+######ATTENTION IMPORTER SYS POUR QUE CELA FONCTIONNE############
+
+
 import numpy as np
 import numpy.linalg as alg
 import math
-import control
 import ctypes
 from ctypes import *
 from matplotlib.pylab import *
 import interface
+import sys
 
 def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
+    #initialisation des constantes
+    ValMaxCourEpos=5 #on s'arrange pour ne pas depasser 5A en courant dans tous les cas
+    qc2mm = 294
 
     #on verifie que la bonne correction est activee
     if groupebuttoncor(interface) == 2:  # si correction en vitesse
         print("erreur il faut une commande en vitesse pour faire une correction en vitesse")
-        break
+        sys.exit() #voir si cela ne va pas faire tomber le bras
 
     if groupebuttoncor(interface) == 3:  # si correction en courant
         print("erreur il faut une commande en vitesse pour faire une correction en vitesse")
-        break
+        sys.exit()
 
 
     def tic():
@@ -82,7 +89,7 @@ def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
     consigneVit=[]
     consigneCour=[]
     courantCorrige=[]
-    qc2mm = 294
+
     errPos=[0,0]
     errVit=[0,0]
     errCour=[0,0]
@@ -93,7 +100,7 @@ def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
     compt=0
 
     debut=time.time()
-    while (time.time()-debut < dureeExp and compt<nombreEch-1): #a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+    while (time.time()-debut < dureeExp and compt<=nombreEch-1): #a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
         t=time.time()
         #On verfie que le mouvement est possible
         MyEpos.getPositionIs(pPositionIs_i, pErrorCode_i)
@@ -113,6 +120,7 @@ def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
 
         else:
             while(time.time()-t<Te):
+                pass
                 #groupBoutonCore renvoie 1 2 3 4 suivant la correction choisie (defini dans interface.py)
                 #Pour l'instant il fait rien mais on peut lui ajouter une action à réaliser pour pas avoir de temps où il ne fait rien
 
@@ -123,9 +131,13 @@ def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
 
                 if optionSatPos:
                     consigneCour.append(pos2current_sat(Kpos, Tipos, Tdpos,Satpos,ValParDefautSatPos, consignePos[-1], pPositionIs_i.contents.value / qc2mm, errPos, sommeErrPos))
+                    if consigneCour[-1]>ValMaxCourEpos:
+                        consigneCour[-1]=5
                     MyEpos.setCurrentMust(c_short(consigneCour[-1]), pErrorCode_i)
                 else:
                     consigneCour.append(pos2current(Kpos, Tipos, Tdpos, consignePos[-1], pPositionIs_i.contents.value / qc2mm, errPos, sommeErrPos))
+                    if consigneCour[-1]>ValMaxCourEpos:
+                        consigneCour[-1]=5
                     MyEpos.setCurrentMust(c_short(consigneCour[-1]), pErrorCode_i)
 
 
@@ -146,9 +158,13 @@ def echelon_position(dureeExp,Te,posFinale,MyEpos,interface):
                 MyEpos.getCurrentIs(pCurrentIs_i,pErrorCode_i)
                 if optionSatCour:
                     courantCorrige.append(courant_cmd_sat(Kcour, Ticour, Tdcour, Satcour, ValParDefautSatCour, consigneCour[-1],pCurrentIs_i.contents.value, errCour, sommeErrCour))
+                    if courantCorrige[-1]>ValMaxCourEpos:
+                        courantCorrige[-1]=5
                     MyEpos.setCurrentMust(c_short(courantCorrige[-1]), pErrorCode_i)
                 else:
                     courantCorrige.append(courant_cmd(Kcour, Ticour, Tdcour, consigneCour[-1], pCurrentIs_i.contents.value, errCour,sommeErrCour))
+                    if courantCorrige[-1]>ValMaxCourEpos:
+                        courantCorrige[-1]=5
                     MyEpos.setCurrentMust(c_short(courantCorrige[-1]), pErrorCode_i)
             compt+=1
 
