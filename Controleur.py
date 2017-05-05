@@ -346,7 +346,49 @@ class Controleur:
             return self.commandeCascade(consignePos)
 
     def sinusPosition(self, Frequence, Amplitude):
-        self.echelonPosition(250)
+        self.echelonPosition(250) #On impose un echelon avant de commencer ? (pcq il manque qq arguments)
+
+        Mode = c_int(-3)
+        self.carteEpos.setOperationMode(Mode, pErrorCode_i)
+        self.parametres.setFrequence(Frequence)
+
+        if Amplitude > 200:
+            return ('Amplitude trop grande')
+        else:
+            self.parametres.setAmplitude(Amplitude)
+
+            Te = self.parametres.getTe()
+
+            pMode = ctypes.POINTER(ctypes.c_int)
+            pMode_i = ctypes.c_int(0)
+            pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
+            self.carteEpos.getOperationMode(pMode2, pErrorCode_i)
+            self.carteEpos.getOperationMode2(pMode2.contents, pErrorCode_i)
+
+            # set enable state
+            self.carteEpos.setDisableState(pErrorCode_i)
+            self.carteEpos.setEnableState(pErrorCode_i)
+
+            # get enabled state
+            res = self.carteEpos.getEnableState(pIsEnabled_i, pErrorCode_i)
+
+            # Phase de commande du bras pour aller d'une position à une autre
+            pPositionIs = c_long(0)
+            self.carteEpos.getPositionIs(pPositionIs, pErrorCode_i)  # mesure de position initiale
+
+            Timeout_i = c_long(5000)
+            t0 = time.time()
+            t = time.time()
+
+            nombrePasEchantillonage = int(self.parametres.getDureeExp() / Te)
+
+            consignePos = [Amplitude * sinus(2*pi*Frequence*i*Te) for i in range(nombrePasEchantillonage)]
+
+        return self.commandeCascade(consignePos)
+
+    def sinusPosition_modif(self, Frequence, Amplitude,dureeExp):
+        tpsPrep=500
+        echelon_position(self,tpsPrep,250,self.carteEpos,self.interface) #On impose un echelon avant de commencer ? (pcq il manque qq arguments)
 
         Mode = c_int(-3)
         self.carteEpos.setOperationMode(Mode, pErrorCode_i)

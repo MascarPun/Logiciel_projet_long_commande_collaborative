@@ -42,8 +42,6 @@ def echelon_position(controleur,dureeExp,posFinale,MyEpos,interface):
     Tdcour=controleur.parametre.getTdcour()
     Satcour=1 #en attente de l'interface
 
-    # imposer Mode Courant
-    MyEpos.setOperationMode(c_int(-3), pErrorCode_i)
 
     # initialiser le pointeur pMode
     pMode = ctypes.POINTER(ctypes.c_int)
@@ -53,6 +51,7 @@ def echelon_position(controleur,dureeExp,posFinale,MyEpos,interface):
     # récupérer le Mode acutuel
     MyEpos.getOperationMode(pMode2, pErrorCode_i)
     MyEpos.getOperationMode2(pMode2.contents, pErrorCode_i)
+    MyEpos.setOperationMode(c_int(-3), pErrorCode_i)
 
     # set enable state
     MyEpos.setEnableState(pErrorCode_i)
@@ -199,9 +198,6 @@ def echelon_vitesse(controleur,dureeExp,vitFinale,MyEpos,interface):
     Tdcour=controleur.parametre.getTdcour()
     Satcour=1 #en attente de l'interface
 
-    # imposer Mode Courant
-    MyEpos.setOperationMode(c_int(-3), pErrorCode_i)
-
     # initialiser le pointeur pMode
     pMode = ctypes.POINTER(ctypes.c_int)
     pMode_i = ctypes.c_int(0)
@@ -210,6 +206,7 @@ def echelon_vitesse(controleur,dureeExp,vitFinale,MyEpos,interface):
     # récupérer le Mode acutuel
     MyEpos.getOperationMode(pMode2, pErrorCode_i)
     MyEpos.getOperationMode2(pMode2.contents, pErrorCode_i)
+    MyEpos.setOperationMode(c_int(-3), pErrorCode_i)
 
     # set enable state
     MyEpos.setEnableState(pErrorCode_i)
@@ -321,9 +318,6 @@ def echelon_courant(controleur, dureeExp, courFinal, MyEpos, interface):
     Tdcour = controleur.parametre.getTdcour()
     Satcour = 1  # en attente de l'interface
 
-    # imposer Mode Courant
-    MyEpos.setOperationMode(c_int(-3), pErrorCode_i)
-
     # initialiser le pointeur pMode
     pMode = ctypes.POINTER(ctypes.c_int)
     pMode_i = ctypes.c_int(0)
@@ -332,6 +326,7 @@ def echelon_courant(controleur, dureeExp, courFinal, MyEpos, interface):
     # récupérer le Mode acutuel
     MyEpos.getOperationMode(pMode2, pErrorCode_i)
     MyEpos.getOperationMode2(pMode2.contents, pErrorCode_i)
+    MyEpos.setOperationMode(c_int(-3), pErrorCode_i)
 
     # set enable state
     MyEpos.setEnableState(pErrorCode_i)
@@ -411,3 +406,4 @@ def echelon_courant(controleur, dureeExp, courFinal, MyEpos, interface):
         TabCourant.append(pCurrentIs_i.contents.value)
 
     return ("fin")
+
