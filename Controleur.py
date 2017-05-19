@@ -930,7 +930,7 @@ class Controleur:
             courants.append(courantLu)
             courantImposePI.append(Correcteurs.courant_cmd(consigneCour[-1], courantLu, erreurCour, sommeErreurCour,
                                                            Kcour, Ticour, Tdcour))
-            self.carteEpos.setCurrentMust(courantImposePI[-1], pErrorCode_i)
+            self.carteEpos.setCurrentMust(c_long(courantImposePI[-1]), pErrorCode_i)
 
             i = i + 1
 

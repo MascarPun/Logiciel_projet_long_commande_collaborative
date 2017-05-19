@@ -1489,9 +1489,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_v"/>
   <buttongroup name="buttonGroup_c"/>
   <buttongroup name="buttonGroup_cor"/>
+  <buttongroup name="buttonGroup_v"/>
   <buttongroup name="buttonGroup_p"/>
  </buttongroups>
 </ui>
