@@ -14,9 +14,10 @@ class Ui_MainWindow(object):
         self.controleur = controleur
     # fin code ajouté
 
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(836, 542)
+        MainWindow.resize(920, 586)
         font = QtGui.QFont()
         font.setPointSize(11)
         MainWindow.setFont(font)
@@ -42,28 +43,14 @@ class Ui_MainWindow(object):
         self.gridLayout = QtWidgets.QGridLayout(self.positionTab)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.label_4 = QtWidgets.QLabel(self.positionTab)
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.label_4.setFont(font)
-        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_4.setObjectName("label_4")
-        self.gridLayout.addWidget(self.label_4, 4, 2, 1, 1)
-        self.radioButtonEch_p = QtWidgets.QRadioButton(self.positionTab)
-        self.radioButtonEch_p.setChecked(True)
-        self.radioButtonEch_p.setObjectName("radioButtonEch_p")
-        self.buttonGroup_p = QtWidgets.QButtonGroup(MainWindow)
-        self.buttonGroup_p.setObjectName("buttonGroup_p")
-        self.buttonGroup_p.addButton(self.radioButtonEch_p)
-        self.gridLayout.addWidget(self.radioButtonEch_p, 4, 0, 1, 2)
-        self.radioButtonSin_p = QtWidgets.QRadioButton(self.positionTab)
-        self.radioButtonSin_p.setObjectName("radioButtonSin_p")
-        self.buttonGroup_p.addButton(self.radioButtonSin_p)
-        self.gridLayout.addWidget(self.radioButtonSin_p, 6, 0, 1, 2)
-        self.radioButtonRam_p = QtWidgets.QRadioButton(self.positionTab)
-        self.radioButtonRam_p.setObjectName("radioButtonRam_p")
-        self.buttonGroup_p.addButton(self.radioButtonRam_p)
-        self.gridLayout.addWidget(self.radioButtonRam_p, 5, 0, 1, 2)
+        self.label_8 = QtWidgets.QLabel(self.positionTab)
+        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_8.setObjectName("label_8")
+        self.gridLayout.addWidget(self.label_8, 5, 8, 1, 2)
+        self.label_7 = QtWidgets.QLabel(self.positionTab)
+        self.label_7.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_7.setObjectName("label_7")
+        self.gridLayout.addWidget(self.label_7, 6, 9, 1, 1)
         self.line_3 = QtWidgets.QFrame(self.positionTab)
         self.line_3.setAutoFillBackground(True)
         self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -72,21 +59,16 @@ class Ui_MainWindow(object):
         self.line_3.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_3.setObjectName("line_3")
         self.gridLayout.addWidget(self.line_3, 7, 0, 1, 11)
-        self.label_7 = QtWidgets.QLabel(self.positionTab)
-        self.label_7.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_7.setObjectName("label_7")
-        self.gridLayout.addWidget(self.label_7, 6, 9, 1, 1)
         self.lineEditFreq_p = QtWidgets.QLineEdit(self.positionTab)
         self.lineEditFreq_p.setText("")
         self.lineEditFreq_p.setObjectName("lineEditFreq_p")
         self.gridLayout.addWidget(self.lineEditFreq_p, 6, 10, 1, 1)
-        self.label_8 = QtWidgets.QLabel(self.positionTab)
-        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_8.setObjectName("label_8")
-        self.gridLayout.addWidget(self.label_8, 5, 8, 1, 2)
-        self.label_14 = QtWidgets.QLabel(self.positionTab)
-        self.label_14.setObjectName("label_14")
-        self.gridLayout.addWidget(self.label_14, 8, 9, 1, 1)
+        self.radioButtonRam_p = QtWidgets.QRadioButton(self.positionTab)
+        self.radioButtonRam_p.setObjectName("radioButtonRam_p")
+        self.buttonGroup_p = QtWidgets.QButtonGroup(MainWindow)
+        self.buttonGroup_p.setObjectName("buttonGroup_p")
+        self.buttonGroup_p.addButton(self.radioButtonRam_p)
+        self.gridLayout.addWidget(self.radioButtonRam_p, 5, 0, 1, 2)
         self.label_6 = QtWidgets.QLabel(self.positionTab)
         self.label_6.setAlignment(QtCore.Qt.AlignCenter)
         self.label_6.setObjectName("label_6")
@@ -99,17 +81,13 @@ class Ui_MainWindow(object):
         self.lineEditCoefDir_p.setText("")
         self.lineEditCoefDir_p.setObjectName("lineEditCoefDir_p")
         self.gridLayout.addWidget(self.lineEditCoefDir_p, 5, 10, 1, 1)
+        self.label_14 = QtWidgets.QLabel(self.positionTab)
+        self.label_14.setObjectName("label_14")
+        self.gridLayout.addWidget(self.label_14, 8, 9, 1, 1)
         self.lineEditDur_p = QtWidgets.QLineEdit(self.positionTab)
         self.lineEditDur_p.setText("")
         self.lineEditDur_p.setObjectName("lineEditDur_p")
         self.gridLayout.addWidget(self.lineEditDur_p, 8, 7, 1, 1)
-        self.run_p = QtWidgets.QPushButton(self.positionTab)
-        self.run_p.setObjectName("run_p")
-        self.gridLayout.addWidget(self.run_p, 9, 7, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.positionTab)
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout.addWidget(self.label_2, 2, 7, 1, 1)
         self.line = QtWidgets.QFrame(self.positionTab)
         self.line.setAutoFillBackground(True)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -120,6 +98,16 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.line, 1, 0, 1, 11)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout.addItem(spacerItem, 8, 10, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem1, 5, 7, 1, 1)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem2, 4, 7, 1, 1)
+        self.label_2 = QtWidgets.QLabel(self.positionTab)
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout.addWidget(self.label_2, 2, 7, 1, 1)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem3, 6, 7, 1, 1)
         self.line_2 = QtWidgets.QFrame(self.positionTab)
         self.line_2.setAutoFillBackground(True)
         self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -128,36 +116,49 @@ class Ui_MainWindow(object):
         self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_2.setObjectName("line_2")
         self.gridLayout.addWidget(self.line_2, 3, 0, 1, 11)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem1, 4, 7, 1, 1)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem2, 5, 7, 1, 1)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem3, 6, 7, 1, 1)
-        self.label_3 = QtWidgets.QLabel(self.positionTab)
-        self.label_3.setObjectName("label_3")
-        self.gridLayout.addWidget(self.label_3, 0, 8, 1, 1)
-        self.poLabelValeurPosAct_p = QtWidgets.QLabel(self.positionTab)
-        self.poLabelValeurPosAct_p.setObjectName("poLabelValeurPosAct_p")
-        self.gridLayout.addWidget(self.poLabelValeurPosAct_p, 0, 7, 1, 1)
-        self.label = QtWidgets.QLabel(self.positionTab)
-        self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 0, 5, 1, 1)
-        self.label_13 = QtWidgets.QLabel(self.positionTab)
-        self.label_13.setObjectName("label_13")
-        self.gridLayout.addWidget(self.label_13, 8, 5, 1, 2)
+        self.run_p = QtWidgets.QPushButton(self.positionTab)
+        self.run_p.setObjectName("run_p")
+        self.gridLayout.addWidget(self.run_p, 9, 7, 1, 1)
         self.lineEditPosFEch_p = QtWidgets.QLineEdit(self.positionTab)
         self.lineEditPosFEch_p.setText("")
         self.lineEditPosFEch_p.setObjectName("lineEditPosFEch_p")
         self.gridLayout.addWidget(self.lineEditPosFEch_p, 4, 3, 1, 4)
-        self.lineEditAmp_p = QtWidgets.QLineEdit(self.positionTab)
-        self.lineEditAmp_p.setText("")
-        self.lineEditAmp_p.setObjectName("lineEditAmp_p")
-        self.gridLayout.addWidget(self.lineEditAmp_p, 6, 3, 1, 4)
+        self.label_3 = QtWidgets.QLabel(self.positionTab)
+        self.label_3.setObjectName("label_3")
+        self.gridLayout.addWidget(self.label_3, 0, 8, 1, 1)
+        self.label = QtWidgets.QLabel(self.positionTab)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 5, 1, 1)
+        self.poLabelValeurPosAct_p = QtWidgets.QLabel(self.positionTab)
+        self.poLabelValeurPosAct_p.setObjectName("poLabelValeurPosAct_p")
+        self.gridLayout.addWidget(self.poLabelValeurPosAct_p, 0, 7, 1, 1)
         self.lineEditPosFRam_p = QtWidgets.QLineEdit(self.positionTab)
         self.lineEditPosFRam_p.setText("")
         self.lineEditPosFRam_p.setObjectName("lineEditPosFRam_p")
         self.gridLayout.addWidget(self.lineEditPosFRam_p, 5, 3, 1, 4)
+        self.lineEditAmp_p = QtWidgets.QLineEdit(self.positionTab)
+        self.lineEditAmp_p.setText("")
+        self.lineEditAmp_p.setObjectName("lineEditAmp_p")
+        self.gridLayout.addWidget(self.lineEditAmp_p, 6, 3, 1, 4)
+        self.label_4 = QtWidgets.QLabel(self.positionTab)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.label_4.setFont(font)
+        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_4.setObjectName("label_4")
+        self.gridLayout.addWidget(self.label_4, 4, 2, 1, 1)
+        self.radioButtonEch_p = QtWidgets.QRadioButton(self.positionTab)
+        self.radioButtonEch_p.setChecked(True)
+        self.radioButtonEch_p.setObjectName("radioButtonEch_p")
+        self.buttonGroup_p.addButton(self.radioButtonEch_p)
+        self.gridLayout.addWidget(self.radioButtonEch_p, 4, 0, 1, 2)
+        self.radioButtonSin_p = QtWidgets.QRadioButton(self.positionTab)
+        self.radioButtonSin_p.setObjectName("radioButtonSin_p")
+        self.buttonGroup_p.addButton(self.radioButtonSin_p)
+        self.gridLayout.addWidget(self.radioButtonSin_p, 6, 0, 1, 2)
+        self.label_13 = QtWidgets.QLabel(self.positionTab)
+        self.label_13.setObjectName("label_13")
+        self.gridLayout.addWidget(self.label_13, 8, 3, 1, 3)
         self.tabs.addTab(self.positionTab, "")
         self.vitesseTab = QtWidgets.QWidget()
         self.vitesseTab.setAutoFillBackground(True)
@@ -266,9 +267,9 @@ class Ui_MainWindow(object):
         self.gridLayout_4.addItem(spacerItem6, 6, 5, 1, 1)
         spacerItem7 = QtWidgets.QSpacerItem(20, 94, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_4.addItem(spacerItem7, 4, 5, 1, 1)
-        self.lineEdit_10 = QtWidgets.QLineEdit(self.vitesseTab)
-        self.lineEdit_10.setObjectName("lineEdit_10")
-        self.gridLayout_4.addWidget(self.lineEdit_10, 5, 4, 1, 1)
+        self.lineEditPlat_v = QtWidgets.QLineEdit(self.vitesseTab)
+        self.lineEditPlat_v.setObjectName("lineEditPlat_v")
+        self.gridLayout_4.addWidget(self.lineEditPlat_v, 5, 4, 1, 1)
         self.label_20 = QtWidgets.QLabel(self.vitesseTab)
         self.label_20.setAlignment(QtCore.Qt.AlignCenter)
         self.label_20.setObjectName("label_20")
@@ -413,9 +414,9 @@ class Ui_MainWindow(object):
         self.label_33 = QtWidgets.QLabel(self.courantTab)
         self.label_33.setObjectName("label_33")
         self.gridLayout_3.addWidget(self.label_33, 5, 3, 1, 1)
-        self.lineEdit_11 = QtWidgets.QLineEdit(self.courantTab)
-        self.lineEdit_11.setObjectName("lineEdit_11")
-        self.gridLayout_3.addWidget(self.lineEdit_11, 5, 4, 1, 1)
+        self.lineEditPlat_c = QtWidgets.QLineEdit(self.courantTab)
+        self.lineEditPlat_c.setObjectName("lineEditPlat_c")
+        self.gridLayout_3.addWidget(self.lineEditPlat_c, 5, 4, 1, 1)
         self.tabs.addTab(self.courantTab, "")
         self.collaboTab = QtWidgets.QWidget()
         self.collaboTab.setAutoFillBackground(True)
@@ -455,6 +456,9 @@ class Ui_MainWindow(object):
         self.gridLayout_6 = QtWidgets.QGridLayout(self.correcteurTab)
         self.gridLayout_6.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_6.setObjectName("gridLayout_6")
+        self.lineEditTdPos_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditTdPos_cor.setObjectName("lineEditTdPos_cor")
+        self.gridLayout_6.addWidget(self.lineEditTdPos_cor, 12, 1, 1, 1)
         self.label_44 = QtWidgets.QLabel(self.correcteurTab)
         self.label_44.setObjectName("label_44")
         self.gridLayout_6.addWidget(self.label_44, 9, 4, 1, 1)
@@ -464,38 +468,21 @@ class Ui_MainWindow(object):
         self.buttonGroup_cor.setObjectName("buttonGroup_cor")
         self.buttonGroup_cor.addButton(self.radioButtonCour_col)
         self.gridLayout_6.addWidget(self.radioButtonCour_col, 4, 0, 1, 2)
+        self.lineEditKCour_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditKCour_cor.setObjectName("lineEditKCour_cor")
+        self.gridLayout_6.addWidget(self.lineEditKCour_cor, 10, 7, 1, 1)
         self.label_48 = QtWidgets.QLabel(self.correcteurTab)
         self.label_48.setObjectName("label_48")
         self.gridLayout_6.addWidget(self.label_48, 10, 3, 1, 1)
-        self.lineEdit_8 = QtWidgets.QLineEdit(self.correcteurTab)
-        self.lineEdit_8.setObjectName("lineEdit_8")
-        self.gridLayout_6.addWidget(self.lineEdit_8, 10, 7, 1, 1)
         self.label_46 = QtWidgets.QLabel(self.correcteurTab)
         self.label_46.setObjectName("label_46")
         self.gridLayout_6.addWidget(self.label_46, 11, 0, 1, 1)
-        self.line_16 = QtWidgets.QFrame(self.correcteurTab)
-        self.line_16.setLineWidth(2)
-        self.line_16.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_16.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_16.setObjectName("line_16")
-        self.gridLayout_6.addWidget(self.line_16, 10, 2, 3, 1)
-        self.line_17 = QtWidgets.QFrame(self.correcteurTab)
-        self.line_17.setLineWidth(2)
-        self.line_17.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_17.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_17.setObjectName("line_17")
-        self.gridLayout_6.addWidget(self.line_17, 10, 5, 3, 1)
         self.label_49 = QtWidgets.QLabel(self.correcteurTab)
         self.label_49.setObjectName("label_49")
         self.gridLayout_6.addWidget(self.label_49, 11, 3, 1, 1)
-        self.radioButton_13 = QtWidgets.QRadioButton(self.correcteurTab)
-        self.radioButton_13.setObjectName("radioButton_13")
-        self.buttonGroup_cor.addButton(self.radioButton_13)
-        self.gridLayout_6.addWidget(self.radioButton_13, 3, 0, 1, 2)
-        spacerItem17 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem17, 10, 8, 1, 1)
-        spacerItem18 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem18, 2, 7, 2, 1)
+        self.label_45 = QtWidgets.QLabel(self.correcteurTab)
+        self.label_45.setObjectName("label_45")
+        self.gridLayout_6.addWidget(self.label_45, 10, 0, 1, 1)
         self.label_54 = QtWidgets.QLabel(self.correcteurTab)
         self.label_54.setObjectName("label_54")
         self.gridLayout_6.addWidget(self.label_54, 9, 7, 1, 1)
@@ -504,12 +491,22 @@ class Ui_MainWindow(object):
         self.radioButtonPos_cor.setObjectName("radioButtonPos_cor")
         self.buttonGroup_cor.addButton(self.radioButtonPos_cor)
         self.gridLayout_6.addWidget(self.radioButtonPos_cor, 2, 0, 1, 2)
-        self.label_45 = QtWidgets.QLabel(self.correcteurTab)
-        self.label_45.setObjectName("label_45")
-        self.gridLayout_6.addWidget(self.label_45, 10, 0, 1, 1)
-        self.label_43 = QtWidgets.QLabel(self.correcteurTab)
-        self.label_43.setObjectName("label_43")
-        self.gridLayout_6.addWidget(self.label_43, 9, 1, 1, 1)
+        self.radioButton_13 = QtWidgets.QRadioButton(self.correcteurTab)
+        self.radioButton_13.setObjectName("radioButton_13")
+        self.buttonGroup_cor.addButton(self.radioButton_13)
+        self.gridLayout_6.addWidget(self.radioButton_13, 3, 0, 1, 2)
+        spacerItem17 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem17, 2, 7, 2, 1)
+        spacerItem18 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem18, 10, 8, 1, 1)
+        spacerItem19 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem19, 4, 7, 2, 1)
+        self.lineEditKVit_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditKVit_cor.setObjectName("lineEditKVit_cor")
+        self.gridLayout_6.addWidget(self.lineEditKVit_cor, 10, 4, 1, 1)
+        self.label_51 = QtWidgets.QLabel(self.correcteurTab)
+        self.label_51.setObjectName("label_51")
+        self.gridLayout_6.addWidget(self.label_51, 10, 6, 1, 1)
         self.line_15 = QtWidgets.QFrame(self.correcteurTab)
         self.line_15.setLineWidth(0)
         self.line_15.setMidLineWidth(3)
@@ -517,17 +514,15 @@ class Ui_MainWindow(object):
         self.line_15.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_15.setObjectName("line_15")
         self.gridLayout_6.addWidget(self.line_15, 8, 0, 1, 8)
-        self.label_51 = QtWidgets.QLabel(self.correcteurTab)
-        self.label_51.setObjectName("label_51")
-        self.gridLayout_6.addWidget(self.label_51, 10, 6, 1, 1)
-        spacerItem19 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem19, 4, 7, 2, 1)
-        self.lineEdit = QtWidgets.QLineEdit(self.correcteurTab)
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout_6.addWidget(self.lineEdit, 10, 1, 1, 1)
-        self.lineEdit_4 = QtWidgets.QLineEdit(self.correcteurTab)
-        self.lineEdit_4.setObjectName("lineEdit_4")
-        self.gridLayout_6.addWidget(self.lineEdit_4, 10, 4, 1, 1)
+        self.lineEditKPos_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditKPos_cor.setObjectName("lineEditKPos_cor")
+        self.gridLayout_6.addWidget(self.lineEditKPos_cor, 10, 1, 1, 1)
+        self.label_43 = QtWidgets.QLabel(self.correcteurTab)
+        self.label_43.setObjectName("label_43")
+        self.gridLayout_6.addWidget(self.label_43, 9, 1, 1, 1)
+        self.label_42 = QtWidgets.QLabel(self.correcteurTab)
+        self.label_42.setObjectName("label_42")
+        self.gridLayout_6.addWidget(self.label_42, 7, 3, 1, 2)
         self.line_14 = QtWidgets.QFrame(self.correcteurTab)
         self.line_14.setLineWidth(0)
         self.line_14.setMidLineWidth(3)
@@ -535,9 +530,6 @@ class Ui_MainWindow(object):
         self.line_14.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_14.setObjectName("line_14")
         self.gridLayout_6.addWidget(self.line_14, 6, 0, 1, 8)
-        self.label_42 = QtWidgets.QLabel(self.correcteurTab)
-        self.label_42.setObjectName("label_42")
-        self.gridLayout_6.addWidget(self.label_42, 7, 3, 1, 2)
         spacerItem20 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_6.addItem(spacerItem20, 11, 8, 1, 1)
         self.label_53 = QtWidgets.QLabel(self.correcteurTab)
@@ -546,35 +538,31 @@ class Ui_MainWindow(object):
         self.label_47 = QtWidgets.QLabel(self.correcteurTab)
         self.label_47.setObjectName("label_47")
         self.gridLayout_6.addWidget(self.label_47, 12, 0, 1, 1)
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.correcteurTab)
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.gridLayout_6.addWidget(self.lineEdit_3, 12, 1, 1, 1)
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.correcteurTab)
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.gridLayout_6.addWidget(self.lineEdit_2, 11, 1, 1, 1)
-        self.lineEdit_5 = QtWidgets.QLineEdit(self.correcteurTab)
-        self.lineEdit_5.setObjectName("lineEdit_5")
-        self.gridLayout_6.addWidget(self.lineEdit_5, 11, 4, 1, 1)
-        spacerItem21 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem21, 12, 8, 1, 1)
-        self.lineEdit_6 = QtWidgets.QLineEdit(self.correcteurTab)
-        self.lineEdit_6.setObjectName("lineEdit_6")
-        self.gridLayout_6.addWidget(self.lineEdit_6, 12, 4, 1, 1)
+        self.lineEditTdVit_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditTdVit_cor.setObjectName("lineEditTdVit_cor")
+        self.gridLayout_6.addWidget(self.lineEditTdVit_cor, 12, 4, 1, 1)
+        self.lineEditTiVit_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditTiVit_cor.setObjectName("lineEditTiVit_cor")
+        self.gridLayout_6.addWidget(self.lineEditTiVit_cor, 11, 4, 1, 1)
+        self.lineEditTiPos_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditTiPos_cor.setObjectName("lineEditTiPos_cor")
+        self.gridLayout_6.addWidget(self.lineEditTiPos_cor, 11, 1, 1, 1)
         self.label_50 = QtWidgets.QLabel(self.correcteurTab)
         self.label_50.setObjectName("label_50")
         self.gridLayout_6.addWidget(self.label_50, 12, 3, 1, 1)
+        self.radioButtonCas_col = QtWidgets.QRadioButton(self.correcteurTab)
+        self.radioButtonCas_col.setObjectName("radioButtonCas_col")
+        self.buttonGroup_cor.addButton(self.radioButtonCas_col)
+        self.gridLayout_6.addWidget(self.radioButtonCas_col, 5, 0, 1, 2)
+        self.lineEditTdCour_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditTdCour_cor.setObjectName("lineEditTdCour_cor")
+        self.gridLayout_6.addWidget(self.lineEditTdCour_cor, 12, 7, 1, 1)
+        self.lineEditTiCour_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditTiCour_cor.setObjectName("lineEditTiCour_cor")
+        self.gridLayout_6.addWidget(self.lineEditTiCour_cor, 11, 7, 1, 1)
         self.label_52 = QtWidgets.QLabel(self.correcteurTab)
         self.label_52.setObjectName("label_52")
         self.gridLayout_6.addWidget(self.label_52, 12, 6, 1, 1)
-        self.lineEdit_9 = QtWidgets.QLineEdit(self.correcteurTab)
-        self.lineEdit_9.setObjectName("lineEdit_9")
-        self.gridLayout_6.addWidget(self.lineEdit_9, 12, 7, 1, 1)
-        self.lineEdit_7 = QtWidgets.QLineEdit(self.correcteurTab)
-        self.lineEdit_7.setObjectName("lineEdit_7")
-        self.gridLayout_6.addWidget(self.lineEdit_7, 11, 7, 1, 1)
-        self.label_41 = QtWidgets.QLabel(self.correcteurTab)
-        self.label_41.setObjectName("label_41")
-        self.gridLayout_6.addWidget(self.label_41, 0, 3, 1, 2)
         self.line_13 = QtWidgets.QFrame(self.correcteurTab)
         self.line_13.setLineWidth(0)
         self.line_13.setMidLineWidth(3)
@@ -582,18 +570,54 @@ class Ui_MainWindow(object):
         self.line_13.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_13.setObjectName("line_13")
         self.gridLayout_6.addWidget(self.line_13, 1, 0, 1, 8)
-        self.radioButtonCas_col = QtWidgets.QRadioButton(self.correcteurTab)
-        self.radioButtonCas_col.setObjectName("radioButtonCas_col")
-        self.buttonGroup_cor.addButton(self.radioButtonCas_col)
-        self.gridLayout_6.addWidget(self.radioButtonCas_col, 5, 0, 1, 2)
+        self.label_41 = QtWidgets.QLabel(self.correcteurTab)
+        self.label_41.setObjectName("label_41")
+        self.gridLayout_6.addWidget(self.label_41, 0, 3, 1, 2)
+        self.line_16 = QtWidgets.QFrame(self.correcteurTab)
+        self.line_16.setLineWidth(2)
+        self.line_16.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_16.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_16.setObjectName("line_16")
+        self.gridLayout_6.addWidget(self.line_16, 10, 2, 4, 1)
+        self.line_17 = QtWidgets.QFrame(self.correcteurTab)
+        self.line_17.setLineWidth(2)
+        self.line_17.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_17.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_17.setObjectName("line_17")
+        self.gridLayout_6.addWidget(self.line_17, 10, 5, 4, 1)
+        self.label_35 = QtWidgets.QLabel(self.correcteurTab)
+        self.label_35.setObjectName("label_35")
+        self.gridLayout_6.addWidget(self.label_35, 13, 0, 1, 1)
+        self.lineEditSatVit_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditSatVit_cor.setObjectName("lineEditSatVit_cor")
+        self.gridLayout_6.addWidget(self.lineEditSatVit_cor, 13, 4, 1, 1)
+        self.lineEditSatCour_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditSatCour_cor.setObjectName("lineEditSatCour_cor")
+        self.gridLayout_6.addWidget(self.lineEditSatCour_cor, 13, 7, 1, 1)
+        self.lineEditSatPos_cor = QtWidgets.QLineEdit(self.correcteurTab)
+        self.lineEditSatPos_cor.setObjectName("lineEditSatPos_cor")
+        self.gridLayout_6.addWidget(self.lineEditSatPos_cor, 13, 1, 1, 1)
+        self.label_36 = QtWidgets.QLabel(self.correcteurTab)
+        self.label_36.setObjectName("label_36")
+        self.gridLayout_6.addWidget(self.label_36, 13, 3, 1, 1)
+        self.label_37 = QtWidgets.QLabel(self.correcteurTab)
+        self.label_37.setObjectName("label_37")
+        self.gridLayout_6.addWidget(self.label_37, 13, 6, 1, 1)
+        spacerItem21 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem21, 12, 8, 1, 1)
+        spacerItem22 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem22, 13, 8, 1, 1)
         self.label_34 = QtWidgets.QLabel(self.correcteurTab)
         self.label_34.setObjectName("label_34")
-        self.gridLayout_6.addWidget(self.label_34, 2, 4, 3, 1)
+        self.gridLayout_6.addWidget(self.label_34, 2, 3, 3, 4)
+        self.label_38 = QtWidgets.QLabel(self.correcteurTab)
+        self.label_38.setObjectName("label_38")
+        self.gridLayout_6.addWidget(self.label_38, 14, 0, 1, 8)
         self.tabs.addTab(self.correcteurTab, "")
         self.gridLayout_2.addWidget(self.tabs, 0, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 836, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 920, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -616,7 +640,6 @@ class Ui_MainWindow(object):
         self.tabs.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
         # début code ajouté
         self.run_p.clicked.connect(self.runpos)
         self.Slider_col.setMinimum(0)
@@ -630,47 +653,50 @@ class Ui_MainWindow(object):
         self.lineEditDur_p.setText('0')
         self.lineEditPosFEch_v.setText('0')
         self.lineEditPosFTri_v.setText('0')
-        self.lineEdit_10.setText('0')
+        self.lineEditPlat_v.setText('0')
         self.lineEditCoefDir_v.setText('0')
         self.lineEditAmp_v.setText('0')
         self.lineEditFreq_v.setText('0')
         self.lineEditDur_v.setText('0')
         self.lineEditPosFEch_c.setText('0')
         self.lineEditPosFRam_c.setText('0')
-        self.lineEdit_11.setText('0')
+        self.lineEditPlat_c.setText('0')
         self.lineEditCoefDir_c.setText('0')
         self.lineEditAmp_c.setText('0')
         self.lineEditFreq_c.setText('0')
         self.lineEditDur_c.setText('0')
-        self.lineEdit.setText('0')
-        self.lineEdit_2.setText('0')
-        self.lineEdit_3.setText('0')
-        self.lineEdit_4.setText('0')
-        self.lineEdit_5.setText('0')
-        self.lineEdit_6.setText('0')
-        self.lineEdit_7.setText('0')
-        self.lineEdit_8.setText('0')
-        self.lineEdit_9.setText('0')
+        self.lineEditKPos_cor.setText('1')
+        self.lineEditTiPos_cor.setText('0')
+        self.lineEditTdPos_cor.setText('0')
+        self.lineEditSatPos_cor.setText('0')
+        self.lineEditKVit_cor.setText('1')
+        self.lineEditTiVit_cor.setText('0')
+        self.lineEditTdVit_cor.setText('0')
+        self.lineEditSatVit_cor.setText('0')
+        self.lineEditKCour_cor.setText('1')
+        self.lineEditTiCour_cor.setText('0')
+        self.lineEditTdCour_cor.setText('0')
+        self.lineEditSatCour_cor.setText('0')
 
         # fin code ajouté
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_4.setText(_translate("MainWindow", "position finale"))
-        self.radioButtonEch_p.setText(_translate("MainWindow", "Echelon"))
-        self.radioButtonSin_p.setText(_translate("MainWindow", "Sinus"))
-        self.radioButtonRam_p.setText(_translate("MainWindow", "Rampe"))
-        self.label_7.setText(_translate("MainWindow", "fréquence"))
         self.label_8.setText(_translate("MainWindow", "coefficient directeur"))
-        self.label_14.setText(_translate("MainWindow", "secondes"))
+        self.label_7.setText(_translate("MainWindow", "fréquence"))
+        self.radioButtonRam_p.setText(_translate("MainWindow", "Rampe"))
         self.label_6.setText(_translate("MainWindow", "amplitude"))
         self.label_5.setText(_translate("MainWindow", "position finale"))
-        self.run_p.setText(_translate("MainWindow", "run"))
+        self.label_14.setText(_translate("MainWindow", "secondes"))
         self.label_2.setText(_translate("MainWindow", "Choix du profil de commande"))
+        self.run_p.setText(_translate("MainWindow", "run"))
         self.label_3.setText(_translate("MainWindow", "cm"))
-        self.poLabelValeurPosAct_p.setText(_translate("MainWindow", "poLabelValeurPosAct"))
         self.label.setText(_translate("MainWindow", "position actuelle"))
+        self.poLabelValeurPosAct_p.setText(_translate("MainWindow", "poLabelValeurPosAct"))
+        self.label_4.setText(_translate("MainWindow", "position finale"))
+        self.radioButtonEch_p.setText(_translate("MainWindow", "Echelon"))
+        self.radioButtonSin_p.setText(_translate("MainWindow", "Sinus Asin(2pi*f*t)"))
         self.label_13.setText(_translate("MainWindow", "Durée expérimentale"))
         self.tabs.setTabText(self.tabs.indexOf(self.positionTab), _translate("MainWindow", "Position"))
         self.label_16.setText(_translate("MainWindow", "position actuelle"))
@@ -683,7 +709,7 @@ class Ui_MainWindow(object):
         self.label_15.setText(_translate("MainWindow", "amplitude"))
         self.label_17.setText(_translate("MainWindow", "secondes"))
         self.label_19.setText(_translate("MainWindow", "Durée expérimentale"))
-        self.radioButtonSin_v.setText(_translate("MainWindow", "Sinus"))
+        self.radioButtonSin_v.setText(_translate("MainWindow", "Sinus Asin(2pi*f*t)"))
         self.label_32.setText(_translate("MainWindow", "plateau"))
         self.label_20.setText(_translate("MainWindow", "Choix du profil de commande"))
         self.poLabelValeurPosAct_v.setText(_translate("MainWindow", "poLabelValeurPosAct"))
@@ -702,7 +728,7 @@ class Ui_MainWindow(object):
         self.label_23.setText(_translate("MainWindow", "position finale"))
         self.radioButtonEch_c.setText(_translate("MainWindow", "Echelon"))
         self.label_22.setText(_translate("MainWindow", "coefficient directeur"))
-        self.radioButtonSin_c.setText(_translate("MainWindow", "Sinus"))
+        self.radioButtonSin_c.setText(_translate("MainWindow", "Sinus Asin(2pi*f*t)"))
         self.label_21.setText(_translate("MainWindow", "fréquence"))
         self.label_25.setText(_translate("MainWindow", "amplitude"))
         self.label_33.setText(_translate("MainWindow", "plateau"))
@@ -716,185 +742,193 @@ class Ui_MainWindow(object):
         self.label_48.setText(_translate("MainWindow", "K"))
         self.label_46.setText(_translate("MainWindow", "Ti"))
         self.label_49.setText(_translate("MainWindow", "Ti"))
-        self.radioButton_13.setText(_translate("MainWindow", "regulation en vitesse"))
+        self.label_45.setText(_translate("MainWindow", "K"))
         self.label_54.setText(_translate("MainWindow", "Courant"))
         self.radioButtonPos_cor.setText(_translate("MainWindow", "regulation en position"))
-        self.label_45.setText(_translate("MainWindow", "K"))
-        self.label_43.setText(_translate("MainWindow", "Position"))
+        self.radioButton_13.setText(_translate("MainWindow", "regulation en vitesse"))
         self.label_51.setText(_translate("MainWindow", "K"))
+        self.label_43.setText(_translate("MainWindow", "Position"))
         self.label_42.setText(_translate("MainWindow", "Choix des parametres des correcteurs"))
         self.label_53.setText(_translate("MainWindow", "Ti"))
         self.label_47.setText(_translate("MainWindow", "Td"))
         self.label_50.setText(_translate("MainWindow", "Td"))
+        self.radioButtonCas_col.setText(_translate("MainWindow", "regulation cascade"))
         self.label_52.setText(_translate("MainWindow", "Td"))
         self.label_41.setText(_translate("MainWindow", "Choix du mode de correction"))
-        self.radioButtonCas_col.setText(_translate("MainWindow", "regulation cascade"))
+        self.label_35.setText(_translate("MainWindow", "Saturation"))
+        self.label_36.setText(_translate("MainWindow", "Saturation"))
+        self.label_37.setText(_translate("MainWindow", "Saturation"))
         self.label_34.setText(_translate("MainWindow", "K(1 + 1/(Ti*p) + Td*p/(1+Td*p/16 ))"))
+        self.label_38.setText(_translate("MainWindow", "La saturation n\'est pas prise en compte si elle est mise à 0"))
         self.tabs.setTabText(self.tabs.indexOf(self.correcteurTab), _translate("MainWindow", "Correcteur"))
         self.menuFile.setTitle(_translate("MainWindow", "Fichier"))
         self.menuOption.setTitle(_translate("MainWindow", "Option"))
         self.menuAffichage.setTitle(_translate("MainWindow", "Affichage"))
         self.menuAide.setTitle(_translate("MainWindow", "Aide"))
 
-    # début code ajouté
+        # début code ajouté
     def launch(self, controleur):
-        import sys
-        app = QtWidgets.QApplication(sys.argv)
-        MainWindow = QtWidgets.QMainWindow()
-        ui = Ui_MainWindow(controleur)
-        ui.setupUi(MainWindow)
-        MainWindow.show()
-        sys.exit(app.exec_())
+            import sys
+            app = QtWidgets.QApplication(sys.argv)
+            MainWindow = QtWidgets.QMainWindow()
+            ui = Ui_MainWindow(controleur)
+            ui.setupUi(MainWindow)
+            MainWindow.show()
+            sys.exit(app.exec_())
 
-
-    def actualisationAffichage(self,pos):
-        self.poLabelValeurPosAct_c.setText(str(pos))
-        self.poLabelValeurPosAct_col.setText(str(pos))
-        self.poLabelValeurPosAct_p.setText(str(pos))
-        self.poLabelValeurPosAct_v.setText(str(pos))
-        self.Slider_col.setValue(pos*10)
-
+    def actualisationAffichage(self, pos):
+            self.poLabelValeurPosAct_c.setText(str(pos))
+            self.poLabelValeurPosAct_col.setText(str(pos))
+            self.poLabelValeurPosAct_p.setText(str(pos))
+            self.poLabelValeurPosAct_v.setText(str(pos))
+            self.Slider_col.setValue(pos * 10)
 
     def runpos(self):
-        a=self.getposfinechelonpos()
+        self.controleur.run()
+        a=self.groupebuttoncor()
         print(a)
-        if (a=='NONE'):
-            print(1)
+        print(self.controleur.parametres.getTdcour())
 
-        if (a==''):
-            print(2)
-        print(type(a))
 
-    def num(self,a):
-        if (a == ''):
-            return (0)
-        else:
-            return float(a)
+    def num(self, a):
+            if (a == ''):
+                return (0)
+            else:
+                return float(a)
 
     def getposfinechelonpos(self):
-        return self.num(self.lineEditPosFEch_p.text())
-
+            return self.num(self.lineEditPosFEch_p.text())
 
     def getposfinrampepos(self):
-        return self.num(self.lineEditPosFRam_p.text())
+            return self.num(self.lineEditPosFRam_p.text())
 
     def getcoefdirrampepos(self):
-        return self.num(self.lineEditCoefDir_p.text())
+            return self.num(self.lineEditCoefDir_p.text())
 
     def getampcospos(self):
-        return self.num(self.lineEditAmp_p.text())
+            return self.num(self.lineEditAmp_p.text())
 
     def getfreqcospos(self):
-        return self.num(self.lineEditFreq_p.text())
+            return self.num(self.lineEditFreq_p.text())
 
     def getdurexppos(self):
-        return self.num(self.lineEditDur_p.text())
+            return self.num(self.lineEditDur_p.text())
 
     def getposfinechelonvit(self):
-        return self.num(self.lineEditPosFEch_v.text())
+            return self.num(self.lineEditPosFEch_v.text())
 
     def getposfintrapvit(self):
-        return self.num(self.lineEditPosFTri_v.text())
+            return self.num(self.lineEditPosFTri_v.text())
 
     def getplattrapvit(self):
-        return self.num(self.lineEdit_10.text())
+            return self.num(self.lineEditPlat_v.text())
 
     def getcoefdirtrapvit(self):
-        return self.num(self.lineEditCoefDir_v.text())
+            return self.num(self.lineEditCoefDir_v.text())
 
     def getampcosvit(self):
-        return self.num(self.lineEditAmp_v.text())
+            return self.num(self.lineEditAmp_v.text())
 
     def getfreqcosvit(self):
-        return self.num(self.lineEditFreq_v.text())
+            return self.num(self.lineEditFreq_v.text())
 
     def getdurexpvit(self):
-        return self.num(self.lineEditDur_v.text())
+            return self.num(self.lineEditDur_v.text())
 
     def getposfinecheloncour(self):
-        return self.num(self.lineEditPosFEch_c.text())
+            return self.num(self.lineEditPosFEch_c.text())
 
     def getposfintrapcour(self):
-        return self.num(self.lineEditPosFRam_c.text())
+            return self.num(self.lineEditPosFRam_c.text())
 
     def getplateautrapcour(self):
-        return self.num(self.lineEdit_11.text())
+            return self.num(self.lineEditPlat_c.text())
 
     def getcoefdirtrapcour(self):
-        return self.num(self.lineEditCoefDir_c.text())
+            return self.num(self.lineEditCoefDir_c.text())
 
     def getampcoscour(self):
-        return self.num(self.lineEditAmp_c.text())
+            return self.num(self.lineEditAmp_c.text())
 
     def getfreqcoscour(self):
-        return self.num(self.lineEditFreq_c.text())
+            return self.num(self.lineEditFreq_c.text())
 
     def getdurexpcour(self):
-        return self.num(self.lineEditDur_c.text())
+            return self.num(self.lineEditDur_c.text())
 
     def getKpos(self):
-        return self.num(self.lineEdit.text())
+            return self.num(self.lineEditKPos_cor.text())
 
     def getTipos(self):
-        return self.num(self.lineEdit_2.text())
+            return self.num(self.lineEditTiPos_cor.text())
 
     def getTdpos(self):
-        return self.num(self.lineEdit_3.text())
+            return self.num(self.lineEditTdPos_cor.text())
+
+    def getsatpos(self):
+            return self.num(self.lineEditSatPos_cor.text())
 
     def getKvit(self):
-        return self.num(self.lineEdit_4.text())
+            return self.num(self.lineEditKVit_cor.text())
 
     def getTivit(self):
-        return self.num(self.lineEdit_5.text())
+            return self.num(self.lineEditTiVit_cor.text())
 
     def getTdvit(self):
-        return self.num(self.lineEdit_6.text())
+            return self.num(self.lineEditTdVit_cor.text())
+
+    def getTdvit(self):
+            return self.num(self.lineEditSatVit_cor.text())
 
     def getKcour(self):
-        return self.num(self.lineEdit_8.text())
+            return self.num(self.lineEditKCour_cor.text())
 
     def getTicour(self):
-        return self.num(self.lineEdit_7.text())
+            return self.num(self.lineEditTiCour_cor.text())
 
     def getTdcour(self):
-        return self.num(self.lineEdit_9.text())
+            return self.num(self.lineEditTdCour_cor.text())
+
+    def getTdcour(self):
+            return self.num(self.lineEditSatCour_cor.text())
 
     def groupebuttonpos(self):
-        if self.radioButtonEch_p.isChecked() == True:       #rends 1 si le bouton d'echellon est coché dans la page position
-            return 1
-        if self.radioButtonRam_p.isChecked() ==True:        #rends 2 si le bouton de rampe est coché dans la page position
-            return 2
-        if self.radioButtonSin_p.isChecked() ==True:        #rends 3 si le bouton sinus est coché dans la page position
-            return 3
+            if self.radioButtonEch_p.isChecked() == True:  # rends 1 si le bouton d'echellon est coché dans la page position
+                return 1
+            if self.radioButtonRam_p.isChecked() == True:  # rends 2 si le bouton de rampe est coché dans la page position
+                return 2
+            if self.radioButtonSin_p.isChecked() == True:  # rends 3 si le bouton sinus est coché dans la page position
+                return 3
 
     def groupebuttonvit(self):
-        if self.radioButtonEch_v.isChecked() == True:       #rends 1 si le bouton d'echellon est coché dans la page vitesse
-            return 1
-        if self.radioButtonTri_v.isChecked() ==True:        #rends 2 si le bouton de rampe est coché dans la page vitesse
-            return 2
-        if self.radioButtonSin_v.isChecked() ==True:        #rends 3 si le bouton sinus est coché dans la page vitesse
-            return 3
+            if self.radioButtonEch_v.isChecked() == True:  # rends 1 si le bouton d'echellon est coché dans la page vitesse
+                return 1
+            if self.radioButtonTri_v.isChecked() == True:  # rends 2 si le bouton de rampe est coché dans la page vitesse
+                return 2
+            if self.radioButtonSin_v.isChecked() == True:  # rends 3 si le bouton sinus est coché dans la page vitesse
+                return 3
 
     def groupebuttoncour(self):
-        if self.radioButtonEch_c.isChecked() == True:       #rends 1 si le bouton d'echellon est coché dans la page courant
-            return 1
-        if self.radioButtonRam_c_c.isChecked() == True:     #rends 2 si le bouton de rampe est coché dans la page courant
-            return 2
-        if self.radioButtonSin_c.isChecked() == True:       #rends 3 si le bouton sinus est coché dans la page courant
-            return 3
+            if self.radioButtonEch_c.isChecked() == True:  # rends 1 si le bouton d'echellon est coché dans la page courant
+                return 1
+            if self.radioButtonRam_c_c.isChecked() == True:  # rends 2 si le bouton de rampe est coché dans la page courant
+                return 2
+            if self.radioButtonSin_c.isChecked() == True:  # rends 3 si le bouton sinus est coché dans la page courant
+                return 3
 
     def groupebuttoncor(self):
-        if self.radioButtonPos_cor.isChecked() == True:     #rends 1 si correction en posistion
-            return 1
-        if self.radioButton_13.isChecked() == True:         #rends 2 si correction en vitesse
-            return 2
-        if self.radioButtonCour_col.isChecked() == True:    #rends 3 si correction en courant
-            return 3
-        if self.radioButtonCas_col.isChecked() ==True:      #rends 4 si correction en cascade
-            return 4
+            if self.radioButtonPos_cor.isChecked() == True:  # rends 1 si correction en posistion
+                return 1
+            if self.radioButton_13.isChecked() == True:  # rends 2 si correction en vitesse
+                return 2
+            if self.radioButtonCour_col.isChecked() == True:  # rends 3 si correction en courant
+                return 3
+            if self.radioButtonCas_col.isChecked() == True:  # rends 4 si correction en cascade
+                return 4
 
 
-    # fin code ajouté
+        # fin code ajouté
+
 
 if __name__ == "__main__":
     import sys
