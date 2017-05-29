@@ -422,15 +422,16 @@ class Controleur:
                     consignePos.append(posFinale)
 
                     if satPos != 0:
-                        consigneCour.append(pos2current_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1],
-                                                            self.pPositionIs_i.contents.value / mm2qc, errPos,
+                        #je tente de convertir le positionn en qc pour les calculs
+                        consigneCour.append(pos2current_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1]*mm2qc,
+                                                            self.pPositionIs_i.contents.value, errPos,
                                                             sommeErrPos))
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
                         self.carteEpos.setCurrentMust(c_short(consigneCour[-1]), self.pErrorCode_i)
                     else:
-                        consigneCour.append(pos2current(Kpos, Tipos, Tdpos, consignePos[-1],
-                                                        self.pPositionIs_i.contents.value / mm2qc, errPos,
+                        consigneCour.append(pos2current(Kpos, Tipos, Tdpos, consignePos[-1]*mm2qc,
+                                                        self.pPositionIs_i.contents.value, errPos,
                                                         sommeErrPos))
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
@@ -445,7 +446,7 @@ class Controleur:
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
 
-        elif self.interface.groupebuttoncor() == 4:  # si correction en position
+        elif self.interface.groupebuttoncor() == 4:  # si correction en cascade
 
             debut = time.time()
             while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -475,12 +476,12 @@ class Controleur:
                     consignePos.append(posFinale)
 
                     if satPos != 0:
-                        consigneVit.append(pos2velocity_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1],
-                                                                        self.pPositionIs_i.contents.value / mm2qc, errPos,
+                        consigneVit.append(pos2velocity_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1]*mm2qc,
+                                                                        self.pPositionIs_i.contents.value, errPos,
                                                                         sommeErrPos))
                     else:
-                        consigneVit.append(pos2velocity(Kpos, Tipos, Tdpos, consignePos[-1],
-                                                                    self.pPositionIs_i.contents.value / mm2qc, errPos,
+                        consigneVit.append(pos2velocity(Kpos, Tipos, Tdpos, consignePos[-1]*mm2qc,
+                                                                    self.pPositionIs_i.contents.value, errPos,
                                                                     sommeErrPos))
 
                     self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
