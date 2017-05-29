@@ -531,8 +531,8 @@ class Controleur:
         # initialisation des constantes
         ValMaxCourEpos = 5000  # on s'arrange pour ne pas depasser 5A en courant dans tous les cas
         mm2qc = 294
-        dureeExp=self.interface.getdurexppos()
-        vitFinale=3         #en attente interface
+        dureeExp=self.interface.getDureeExp()
+        vitFinale=2000         #en attente interface (en rpm)
         rapportReduction = 0.1082 / (2 * math.pi * 15.88)
         posFinale = 2 * math.pi * rapportReduction * dureeExp * vitFinale
 
@@ -630,20 +630,30 @@ class Controleur:
                     # On calcule ce que la commande renvoie comme courant
                     consigneVit.append(vitFinale)
 
-                    if SatVit != 0:
-                        consigneCour.append(Correcteurs.velocity2current_sat(Kvit, Tivit, Tdvit, Savit, consigneVit[-1],
+                    if satVit != 0:
+                        sortie=Correcteurs.velocity2current_sat(Kvit, Tivit, Tdvit, satVit, consigneVit[-1],
                                                                              self.pVelocityIs_i.contents.value, errVit,
-                                                                             sommeErrVit,Te))
+                                                                             sommeErrVit,Te)
+                        sommeErrVit=sortie[1]
+                        consigneCour.append(sortie[0]*1000) #conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
-                        MyEpos.setCurrentMust(c_short(consigneCour[-1]), self.pErrorCode_i)
+                        if consigneCour[-1]<-ValMaxCourEpos:
+                            consigneCour[-1]=-4000
+                        c=int(consigneCour[-1])
+                        self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
-                        consigneCour.append(Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1],
-                                                                         self.pVelocityIs_i.contents.value, errVit,
-                                                                         sommeErrVit,Te))
+                        sortie=Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1],
+                                                     self.pVelocityIs_i.contents.value, errVit,
+                                                     sommeErrVit, Te)
+                        sommeErrVit = sortie[1]
+                        consigneCour.append(sortie[0]*1000)#conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
-                        MyEpos.setCurrentMust(c_short(consigneCour[-1]), self.pErrorCode_i)
+                        if consigneCour[-1] < -ValMaxCourEpos:
+                            consigneCour[-1] = -4000
+                        c = int(consigneCour[-1])
+                        self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
                 compt+=1
                 Temps.append(time.time() - debut)
@@ -755,6 +765,7 @@ class Controleur:
                     consigneCour.append(courFinal)
 
                     if satCour != 0:
+                        #modifier sur le modèle de la boucle de vitesse
                         courantCorrige.append(Correcteurs.courant_cmd_sat(Kcour, Ticour, Tdcour, satCour, consigneCour[-1],
                                                                              self.pCurrentIs_i.contents.value, errCour,
                                                                              sommeErrCour,Te))

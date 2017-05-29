@@ -148,7 +148,7 @@ def velocity2current(K,Ti,Td,cmd,S,err,somme_err,Te):
         courant=prop(K,err[-1])
     else:
         courant=pid(K,Ti,Td,err,somme_err,Te)
-    return courant
+    return courant,somme_err
 
 def velocity2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
     err[0]=err[1]
@@ -160,12 +160,12 @@ def velocity2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
         courant=prop(K,err[-1])
     else:
         courant=pid_sat(K,Ti,Td,err,somme_err,Sat,Te)
-    return courant
+    return courant,somme_err
 
 
 #boucle de courant avec pi courant
 #S sortie en courant du modele et courantC est le courant en sortie du correcteur
-def courant_cmd(cmd,S,err,somme_err,K,Ti,Td,Te):
+def courant_cmd(K,Ti,Td,cmd,S,err,somme_err,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
@@ -178,7 +178,7 @@ def courant_cmd(cmd,S,err,somme_err,K,Ti,Td,Te):
     return courantC
 
 
-def courant_cmd_sat(cmd,S,err,somme_err,Sat,K,Ti,Td,Te):
+def courant_cmd_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
