@@ -10,7 +10,7 @@ import ctypes
 from ctypes import *
 from matplotlib.pylab import *
 import time
-import Correcteurs
+from Correcteurs import *
 from Commandes import *
 
 
@@ -320,8 +320,8 @@ class Controleur:
         # initialisation des constantes
         ValMaxCourEpos = 5000  # on s'arrange pour ne pas depasser 5A en courant dans tous les cas
         mm2qc = 294
-        dureeExp=self.interface.getdurexppos()
-        posFinale=self.interface.getposfinechelonpos()
+        dureeExp=self.parametres.getDureeExp()
+        posFinale=self.interface.getposfinechelonpos() #a coder en dur pour les tests
 
         if posFinale > 490 or posFinale < 10:
             return ('Cette valeur est interdite')
@@ -425,17 +425,19 @@ class Controleur:
                         #je tente de convertir le positionn en qc pour les calculs
                         consigneCour.append(pos2current_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1]*mm2qc,
                                                             self.pPositionIs_i.contents.value, errPos,
-                                                            sommeErrPos))
+                                                            sommeErrPos,Te))
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
-                        self.carteEpos.setCurrentMust(c_short(consigneCour[-1]), self.pErrorCode_i)
+                        c=int(consigneCour[-1])
+                        self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
                         consigneCour.append(pos2current(Kpos, Tipos, Tdpos, consignePos[-1]*mm2qc,
                                                         self.pPositionIs_i.contents.value, errPos,
-                                                        sommeErrPos))
+                                                        sommeErrPos,Te))
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
-                        self.carteEpos.setCurrentMust(c_short(consigneCour[-1]), self.pErrorCode_i)
+                        c = int(consigneCour[-1])
+                        self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                 compt+=1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -478,35 +480,37 @@ class Controleur:
                     if satPos != 0:
                         consigneVit.append(pos2velocity_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1]*mm2qc,
                                                                         self.pPositionIs_i.contents.value, errPos,
-                                                                        sommeErrPos))
+                                                                        sommeErrPos,Te))
                     else:
                         consigneVit.append(pos2velocity(Kpos, Tipos, Tdpos, consignePos[-1]*mm2qc,
                                                                     self.pPositionIs_i.contents.value, errPos,
-                                                                    sommeErrPos))
+                                                                    sommeErrPos,Te))
 
                     self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
                     if satVit != 0:
                         consigneCour.append(velocity2current_sat(Kvit, Tivit, Tdvit, satVit, consigneVit[-1],
-                                                             self.pVelocityIs_i.contents.value, errVit, sommeErrVit))
+                                                             self.pVelocityIs_i.contents.value, errVit, sommeErrVit,Te))
                     else:
                         consigneCour.append(velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1],
                                                                          self.pVelocityIs_i.contents.value, errVit,
-                                                                         sommeErrVit))
+                                                                         sommeErrVit,Te))
 
                     self.carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
                     if satCour != 0:
                         courantCorrige.append(courant_cmd_sat(Kcour, Ticour, Tdcour, satCour, consigneCour[-1],
-                                                        self.pCurrentIs_i.contents.value, errCour, sommeErrCour))
+                                                        self.pCurrentIs_i.contents.value, errCour, sommeErrCour,Te))
                         if courantCorrige[-1] > ValMaxCourEpos:
                             courantCorrige[-1] = 4000
-                        self.carteEpos.setCurrentMust(c_short(courantCorrige[-1]), self.pErrorCode_i)
+                        c = int(courantCorrige[-1])
+                        self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
                         courantCorrige.append(courant_cmd(Kcour, Ticour, Tdcour, consigneCour[-1],
                                                                       self.pCurrentIs_i.contents.value, errCour,
-                                                                      sommeErrCour))
+                                                                      sommeErrCour,Te))
                         if courantCorrige[-1] > ValMaxCourEpos:
                             courantCorrige[-1] = 4000
-                        self.carteEpos.setCurrentMust(c_short(courantCorrige[-1]), self.pErrorCode_i)
+                        c = int(courantCorrige[-1])
+                        self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                 compt+=1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -629,14 +633,14 @@ class Controleur:
                     if SatVit != 0:
                         consigneCour.append(Correcteurs.velocity2current_sat(Kvit, Tivit, Tdvit, Savit, consigneVit[-1],
                                                                              self.pVelocityIs_i.contents.value, errVit,
-                                                                             sommeErrVit))
+                                                                             sommeErrVit,Te))
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
                         MyEpos.setCurrentMust(c_short(consigneCour[-1]), self.pErrorCode_i)
                     else:
                         consigneCour.append(Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1],
                                                                          self.pVelocityIs_i.contents.value, errVit,
-                                                                         sommeErrVit))
+                                                                         sommeErrVit,Te))
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
                         MyEpos.setCurrentMust(c_short(consigneCour[-1]), self.pErrorCode_i)
@@ -753,14 +757,14 @@ class Controleur:
                     if satCour != 0:
                         courantCorrige.append(Correcteurs.courant_cmd_sat(Kcour, Ticour, Tdcour, satCour, consigneCour[-1],
                                                                              self.pCurrentIs_i.contents.value, errCour,
-                                                                             sommeErrCour))
+                                                                             sommeErrCour,Te))
                         if courantCorrige[-1] > ValMaxCourEpos:
                             courantCorrige[-1] = 4000
                         MyEpos.setCurrentMust(c_short(courantCorrige[-1]), self.pErrorCode_i)
                     else:
                         courantCorrige.append(Correcteurs.courant_cmd(Kcour, Ticour, Tdcour, courantCorrige[-1],
                                                                          self.pCurrentIs_i.contents.value, errCour,
-                                                                         sommeErrCour))
+                                                                         sommeErrCour,Te))
                         if courantCorrige[-1] > ValMaxCourEpos:
                             courantCorrige[-1] = 4000
                         MyEpos.setCurrentMust(c_short(courantCorrige[-1]), self.pErrorCode_i)

@@ -42,30 +42,30 @@ def pi_bilin(K,Ti,cmd,E1,S1,Te):
 
 #pi mais en version un peu plus bourrin
 #err=tableau avec les erreurs
-def pi(K,Ti,err,somme_err):
-    result=K*err+(K/Ti)*somme_err
+def pi(K,Ti,err,somme_err,Te):
+    result=K*err+(K/Ti)*somme_err*Te
     return result
 
 
 
-def pi_sat(K,Ti,err,somme_err,Sat):
-    result = K * err + (K / Ti) * somme_err
+def pi_sat(K,Ti,err,somme_err,Sat,Te):
+    result = K * err + (K / Ti) * somme_err*Te
     if result>Sat:
-        result = K*err + ((Sat-result)/Ti+(K / Ti))*somme_err
+        result = K*err + ((Sat-result)/Ti+(K / Ti))*somme_err*Te
     return result
 
 #pid bourrin (mais qui marche bien)
-def pid(K,Ti,Td,err,somme_err):
-    delta_err=err[-1]-err[-2]
-    result=K*err[-1]+(K/Ti)*somme_err+(K*Td)*delta_err
+def pid(K,Ti,Td,err,somme_err,Te):
+    delta_err=(err[-1]-err[-2])/Te
+    result=K*err[-1]+(K/Ti)*somme_err*Te+(K*Td)*delta_err
     return result
 
 
-def pid_sat(K,Ti,Td,err,somme_err,Sat):
-    delta_err=err[-1]-err[-2]
-    result=K*err[-1]+(K/Ti)*somme_err+(K*Td)*delta_err
+def pid_sat(K,Ti,Td,err,somme_err,Sat,Te):
+    delta_err=(err[-1]-err[-2])/Te
+    result=K*err[-1]+(K/Ti)*somme_err*Te+(K*Td)*delta_err
     if result>Sat:
-        result = K*err[-1] + ((Sat-result)/Ti+(K / Ti))*somme_err + (K*Td)*delta_err
+        result = K*err[-1] + ((Sat-result)/Ti+(K / Ti))*somme_err*Te + (K*Td)*delta_err
     return result
 
 #correcteur proportionnel
@@ -83,111 +83,111 @@ def prop(K,err):
 #LES FONCTIONS SUIVANTES SONT A ITERER
 
 #permet d'avoir en sortie un courant qu'il faudra ensuite corriger avec current_cmd()
-def pos2current(K,Ti,Td,cmd,S,err,somme_err):
+def pos2current(K,Ti,Td,cmd,S,err,somme_err,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
     if Td=='' and Ti!='':
-        courant=pi(K,Ti,err[-1],somme_err)
+        courant=pi(K,Ti,err[-1],somme_err,Te)
     elif Td=='' and Ti=='':
         courant=prop(K,err[-1])
     else:
-        courant=pid(K,Ti,Td,err,somme_err)
+        courant=pid(K,Ti,Td,err,somme_err,Te)
     return courant
 
 
-def pos2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err):
+def pos2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
     if Td=='' and Ti!='':
-        courant=pi_sat(K,Ti,err[-1],somme_err,Sat)
+        courant=pi_sat(K,Ti,err[-1],somme_err,Sat,Te)
     elif Td=='' and Ti=='':
         courant=prop(K,err[-1])
     else:
-        courant=pid_sat(K,Ti,Td,err,somme_err,Sat)
+        courant=pid_sat(K,Ti,Td,err,somme_err,Sat,Te)
     return courant
 
 
 #permet d'avoir en sortie une vitesse qu'il faudra ensuite corriger avec vit2current puis current_cmd()
 #fonction identique à la precedente mais nom différent pour plus de lisibilite
-def pos2velocity(K,Ti,Td,cmd,S,err,somme_err):
+def pos2velocity(K,Ti,Td,cmd,S,err,somme_err,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
-    if Td==0 and Ti!=0:
-        vitesse=pi(K,Ti,err[-1],somme_err)
-    elif Td==0 and Ti==0:
+    if Td=='' and Ti!='':
+        vitesse=pi(K,Ti,err[-1],somme_err,Te)
+    elif Td=='' and Ti=='':
         vitesse=prop(K,err[-1])
     else:
-        vitesse=pid(K,Ti,Td,err,somme_err)
+        vitesse=pid(K,Ti,Td,err,somme_err,Te)
     return vitesse
 
 
-def pos2velocity_sat(K,Ti,Td,Sat,cmd,S,err,somme_err):
+def pos2velocity_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
-    if Td==0 and Ti!=0:
-        vitesse=pi_sat(K,Ti,err[-1],somme_err,Sat)
-    elif Td==0 and Ti==0:
+    if Td=='' and Ti!='':
+        vitesse=pi_sat(K,Ti,err[-1],somme_err,Sat,Te)
+    elif Td=='' and Ti=='':
         vitesse=prop(K,err[-1])
     else:
-        vitesse=pid_sat(K,Ti,Td,err,somme_err,Sat)
+        vitesse=pid_sat(K,Ti,Td,err,somme_err,Sat,Te)
     return vitesse
 
 
 #conversion de la vitesse en courant
-def velocity2current(K,Ti,Td,cmd,S,err,somme_err):
+def velocity2current(K,Ti,Td,cmd,S,err,somme_err,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
-    if Td==0 and Ti!=0:
-        courant=pi(K,Ti,err[-1],somme_err)
-    elif Td==0 and Ti==0:
+    if Td=='' and Ti!='':
+        courant=pi(K,Ti,err[-1],somme_err,Te)
+    elif Td=='' and Ti=='':
         courant=prop(K,err[-1])
     else:
-        courant=pid(K,Ti,Td,err,somme_err)
+        courant=pid(K,Ti,Td,err,somme_err,Te)
     return courant
 
-def velocity2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err):
+def velocity2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
-    if Td==0 and Ti!=0:
-        courant=pi_sat(K,Ti,err[-1],somme_err,Sat)
-    elif Td==0 and Ti==0:
+    if Td=='' and Ti!='':
+        courant=pi_sat(K,Ti,err[-1],somme_err,Sat,Te)
+    elif Td=='' and Ti=='':
         courant=prop(K,err[-1])
     else:
-        courant=pid_sat(K,Ti,Td,err,somme_err,Sat)
+        courant=pid_sat(K,Ti,Td,err,somme_err,Sat,Te)
     return courant
 
 
 #boucle de courant avec pi courant
 #S sortie en courant du modele et courantC est le courant en sortie du correcteur
-def courant_cmd(cmd,S,err,somme_err,K,Ti,Td):
+def courant_cmd(cmd,S,err,somme_err,K,Ti,Td,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
-    if Td==0 and Ti!=0:
-        courantC=pi(K,Ti,err[-1],somme_err)
-    elif Td==0 and Ti==0:
+    if Td=='' and Ti!='':
+        courantC=pi(K,Ti,err[-1],somme_err,Te)
+    elif Td=='' and Ti=='':
         courantC=prop(K,err[-1])
     else:
-        courantC=pid(K,Ti,Td,err,somme_err)
+        courantC=pid(K,Ti,Td,err,somme_err,Te)
     return courantC
 
 
-def courant_cmd_sat(cmd,S,err,somme_err,Sat,K,Ti,Td):
+def courant_cmd_sat(cmd,S,err,somme_err,Sat,K,Ti,Td,Te):
     err[0]=err[1]
     err[1]=cmd-S
     somme_err+=err[1]
-    if Td==0 and Ti!=0:
-        courantC=pi_sat(K,Ti,err[-1],somme_err,Sat)
-    elif Td==0 and Ti==0:
+    if Td=='' and Ti!='':
+        courantC=pi_sat(K,Ti,err[-1],somme_err,Sat,Te)
+    elif Td=='' and Ti=='':
         courantC=prop(K,err[-1])
     else:
-        courantC=pid_sat(K,Ti,Td,err,somme_err,Sat)
+        courantC=pid_sat(K,Ti,Td,err,somme_err,Sat,Te)
     return courantC
 
 #pour l instant bcp d'arguments mais visuellement c est plsu simple a comprendre que des tableaux
