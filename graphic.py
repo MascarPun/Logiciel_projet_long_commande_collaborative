@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtWidgets
 from numpy import arange, sin, pi
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from PyQt5 import QtGui
 
 progname = os.path.basename(sys.argv[0])
 progversion = "0.1"
@@ -33,7 +34,11 @@ class MyMplCanvas(FigureCanvas):
                                    QtWidgets.QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
 
+
     def compute_initial_figure(self):
+        pass
+
+    def actualisation_graph(self):
         pass
 
 
@@ -52,6 +57,8 @@ class MyStaticMplCanvas(MyMplCanvas):
         self.axes.cla()
         for i in range(len(s)):
             self.axes.plot(t, s[i])
+
+        self.draw()
 
 
 
@@ -91,6 +98,10 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+
+
+
+
         self.pushButton.clicked.connect(lambda: self.update_bouton(self.sc, self.s, self.t))
 
         self.retranslateUi(MainWindow)
@@ -105,28 +116,30 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "plot"))
 
     def update_bouton(self, graph, s, t):
-        if self.checkBox_pos.isChecked()==True & self.checkBox_vit.isChecked()==True & self.checkBox_cour.isChecked() ==True:
+        if (self.checkBox_pos.isChecked() == True and self.checkBox_vit.isChecked() == True and self.checkBox_cour.isChecked() ==True):
             s = numpy.array([s[0], s[1], s[2]])
-            self.sc.actualisation_graph(t,s)
-        elif self.checkBox_pos.isChecked()==True & self.checkBox_vit.isChecked()==True & self.checkBox_cour.isChecked()==False:
+            graph.actualisation_graph(t,s)
+            self.sc.actualisation_graph(t, s)
+        elif (self.checkBox_pos.isChecked()==True and self.checkBox_vit.isChecked()==True and self.checkBox_cour.isChecked()==False):
             s = numpy.array([s[0], s[1]])
+            graph.actualisation_graph(t,s)
             self.sc.actualisation_graph(t,s)
-        elif self.checkBox_pos.isChecked()==True & self.checkBox_vit.isChecked()==False & self.checkBox_cour.isChecked()==True:
+        elif (self.checkBox_pos.isChecked()==True and self.checkBox_vit.isChecked()==False and self.checkBox_cour.isChecked()==True):
             s = numpy.array([s[0], s[2]])
             self.sc.actualisation_graph(t,s)
-        elif self.checkBox_pos.isChecked()==True & self.checkBox_vit.isChecked()==False & self.checkBox_cour.isChecked()==False:
+        elif (self.checkBox_pos.isChecked()==True and self.checkBox_vit.isChecked()==False and self.checkBox_cour.isChecked()==False):
             s = numpy.array([s[0]])
             self.sc.actualisation_graph(t,s)
-        elif self.checkBox_pos.isChecked()==False & self.checkBox_vit.isChecked()==True & self.checkBox_cour.isChecked()==True:
+        elif (self.checkBox_pos.isChecked()==False and self.checkBox_vit.isChecked()==True and self.checkBox_cour.isChecked()==True):
             s = numpy.array([s[1], s[2]])
             self.sc.actualisation_graph(t,s)
-        elif self.checkBox_pos.isChecked()==False & self.checkBox_vit.isChecked()==True & self.checkBox_cour.isChecked()==False:
+        elif (self.checkBox_pos.isChecked()==False and self.checkBox_vit.isChecked()==True and self.checkBox_cour.isChecked()==False):
             s = numpy.array([s[1]])
             self.sc.actualisation_graph(t,s)
-        elif self.checkBox_pos.isChecked()==False & self.checkBox_vit.isChecked()==False & self.checkBox_cour.isChecked()==True:
+        elif (self.checkBox_pos.isChecked()==False and self.checkBox_vit.isChecked()==False and self.checkBox_cour.isChecked()==True):
             s = numpy.array([s[2]])
             self.sc.actualisation_graph(t,s)
-        elif self.checkBox_pos.isChecked()==False & self.checkBox_vit.isChecked()==False & self.checkBox_cour.isChecked()==False:
+        elif (self.checkBox_pos.isChecked()==False and self.checkBox_vit.isChecked()==False and self.checkBox_cour.isChecked()==False):
             s = numpy.array([])
             self.sc.actualisation_graph(t,s)
 
@@ -137,43 +150,10 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     t = arange(0.0, 3.0, 0.01)
-    s = numpy.array([sin(2 * pi * t), sin(2 * pi * t + 0.2), sin(2 * pi * t + 0.4)])
+    s = numpy.array([2*sin(2 * pi * t), 3*sin(2 * pi * t + 0.2), 4*sin(2 * pi * t + 0.4)])
     ui = Ui_MainWindow(s,t)
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
 
 
-# code à conserver pour des tests
-"""class ApplicationWindow(QtWidgets.QMainWindow):
-    def __init__(self):
-        QtWidgets.QMainWindow.__init__(self)
-        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-        self.setWindowTitle("application graphic display")
-
-
-        self.main_widget = QtWidgets.QWidget(self)
-
-        l = QtWidgets.QVBoxLayout(self.main_widget)
-        sc = MyStaticMplCanvas(self.main_widget, width=5, height=4, dpi=100)
-
-
-        self.main_widget.setFocus()
-        self.setCentralWidget(self.main_widget)
-
-
-    def fileQuit(self):
-        self.close()
-
-    def closeEvent(self, ce):
-        self.fileQuit()
-
-
-
-qApp = QtWidgets.QApplication(sys.argv)
-
-aw = ApplicationWindow()
-aw.setWindowTitle("%s" % progname)
-aw.show()
-sys.exit(qApp.exec_())
-#qApp.exec_()"""
