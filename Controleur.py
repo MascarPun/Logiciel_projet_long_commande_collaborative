@@ -1375,9 +1375,10 @@ class Controleur:
         sommeErreurCour = 0
         rad_m = 1 #A Ajuster
 
-
-
-        while self.parametres.collaborativeRunning:
+        t0 = time.time()
+        t = time.time()
+        dureeExp = self.parametres.getDureeExp
+        while t-t0< dureeExp:
             while time.time() - t < Te:
                 a = 0
             t = time.time()
