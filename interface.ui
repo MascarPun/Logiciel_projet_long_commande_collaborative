@@ -23,7 +23,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
+    <item row="0" column="1">
      <widget class="QTabWidget" name="tabs">
       <property name="font">
        <font>
@@ -1050,13 +1050,6 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="8" rowspan="5">
-         <widget class="QSlider" name="Slider_col">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="9">
          <widget class="QLabel" name="poLabelValeurPosAct_col">
           <property name="text">
@@ -1084,18 +1077,12 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="4">
-         <spacer name="verticalSpacer_22">
+        <item row="0" column="8" rowspan="5">
+         <widget class="QSlider" name="Slider_col">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
+         </widget>
         </item>
         <item row="1" column="2">
          <widget class="QLineEdit" name="lineEditK_col"/>
@@ -1147,6 +1134,19 @@
           </property>
          </spacer>
         </item>
+        <item row="2" column="5">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="2" column="10">
          <spacer name="horizontalSpacer_4">
           <property name="orientation">
@@ -1160,15 +1160,22 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="5">
-         <spacer name="horizontalSpacer_3">
+        <item row="5" column="2">
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>stop</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="4" rowspan="2">
+         <spacer name="verticalSpacer_22">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
-            <height>20</height>
+            <width>20</width>
+            <height>40</height>
            </size>
           </property>
          </spacer>
