@@ -1237,6 +1237,11 @@ class Controleur:
 
 
 
+
+
+
+
+
     def commandeCascade(self, consignePos):
 
         Kpos = self.parametres.getKpos()
@@ -1271,23 +1276,29 @@ class Controleur:
                 a = 0
             t = time.time()
 
+        ############ Elaboration Consigne Vitesse a partir de Consigne Position ############
             carteEpos.getPositionIs(pPositionIs, self.pErrorCode_i)  # mesure de position initiale
             positionLueMm = self.pPositionIs_i.contents.value / mm2qc  # conversion qc en mm
             positions.append(positionLueMm)
-            consigneVit.append(Correcteurs.pos2velocity(Kpos, Tipos, Tdpos, consignePos[i], positionLueMm,
-                                                            erreurPos, sommeErreurPos))
+            a = Correcteurs.pos2velocity(Kpos, Tipos, Tdpos, consignePos[i], positionLueMm, erreurPos, sommeErreurPos)
+            consigneVit.append(a[0])
+            sommeErreurPos = sommeErreurPos + a[1]
 
+        ############ Elaboration Consigne Courant a partir de Consigne Vitesse ############
             carteEpos.getVelocityIs(pVelocityIs, self.pErrorCode_i)
             vitesseLue = self.pVelocityIs_i.contents.value  # en tour par minute ATTENTION ERREUR UNITE SOMMATEUR!
             vitesses.append(vitesseLue)
-            consigneCour.append(Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1], vitesseLue,
-                                                                 erreurVit, sommeErreurVit))
+            a = Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1], vitesseLue,erreurVit, sommeErreurVit)
+            consigneCour.append(a[0])
+            sommeErreurVit = sommeErreurVit + a[1]
 
+        ############ Elaboration Consigne Courant Envoye a partir de Consigne Courant ############
             carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
             courantLu = self.pCurrentIs_i.contents.value / 1000  # en A
             courants.append(courantLu)
-            courantImposePI.append(Correcteurs.courant_cmd(consigneCour[-1], courantLu, erreurCour, sommeErreurCour,
-                                                           Kcour, Ticour, Tdcour))
+            a = Correcteurs.courant_cmd(consigneCour[-1], courantLu, erreurCour, sommeErreurCour, Kcour, Ticour, Tdcour)
+            courantImposePI.append(a[0])
+            sommeErreurCour = sommeErreurCour + a[1]
             self.carteEpos.setCurrentMust(c_long(courantImposePI[-1]), self.pErrorCode_i)
 
             i = i + 1
