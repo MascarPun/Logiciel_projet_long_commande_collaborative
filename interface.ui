@@ -1005,7 +1005,7 @@
          </spacer>
         </item>
         <item row="3" column="2">
-         <widget class="QLineEdit" name="lineEdit_3"/>
+         <widget class="QLineEdit" name="lineEditTd_col"/>
         </item>
         <item row="3" column="1">
          <widget class="QLabel" name="label_55">
@@ -1015,7 +1015,7 @@
          </widget>
         </item>
         <item row="2" column="2">
-         <widget class="QLineEdit" name="lineEdit_2"/>
+         <widget class="QLineEdit" name="lineEditTi_col"/>
         </item>
         <item row="2" column="4">
          <spacer name="verticalSpacer_15">
@@ -1098,7 +1098,7 @@
          </spacer>
         </item>
         <item row="1" column="2">
-         <widget class="QLineEdit" name="lineEdit"/>
+         <widget class="QLineEdit" name="lineEditK_col"/>
         </item>
         <item row="1" column="1">
          <widget class="QLabel" name="label_39">

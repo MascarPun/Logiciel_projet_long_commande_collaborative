@@ -11,7 +11,7 @@ class Parametre:
         self.tdpos = 1
 
         # parametre de corecteur pid pour la boucle de vitesse
-        self.kvit = 0,02
+        self.kvit = 0.02
         self.tivit = 1
         self.tdvit = 1
 

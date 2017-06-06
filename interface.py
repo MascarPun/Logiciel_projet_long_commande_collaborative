@@ -14,10 +14,9 @@ class Ui_MainWindow(object):
         self.controleur = controleur
     # fin code ajouté
 
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(920, 586)
+        MainWindow.resize(875, 608)
         font = QtGui.QFont()
         font.setPointSize(11)
         MainWindow.setFont(font)
@@ -421,35 +420,61 @@ class Ui_MainWindow(object):
         self.collaboTab = QtWidgets.QWidget()
         self.collaboTab.setAutoFillBackground(True)
         self.collaboTab.setObjectName("collaboTab")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.collaboTab)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem12)
-        spacerItem13 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem13)
-        self.label_31 = QtWidgets.QLabel(self.collaboTab)
-        self.label_31.setObjectName("label_31")
-        self.horizontalLayout.addWidget(self.label_31)
-        spacerItem14 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem14)
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.collaboTab)
+        self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        spacerItem12 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_5.addItem(spacerItem12, 1, 4, 1, 1)
+        self.lineEditTd_col = QtWidgets.QLineEdit(self.collaboTab)
+        self.lineEditTd_col.setObjectName("lineEditTd_col")
+        self.gridLayout_5.addWidget(self.lineEditTd_col, 3, 2, 1, 1)
+        self.label_55 = QtWidgets.QLabel(self.collaboTab)
+        self.label_55.setObjectName("label_55")
+        self.gridLayout_5.addWidget(self.label_55, 3, 1, 1, 1)
+        self.lineEditTi_col = QtWidgets.QLineEdit(self.collaboTab)
+        self.lineEditTi_col.setObjectName("lineEditTi_col")
+        self.gridLayout_5.addWidget(self.lineEditTi_col, 2, 2, 1, 1)
+        spacerItem13 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_5.addItem(spacerItem13, 2, 4, 1, 1)
+        spacerItem14 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_5.addItem(spacerItem14, 0, 4, 1, 1)
+        self.run_col = QtWidgets.QPushButton(self.collaboTab)
+        self.run_col.setObjectName("run_col")
+        self.gridLayout_5.addWidget(self.run_col, 4, 2, 1, 1)
         self.Slider_col = QtWidgets.QSlider(self.collaboTab)
         self.Slider_col.setOrientation(QtCore.Qt.Vertical)
         self.Slider_col.setObjectName("Slider_col")
-        self.horizontalLayout.addWidget(self.Slider_col)
+        self.gridLayout_5.addWidget(self.Slider_col, 0, 8, 5, 1)
         self.poLabelValeurPosAct_col = QtWidgets.QLabel(self.collaboTab)
         self.poLabelValeurPosAct_col.setObjectName("poLabelValeurPosAct_col")
-        self.horizontalLayout.addWidget(self.poLabelValeurPosAct_col)
-        spacerItem15 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem15)
-        spacerItem16 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem16)
-        self.verticalLayout.addLayout(self.horizontalLayout)
-        self.run_col = QtWidgets.QPushButton(self.collaboTab)
-        self.run_col.setObjectName("run_col")
-        self.verticalLayout.addWidget(self.run_col)
+        self.gridLayout_5.addWidget(self.poLabelValeurPosAct_col, 2, 9, 1, 1)
+        spacerItem15 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_5.addItem(spacerItem15, 3, 4, 1, 1)
+        self.label_31 = QtWidgets.QLabel(self.collaboTab)
+        self.label_31.setObjectName("label_31")
+        self.gridLayout_5.addWidget(self.label_31, 2, 6, 1, 1)
+        spacerItem16 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_5.addItem(spacerItem16, 4, 4, 1, 1)
+        self.lineEditK_col = QtWidgets.QLineEdit(self.collaboTab)
+        self.lineEditK_col.setObjectName("lineEditK_col")
+        self.gridLayout_5.addWidget(self.lineEditK_col, 1, 2, 1, 1)
+        self.label_39 = QtWidgets.QLabel(self.collaboTab)
+        self.label_39.setObjectName("label_39")
+        self.gridLayout_5.addWidget(self.label_39, 1, 1, 1, 1)
+        self.label_40 = QtWidgets.QLabel(self.collaboTab)
+        self.label_40.setObjectName("label_40")
+        self.gridLayout_5.addWidget(self.label_40, 2, 1, 1, 1)
+        self.label_56 = QtWidgets.QLabel(self.collaboTab)
+        self.label_56.setObjectName("label_56")
+        self.gridLayout_5.addWidget(self.label_56, 0, 2, 1, 1)
+        spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem17, 2, 7, 1, 1)
+        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem18, 2, 0, 1, 1)
+        spacerItem19 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem19, 2, 10, 1, 1)
+        spacerItem20 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem20, 2, 5, 1, 1)
         self.tabs.addTab(self.collaboTab, "")
         self.correcteurTab = QtWidgets.QWidget()
         self.correcteurTab.setObjectName("correcteurTab")
@@ -495,12 +520,12 @@ class Ui_MainWindow(object):
         self.radioButton_13.setObjectName("radioButton_13")
         self.buttonGroup_cor.addButton(self.radioButton_13)
         self.gridLayout_6.addWidget(self.radioButton_13, 3, 0, 1, 2)
-        spacerItem17 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem17, 2, 7, 2, 1)
-        spacerItem18 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem18, 10, 8, 1, 1)
-        spacerItem19 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem19, 4, 7, 2, 1)
+        spacerItem21 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem21, 2, 7, 2, 1)
+        spacerItem22 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem22, 10, 8, 1, 1)
+        spacerItem23 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem23, 4, 7, 2, 1)
         self.lineEditKVit_cor = QtWidgets.QLineEdit(self.correcteurTab)
         self.lineEditKVit_cor.setObjectName("lineEditKVit_cor")
         self.gridLayout_6.addWidget(self.lineEditKVit_cor, 10, 4, 1, 1)
@@ -530,8 +555,8 @@ class Ui_MainWindow(object):
         self.line_14.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_14.setObjectName("line_14")
         self.gridLayout_6.addWidget(self.line_14, 6, 0, 1, 8)
-        spacerItem20 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem20, 11, 8, 1, 1)
+        spacerItem24 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem24, 11, 8, 1, 1)
         self.label_53 = QtWidgets.QLabel(self.correcteurTab)
         self.label_53.setObjectName("label_53")
         self.gridLayout_6.addWidget(self.label_53, 11, 6, 1, 1)
@@ -603,10 +628,10 @@ class Ui_MainWindow(object):
         self.label_37 = QtWidgets.QLabel(self.correcteurTab)
         self.label_37.setObjectName("label_37")
         self.gridLayout_6.addWidget(self.label_37, 13, 6, 1, 1)
-        spacerItem21 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem21, 12, 8, 1, 1)
-        spacerItem22 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem22, 13, 8, 1, 1)
+        spacerItem25 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem25, 12, 8, 1, 1)
+        spacerItem26 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem26, 13, 8, 1, 1)
         self.label_34 = QtWidgets.QLabel(self.correcteurTab)
         self.label_34.setObjectName("label_34")
         self.gridLayout_6.addWidget(self.label_34, 2, 3, 3, 4)
@@ -614,10 +639,10 @@ class Ui_MainWindow(object):
         self.label_38.setObjectName("label_38")
         self.gridLayout_6.addWidget(self.label_38, 14, 0, 1, 8)
         self.tabs.addTab(self.correcteurTab, "")
-        self.gridLayout_2.addWidget(self.tabs, 0, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.tabs, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 920, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 875, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -637,7 +662,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAide.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.tabs.setCurrentIndex(4)
+        self.tabs.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         # début code ajouté
@@ -677,8 +702,11 @@ class Ui_MainWindow(object):
         self.lineEditTiCour_cor.setText('0')
         self.lineEditTdCour_cor.setText('0')
         self.lineEditSatCour_cor.setText('0')
-
+        self.lineEditK_col.setText('1')
+        self.lineEditTi_col.setText('0')
+        self.lineEditTd_col.setText('0')
         # fin code ajouté
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -733,9 +761,13 @@ class Ui_MainWindow(object):
         self.label_25.setText(_translate("MainWindow", "amplitude"))
         self.label_33.setText(_translate("MainWindow", "plateau"))
         self.tabs.setTabText(self.tabs.indexOf(self.courantTab), _translate("MainWindow", "Courant"))
-        self.label_31.setText(_translate("MainWindow", "Position du bras"))
-        self.poLabelValeurPosAct_col.setText(_translate("MainWindow", "poLabelValeurPosAct"))
+        self.label_55.setText(_translate("MainWindow", "Td"))
         self.run_col.setText(_translate("MainWindow", "Run"))
+        self.poLabelValeurPosAct_col.setText(_translate("MainWindow", "poLabelValeurPosAct"))
+        self.label_31.setText(_translate("MainWindow", "Position du bras"))
+        self.label_39.setText(_translate("MainWindow", "K"))
+        self.label_40.setText(_translate("MainWindow", "Ti"))
+        self.label_56.setText(_translate("MainWindow", "Correcteur d\'effort"))
         self.tabs.setTabText(self.tabs.indexOf(self.collaboTab), _translate("MainWindow", "Collaboratif"))
         self.label_44.setText(_translate("MainWindow", "Vitesse"))
         self.radioButtonCour_col.setText(_translate("MainWindow", "regulation en courant"))
@@ -766,7 +798,7 @@ class Ui_MainWindow(object):
         self.menuAffichage.setTitle(_translate("MainWindow", "Affichage"))
         self.menuAide.setTitle(_translate("MainWindow", "Aide"))
 
-        # début code ajouté
+# début code ajouté
     def launch(self, controleur):
             import sys
             app = QtWidgets.QApplication(sys.argv)
@@ -892,6 +924,15 @@ class Ui_MainWindow(object):
     def getTdcour(self):
             return self.num(self.lineEditSatCour_cor.text())
 
+    def getKcol(self):
+        return self.num(self.lineEditK_col.text())
+
+    def getTicol(self):
+        return self.num(self.lineEditTi_col.text())
+
+    def getTdcol(self):
+        return self.num(self.lineEditTd_col.text())
+
     def groupebuttonpos(self):
             if self.radioButtonEch_p.isChecked() == True:  # rends 1 si le bouton d'echellon est coché dans la page position
                 return 1
@@ -928,7 +969,6 @@ class Ui_MainWindow(object):
 
 
         # fin code ajouté
-
 
 if __name__ == "__main__":
     import sys
