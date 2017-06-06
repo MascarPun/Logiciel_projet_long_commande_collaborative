@@ -1043,7 +1043,7 @@
           </property>
          </spacer>
         </item>
-        <item row="4" column="2">
+        <item row="5" column="2">
          <widget class="QPushButton" name="run_col">
           <property name="text">
            <string>Run</string>
@@ -1077,7 +1077,20 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="8" rowspan="5">
+        <item row="5" column="4">
+         <spacer name="verticalSpacer_22">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="8" rowspan="6">
          <widget class="QSlider" name="Slider_col">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -1160,15 +1173,18 @@
           </property>
          </spacer>
         </item>
-        <item row="5" column="2">
-         <widget class="QPushButton" name="pushButton">
+        <item row="4" column="1">
+         <widget class="QLabel" name="label_57">
           <property name="text">
-           <string>stop</string>
+           <string>durée expérimentale</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="4" rowspan="2">
-         <spacer name="verticalSpacer_22">
+        <item row="4" column="2">
+         <widget class="QLineEdit" name="lineEdit"/>
+        </item>
+        <item row="4" column="4">
+         <spacer name="verticalSpacer_24">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
