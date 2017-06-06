@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
+
     # début code ajouté
     def __init__(self, controleur):
         self.controleur = controleur
@@ -441,10 +442,6 @@ class Ui_MainWindow(object):
         self.run_col = QtWidgets.QPushButton(self.collaboTab)
         self.run_col.setObjectName("run_col")
         self.gridLayout_5.addWidget(self.run_col, 4, 2, 1, 1)
-        self.Slider_col = QtWidgets.QSlider(self.collaboTab)
-        self.Slider_col.setOrientation(QtCore.Qt.Vertical)
-        self.Slider_col.setObjectName("Slider_col")
-        self.gridLayout_5.addWidget(self.Slider_col, 0, 8, 5, 1)
         self.poLabelValeurPosAct_col = QtWidgets.QLabel(self.collaboTab)
         self.poLabelValeurPosAct_col.setObjectName("poLabelValeurPosAct_col")
         self.gridLayout_5.addWidget(self.poLabelValeurPosAct_col, 2, 9, 1, 1)
@@ -453,8 +450,10 @@ class Ui_MainWindow(object):
         self.label_31 = QtWidgets.QLabel(self.collaboTab)
         self.label_31.setObjectName("label_31")
         self.gridLayout_5.addWidget(self.label_31, 2, 6, 1, 1)
-        spacerItem16 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_5.addItem(spacerItem16, 4, 4, 1, 1)
+        self.Slider_col = QtWidgets.QSlider(self.collaboTab)
+        self.Slider_col.setOrientation(QtCore.Qt.Vertical)
+        self.Slider_col.setObjectName("Slider_col")
+        self.gridLayout_5.addWidget(self.Slider_col, 0, 8, 5, 1)
         self.lineEditK_col = QtWidgets.QLineEdit(self.collaboTab)
         self.lineEditK_col.setObjectName("lineEditK_col")
         self.gridLayout_5.addWidget(self.lineEditK_col, 1, 2, 1, 1)
@@ -467,14 +466,19 @@ class Ui_MainWindow(object):
         self.label_56 = QtWidgets.QLabel(self.collaboTab)
         self.label_56.setObjectName("label_56")
         self.gridLayout_5.addWidget(self.label_56, 0, 2, 1, 1)
+        spacerItem16 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem16, 2, 7, 1, 1)
         spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_5.addItem(spacerItem17, 2, 7, 1, 1)
+        self.gridLayout_5.addItem(spacerItem17, 2, 0, 1, 1)
         spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_5.addItem(spacerItem18, 2, 0, 1, 1)
+        self.gridLayout_5.addItem(spacerItem18, 2, 5, 1, 1)
         spacerItem19 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_5.addItem(spacerItem19, 2, 10, 1, 1)
-        spacerItem20 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_5.addItem(spacerItem20, 2, 5, 1, 1)
+        self.pushButton = QtWidgets.QPushButton(self.collaboTab)
+        self.pushButton.setObjectName("pushButton")
+        self.gridLayout_5.addWidget(self.pushButton, 5, 2, 1, 1)
+        spacerItem20 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_5.addItem(spacerItem20, 4, 4, 2, 1)
         self.tabs.addTab(self.collaboTab, "")
         self.correcteurTab = QtWidgets.QWidget()
         self.correcteurTab.setObjectName("correcteurTab")
@@ -639,7 +643,7 @@ class Ui_MainWindow(object):
         self.label_38.setObjectName("label_38")
         self.gridLayout_6.addWidget(self.label_38, 14, 0, 1, 8)
         self.tabs.addTab(self.correcteurTab, "")
-        self.gridLayout_2.addWidget(self.tabs, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.tabs, 0, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 875, 21))
@@ -707,7 +711,6 @@ class Ui_MainWindow(object):
         self.lineEditTd_col.setText('0')
         # fin code ajouté
 
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -768,6 +771,7 @@ class Ui_MainWindow(object):
         self.label_39.setText(_translate("MainWindow", "K"))
         self.label_40.setText(_translate("MainWindow", "Ti"))
         self.label_56.setText(_translate("MainWindow", "Correcteur d\'effort"))
+        self.pushButton.setText(_translate("MainWindow", "stop"))
         self.tabs.setTabText(self.tabs.indexOf(self.collaboTab), _translate("MainWindow", "Collaboratif"))
         self.label_44.setText(_translate("MainWindow", "Vitesse"))
         self.radioButtonCour_col.setText(_translate("MainWindow", "regulation en courant"))
