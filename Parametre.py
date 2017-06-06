@@ -20,6 +20,11 @@ class Parametre:
         self.ticour = 1
         self.tdcour = 1
 
+        # parametres de correcteur d'effort
+        self.kfor = 1
+        self.tifor = 1
+        self.tdfor = 1
+
         self.cascade = 0    # si est egale a 0 on ne fait pas de correction en cascade
 
         self.mode = 0       # si 0 position si 1 vitesse si 2 courant si 3 collaboratif
@@ -41,6 +46,7 @@ class Parametre:
 
         self.Te = 0.001
 
+        self.collaborativeRunning = False
 
 
     def getKpos(self):
@@ -59,7 +65,7 @@ class Parametre:
         return (self.tdpos)
 
     def setTdpos(self,k):
-        self.tspos = k
+        self.tdpos = k
 
     def getKvit(self):
         return (self.kvit)
@@ -87,6 +93,7 @@ class Parametre:
 
     def getTicour(self):
         return (self.ticour)
+
     def setTicour(self,k):
         self.ticour = k
 
@@ -95,6 +102,24 @@ class Parametre:
 
     def setTdcour(self,k):
         self.tdcour = k
+
+    def getKfor(self):
+        return (self.kfor)
+
+    def setKfor(self,k):
+        self.kfor = k
+
+    def getTifor(self):
+        return (self.tifor)
+
+    def setTifor(self,k):
+        self.tifor = k
+
+    def getTdfor(self):
+        return (self.tdfor)
+
+    def setTdfor(self,k):
+        self.tdfor = k
 
     def getCascade(self):
         return (self.cascade)
@@ -197,3 +222,9 @@ class Parametre:
 
     def getTe(self):
         return (self.Te)
+
+    def setCollaborativeRunning(self, b):
+        self.collaborativeRunning = b
+
+    def getCollaborativeRunning(self):
+        return (self.collaborativeRunning)

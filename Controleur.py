@@ -10,8 +10,10 @@ import ctypes
 from ctypes import *
 from matplotlib.pylab import *
 import time
+import Correcteurs
 from Correcteurs import *
 from Commandes import *
+
 
 
 class Controleur:
@@ -1192,8 +1194,8 @@ class Controleur:
 
 
     def sinusPosition_modif(self, Frequence, Amplitude,dureeExp):
-        tpsPrep=500
-        echelon_position(self,tpsPrep,250,self.carteEpos,self.interface) #On impose un echelon avant de commencer ? (pcq il manque qq arguments)
+
+        self.echelonPosition(self,250) #On impose un echelon avant de commencer ? (pcq il manque qq arguments)
 
         Mode = c_int(-3)
         self.carteEpos.setOperationMode(Mode, self.pErrorCode_i)
@@ -1277,7 +1279,7 @@ class Controleur:
             t = time.time()
 
         ############ Elaboration Consigne Vitesse a partir de Consigne Position ############
-            carteEpos.getPositionIs(pPositionIs, self.pErrorCode_i)  # mesure de position initiale
+            self.carteEpos.getPositionIs(pPositionIs, self.pErrorCode_i)  # mesure de position initiale
             positionLueMm = self.pPositionIs_i.contents.value / mm2qc  # conversion qc en mm
             positions.append(positionLueMm)
             a = Correcteurs.pos2velocity(Kpos, Tipos, Tdpos, consignePos[i], positionLueMm, erreurPos, sommeErreurPos)
@@ -1285,7 +1287,7 @@ class Controleur:
             sommeErreurPos = sommeErreurPos + a[1]
 
         ############ Elaboration Consigne Courant a partir de Consigne Vitesse ############
-            carteEpos.getVelocityIs(pVelocityIs, self.pErrorCode_i)
+            self.carteEpos.getVelocityIs(pVelocityIs, self.pErrorCode_i)
             vitesseLue = self.pVelocityIs_i.contents.value  # en tour par minute ATTENTION ERREUR UNITE SOMMATEUR!
             vitesses.append(vitesseLue)
             a = Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1], vitesseLue,erreurVit, sommeErreurVit)
@@ -1293,7 +1295,7 @@ class Controleur:
             sommeErreurVit = sommeErreurVit + a[1]
 
         ############ Elaboration Consigne Courant Envoye a partir de Consigne Courant ############
-            carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
+            self.carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
             courantLu = self.pCurrentIs_i.contents.value / 1000  # en A
             courants.append(courantLu)
             a = Correcteurs.courant_cmd(consigneCour[-1], courantLu, erreurCour, sommeErreurCour, Kcour, Ticour, Tdcour)
@@ -1304,6 +1306,130 @@ class Controleur:
             i = i + 1
 
         return ("fini")
+
+
+
+
+
+############ Commande Collaborative ############
+
+
+def commandeCollabo(self):
+    self.echelonPosition(self, 250)  # On impose un echelon avant de commencer ? (pcq il manque qq arguments)
+
+    Mode = c_int(-3)
+    self.carteEpos.setOperationMode(Mode, self.pErrorCode_i)
+
+    Te = self.parametres.getTe()
+
+    pMode = ctypes.POINTER(ctypes.c_int)
+    pMode_i = ctypes.c_int(0)
+    pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
+    self.carteEpos.getOperationMode(pMode2, self.pErrorCode_i)
+    self.carteEpos.getOperationMode2(pMode2.contents, self.pErrorCode_i)
+
+    # set enable state
+    self.carteEpos.setDisableState(self.pErrorCode_i)
+    self.carteEpos.setEnableState(self.pErrorCode_i)
+
+    # get enabled state
+    res = self.carteEpos.getEnableState(self.pIsEnabled_i, self.pErrorCode_i)
+
+    # Phase de commande du bras pour aller d'une position à une autre
+    pPositionIs = c_long(0)
+    self.carteEpos.getPositionIs(pPositionIs, self.pErrorCode_i)  # mesure de position initiale
+
+    Timeout_i = c_long(5000)
+    t0 = time.time()
+    t = time.time()
+
+
+
+    Kfor = self.parametres.getKfor()
+    Tifor = self.parametres.getTifor()
+    Tdfor = self.parametres.getTdfor()
+
+    Kvit = self.parametres.getKvit()
+    Tivit = self.parametres.getTivit()
+    Tdvit = self.parametres.getTdvit()
+
+    Kcour = self.parametres.getKcour()
+    Ticour = self.parametres.getTicour()
+    Tdcour = self.parametres.getTdcour()
+
+    Te = self.parametres.getTe()
+
+    i = 0
+    forces = [0,0,0]
+    positions = []
+    vitesses = []
+    courants = []
+    consigneVit = []
+    consigneCour = []
+    courantImposePI = []
+    mm2qc = 294
+    # pPositionIs = c_long(0)
+    erreurVit = [0, 0]
+    erreurCour = [0, 0]
+    sommeErreurVit = 0
+    sommeErreurCour = 0
+    rad_m = 1 #A Ajuster
+
+
+
+    while self.parametres.collaborativeRunning:
+        while time.time() - t < Te:
+            a = 0
+        t = time.time()
+
+    ####### Mesure de la position actuelle #########################
+        self.carteEpos.getPositionIs(pPositionIs, self.pErrorCode_i)  # mesure de position initiale
+        positionLueMm = self.pPositionIs_i.contents.value / mm2qc  # conversion qc en mm
+        positions.append(positionLueMm)
+
+    #######  Mesure de la valeur de l'input en force sorti du capteur ##########
+        InputNumber = c_int(1)
+
+        self.carteEpos.getAnalogInput(InputNumber, pAnalogValue, pErrorCode_i)
+        self.carteEpos.getAnalogInput2(InputNumber, pAnalogValue.contents, pErrorCode_i)
+
+        forces.append(pAnalogValue.contents.value - 2499)
+        #print(forces[-1])
+
+
+    ############ Elaboration Consigne Vitesse a partir de la Consigne Force ############
+
+        consigneVitesseActuelle = consigneVit[-2] + Kfor*rad_m/(2*Tifor*Te)*(
+            (2*Tifor*Te + Te*Te + 4*Tdfor*Tifor)*forces[-1] +
+            (2*Te*Te - 8*Tifor*Tdfor)*forces[-2] +
+            (Te*Te - 2*Tifor*Te + 4*Tdfor*Tifor)*forces[-3]
+        )
+        consigneVit.append(consigneVitesseActuelle)
+
+    ############ Elaboration Consigne Courant a partir de la Consigne Vitesse ############
+        self.carteEpos.getVelocityIs(pVelocityIs, self.pErrorCode_i)
+        vitesseLue = self.pVelocityIs_i.contents.value  # en tour par minute ATTENTION ERREUR UNITE SOMMATEUR!
+        vitesses.append(vitesseLue)
+        a = Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1], vitesseLue,erreurVit, sommeErreurVit)
+        consigneCour.append(a[0])
+        sommeErreurVit = sommeErreurVit + a[1]
+
+    ############ Elaboration Consigne Courant Envoye a partir de la Consigne Courant ############
+        self.carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
+        courantLu = self.pCurrentIs_i.contents.value / 1000  # en A
+        courants.append(courantLu)
+        a = Correcteurs.courant_cmd(consigneCour[-1], courantLu, erreurCour, sommeErreurCour, Kcour, Ticour, Tdcour)
+        courantImposePI.append(a[0])
+        sommeErreurCour = sommeErreurCour + a[1]
+        self.carteEpos.setCurrentMust(c_long(courantImposePI[-1]), self.pErrorCode_i)
+
+        i = i + 1
+
+    return ("fini")
+
+
+
+
 
 c=Controleur()
 #c.run()

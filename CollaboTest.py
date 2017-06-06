@@ -13,24 +13,20 @@ def commandeCollabo(self):
     Tdcour = self.parametres.getTdcour()
 
     i = 0
-    forces = []
+    forces = [0,0,0]
     positions = []
     vitesses = []
     courants = []
-    consigneForce = []
     consigneVit = []
     consigneCour = []
     courantImposePI = []
     mm2qc = 294
     # pPositionIs = c_long(0)
-    erreurForce = [0, 0]
-    #erreurPos = [0, 0]
     erreurVit = [0, 0]
     erreurCour = [0, 0]
-    sommeErreurForce = 0
-    #sommeErreurPos = 0
     sommeErreurVit = 0
     sommeErreurCour = 0
+    rad_m = 1 #A Ajuster
 
     while t - t0 < dureeExp:
         while time.time() - t < Te:
@@ -49,14 +45,17 @@ def commandeCollabo(self):
         carteEpos.getAnalogInput2(InputNumber, pAnalogValue.contents, pErrorCode_i)
 
         forces.append(pAnalogValue.contents.value - 2499)
-        print(forces[-1])
+        #print(forces[-1])
 
 
     ############ Elaboration Consigne Vitesse a partir de la Consigne Force ############
 
-        a = Correcteurs.pos2velocity(Kfor, Tifor, Tdfor, forces[i], positionLueMm, erreurForce, sommeErreurForce)
-        consigneVit.append(a[0])
-        sommeErreurPos = sommeErreurPos + a[1]
+        consigneVitesseActuelle = consigneVit[-2] + Kfor*rad_m/(2*Tifor*Te)*(
+            (2*Tifor*Te + Te*Te + 4*Tdfor*Tifor)*forces[-1] +
+            (2*Te*Te - 8*Tifor*Tdfor)*forces[-2] +
+            (Te*Te - 2*Tifor*Te + 4*Tdfor*Tifor)*forces[-3]
+        )
+        consigneVit.append(consigneVitesseActuelle)
 
     ############ Elaboration Consigne Courant a partir de la Consigne Vitesse ############
         carteEpos.getVelocityIs(pVelocityIs, self.pErrorCode_i)
@@ -76,7 +75,5 @@ def commandeCollabo(self):
         self.carteEpos.setCurrentMust(c_long(courantImposePI[-1]), self.pErrorCode_i)
 
         i = i + 1
-
-    return ("fini")
 
     return ("fini")
