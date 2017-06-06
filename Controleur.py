@@ -654,6 +654,7 @@ class Controleur:
 
                     # On calcule ce que la commande renvoie comme courant
                     consigneVit.append(vitFinale)
+                    self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
 
                     if satVit != 0:
                         sortie=Correcteurs.velocity2current_sat(Kvit, Tivit, Tdvit, satVit, consigneVit[-1],
@@ -788,6 +789,7 @@ class Controleur:
 
                     # On calcule ce que la commande renvoie comme courant
                     consigneCour.append(courFinal)
+                    self.carteEpos.getCurrentIs(self.pCurrentIs_i,self.pErrorCode_i)
 
                     if satCour != 0:
                         #modifier sur le modèle de la boucle de vitesse
@@ -826,6 +828,7 @@ class Controleur:
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
         return Temps,TabPosition,TabVitesse,TabCourant
+
 
 
     def rampe_vitesse(self):
@@ -920,6 +923,7 @@ class Controleur:
 
                         # On suppose que l'on commmence à zero (en position on aura un offset)
                         consigneVit.append(compt*Te*coef_dir)
+                        self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
 
                         if satVit != 0:
                             sortie = Correcteurs.velocity2current_sat(Kvit, Tivit, Tdvit, satVit, consigneVit[-1],
@@ -957,12 +961,14 @@ class Controleur:
 
         return Temps, TabPosition, TabVitesse, TabCourant
 
-    def rampe_vitesse(self):
+
+
+    def rampe_courant(self):
         Mode = c_int(-3)
         self.carteEpos.setOperationMode(Mode, self.pErrorCode_i)
-        coef_dir=self.parametres.getRampe()
+        coef_dir=self.parametres.getRampe() #en Ampere
         dureeExp=self.parametres.getDureeExp()
-        posFinale=dureeExp*dureeExp*coef_dir/2
+        posFinale=250
 
         if posFinale > 490 or posFinale < 10:
             return ('Cette valeur est interdite')
@@ -1021,6 +1027,7 @@ class Controleur:
             compt = 0
 
             if self.interface.groupebuttoncor() == 3:  # si correction en courant
+                courantInitial=self.carteEpos.getCurrentIs(self.pCurrentIs_i,self.pErrorCode_i)/1000
 
                 debut = time.time()
                 while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -1047,32 +1054,33 @@ class Controleur:
                             # groupBoutonCore renvoie 1 2 3 4 suivant la correction choisie (defini dans interface.py)
                             # Pour l'instant il fait rien mais on peut lui ajouter une action à réaliser pour pas avoir de temps où il ne fait rien
 
-                        # On suppose que l'on commmence à zero (en position on aura un offset)
-                        consigneVit.append(compt*Te*coef_dir)
+                        # On suppose que l'on commmence à courant innitial (en position on aura un offset)
+                        consigneCour.append((compt*Te*coef_dir+courantInitial)*1000)
 
                         if satVit != 0:
-                            sortie = Correcteurs.velocity2current_sat(Kvit, Tivit, Tdvit, satVit, consigneVit[-1],
-                                                                      self.pVelocityIs_i.contents.value, errVit,
-                                                                      sommeErrVit, Te)
-                            sommeErrVit = sortie[1]
-                            consigneCour.append(sortie[0] * 1000)  # conversion en mA
-                            if consigneCour[-1] > ValMaxCourEpos:
-                                consigneCour[-1] = 4000
-                            if consigneCour[-1] < -ValMaxCourEpos:
-                                consigneCour[-1] = -4000
-                            c = int(consigneCour[-1])
+                            sortie = Correcteurs.courant_cmd_sat(Kcour, Ticour, Tdcour, satCour, consigneCour[-1],
+                                                                      self.pCurrentIs_i.contents.value, errCour,
+                                                                      sommeErrCour, Te)
+                            sommeErrCour = sortie[1]
+                            courantCorrige.append(sortie[0] * 1000)  # conversion en mA
+                            if courantCorrige[-1] > ValMaxCourEpos:
+                                courantCorrige[-1] = 4000
+                            if courantCorrige[-1] < -ValMaxCourEpos:
+                                courantCorrige[-1] = -4000
+                            c = int(courantCorrige[-1])
                             self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                         else:
-                            sortie = Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1],
-                                                                  self.pVelocityIs_i.contents.value, errVit,
-                                                                  sommeErrVit, Te)
-                            sommeErrVit = sortie[1]
-                            consigneCour.append(sortie[0] * 1000)  # conversion en mA
-                            if consigneCour[-1] > ValMaxCourEpos:
-                                consigneCour[-1] = 4000
-                            if consigneCour[-1] < -ValMaxCourEpos:
-                                consigneCour[-1] = -4000
-                            c = int(consigneCour[-1])
+
+                            sortie = Correcteurs.courant_cmd(Kcour, Ticour, Tdcour, consigneCour[-1],
+                                                                      self.pCurrentIs_i.contents.value, errCour,
+                                                                      sommeErrCour, Te)
+                            sommeErrCour = sortie[1]
+                            courantCorrige.append(sortie[0] * 1000)  # conversion en mA
+                            if courantCorrige[-1] > ValMaxCourEpos:
+                                courantCorrige[-1] = 4000
+                            if courantCorrige[-1] < -ValMaxCourEpos:
+                                courantCorrige[-1] = -4000
+                            c = int(courantCorrige[-1])
                             self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
                     compt += 1
@@ -1085,6 +1093,9 @@ class Controleur:
                     TabCourant.append(self.pCurrentIs_i.contents.value)
 
         return Temps, TabPosition, TabVitesse, TabCourant
+
+
+
 
     def rampePosition(self, coef_dir, posFinale, dureeExp):
         Mode = c_int(-3)
