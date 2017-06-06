@@ -342,15 +342,15 @@ class Controleur:
         Kpos = self.parametres.getKpos()
         Tipos = self.parametres.getTipos()
         Tdpos = self.parametres.getTdpos()
-        satPos = 150  # en attente de l'interface
+        satPos = 0  # en attente de l'interface
         Kvit = self.parametres.getKvit()
         Tivit = self.parametres.getTivit()
         Tdvit = self.parametres.getTdvit()
-        satVit = 1  # en attente de l'interface
+        satVit = 0  # en attente de l'interface
         Kcour = self.parametres.getKcour()
         Ticour = self.parametres.getTicour()
         Tdcour = self.parametres.getTdcour()
-        satCour = 1500  # en attente de l'interface
+        satCour = 0  # en attente de l'interface
 
         # initialiser le pointeur pMode
         pMode = ctypes.POINTER(ctypes.c_int)
@@ -423,19 +423,27 @@ class Controleur:
 
                     if satPos != 0:
                         #je tente de convertir le positionn en qc pour les calculs
-                        consigneCour.append(pos2current_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1]*mm2qc,
+                        sortie=pos2current_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1]*mm2qc,
                                                             self.pPositionIs_i.contents.value, errPos,
-                                                            sommeErrPos,Te))
+                                                            sommeErrPos,Te)
+                        consigneCour.append(sortie[0]*1000)
+                        sommeErrPos=sortie[1]
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
+                        if consigneCour[-1] < -ValMaxCourEpos:
+                            consigneCour[-1] = -4000
                         c=int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
-                        consigneCour.append(pos2current(Kpos, Tipos, Tdpos, consignePos[-1]*mm2qc,
+                        sortie=pos2current(Kpos, Tipos, Tdpos, consignePos[-1]*mm2qc,
                                                         self.pPositionIs_i.contents.value, errPos,
-                                                        sommeErrPos,Te))
+                                                        sommeErrPos,Te)
+                        consigneCour.append(sortie[0] * 1000)
+                        sommeErrPos = sortie[1]
                         if consigneCour[-1] > ValMaxCourEpos:
                             consigneCour[-1] = 4000
+                        if consigneCour[-1] < -ValMaxCourEpos:
+                            consigneCour[-1] = -4000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                 compt+=1
@@ -478,39 +486,56 @@ class Controleur:
                     consignePos.append(posFinale)
 
                     if satPos != 0:
-                        consigneVit.append(pos2velocity_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1]*mm2qc,
+                        sortie=pos2velocity_sat(Kpos, Tipos, Tdpos, satPos, consignePos[-1]*mm2qc,
                                                                         self.pPositionIs_i.contents.value, errPos,
-                                                                        sommeErrPos,Te))
+                                                                        sommeErrPos,Te)
+                        consigneVit.append(sortie[0])
+                        sommeErrPos=sortie[1]
                     else:
-                        consigneVit.append(pos2velocity(Kpos, Tipos, Tdpos, consignePos[-1]*mm2qc,
+                        sortie=pos2velocity(Kpos, Tipos, Tdpos, consignePos[-1]*mm2qc,
                                                                     self.pPositionIs_i.contents.value, errPos,
-                                                                    sommeErrPos,Te))
+                                                                    sommeErrPos,Te)
+                        consigneVit.append(sortie[0])
+                        sommeErrPos = sortie[1]
 
                     self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
                     if satVit != 0:
-                        consigneCour.append(velocity2current_sat(Kvit, Tivit, Tdvit, satVit, consigneVit[-1],
-                                                             self.pVelocityIs_i.contents.value, errVit, sommeErrVit,Te))
+                        sortie=velocity2current_sat(Kvit, Tivit, Tdvit, satVit, consigneVit[-1],
+                                                             self.pVelocityIs_i.contents.value, errVit, sommeErrVit,Te)
+                        consigneCour.append(sortie[0]*1000)
+                        sommeErrVit = sortie[1]
                     else:
-                        consigneCour.append(velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1],
+                        sortie=velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1],
                                                                          self.pVelocityIs_i.contents.value, errVit,
-                                                                         sommeErrVit,Te))
+                                                                         sommeErrVit,Te)
+                        consigneCour.append(sortie[0] * 1000)
+                        sommeErrVit = sortie[1]
 
                     self.carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
                     if satCour != 0:
-                        courantCorrige.append(courant_cmd_sat(Kcour, Ticour, Tdcour, satCour, consigneCour[-1],
-                                                        self.pCurrentIs_i.contents.value, errCour, sommeErrCour,Te))
+                        sortie=courant_cmd_sat(Kcour, Ticour, Tdcour, satCour, consigneCour[-1],
+                                                        self.pCurrentIs_i.contents.value, errCour, sommeErrCour,Te)
+                        courantCorrige.append(sortie[0] * 1000)
+                        sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
                             courantCorrige[-1] = 4000
+                        if courantCorrige[-1] < -ValMaxCourEpos:
+                            courantCorrige[-1] = -4000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
-                        courantCorrige.append(courant_cmd(Kcour, Ticour, Tdcour, consigneCour[-1],
+                        sortie=courant_cmd(Kcour, Ticour, Tdcour, consigneCour[-1],
                                                                       self.pCurrentIs_i.contents.value, errCour,
-                                                                      sommeErrCour,Te))
+                                                                      sommeErrCour,Te)
+                        courantCorrige.append(sortie[0] * 1000)
+                        sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
                             courantCorrige[-1] = 4000
+                        if courantCorrige[-1] < -ValMaxCourEpos:
+                            courantCorrige[-1] = -4000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
+
                 compt+=1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -520,7 +545,7 @@ class Controleur:
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
-        return ("fin")
+        return Temps,TabPosition,TabVitesse,TabCourant
 
 
 
@@ -531,7 +556,7 @@ class Controleur:
         # initialisation des constantes
         ValMaxCourEpos = 5000  # on s'arrange pour ne pas depasser 5A en courant dans tous les cas
         mm2qc = 294
-        dureeExp=self.interface.getDureeExp()
+        dureeExp=self.parametres.getDureeExp()
         vitFinale=2000         #en attente interface (en rpm)
         rapportReduction = 0.1082 / (2 * math.pi * 15.88)
         posFinale = 2 * math.pi * rapportReduction * dureeExp * vitFinale
@@ -558,11 +583,11 @@ class Controleur:
         Kvit = self.parametres.getKvit()
         Tivit = self.parametres.getTivit()
         Tdvit = self.parametres.getTdvit()
-        satVit = 1  # en attente de l'interface
+        satVit = 0  # en attente de l'interface
         Kcour = self.parametres.getKcour()
         Ticour = self.parametres.getTicour()
         Tdcour = self.parametres.getTdcour()
-        satCour = 1  # en attente de l'interface
+        satCour = 0  # en attente de l'interface
 
         # initialiser le pointeur pMode
         pMode = ctypes.POINTER(ctypes.c_int)
@@ -614,7 +639,7 @@ class Controleur:
                     print("Le bras ne peut pas monter car il va taper la butée !!!")
                     break
 
-                if ((self.pPositionIs_i.contents.value / mm2qc) < -2):
+                if ((self.pPositionIs_i.contents.value / mm2qc) < -30):
                     self.carteEpos.setOperationMode(c_int(3), self.pErrorCode_i)
                     self.carteEpos.moveWithVelocity(c_long(0), self.pErrorCode_i)
                     self.carteEpos.setOperationMode(c_int(-3), self.pErrorCode_i)
@@ -664,7 +689,7 @@ class Controleur:
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
-        return ("fin")
+        return Temps, TabPosition,TabVitesse,TabCourant
 
 
 
@@ -672,8 +697,8 @@ class Controleur:
     def echelon_courant(self):
         # initialisation des constantes
         ValMaxCourEpos = 5000  # on s'arrange pour ne pas depasser 5A en courant dans tous les cas
-        dureeExp = self.interface.getdurexppos()
-        courFinal= 3 #à relier ensuite avec interface
+        dureeExp = self.parametres.getDureeExp()
+        courFinal= 3000 #à relier ensuite avec interface
         posFinale=250 #temporaire, à exprimer en fonction du courant
 
         if posFinale > 490 or posFinale < 10:
@@ -698,7 +723,7 @@ class Controleur:
         Kcour = self.parametres.getKcour()
         Ticour = self.parametres.getTicour()
         Tdcour = self.parametres.getTdcour()
-        satCour = 3  # en attente de l'interface
+        satCour = 0  # en attente de l'interface (en mA)
 
         # initialiser le pointeur pMode
         pMode = ctypes.POINTER(ctypes.c_int)
@@ -766,19 +791,30 @@ class Controleur:
 
                     if satCour != 0:
                         #modifier sur le modèle de la boucle de vitesse
-                        courantCorrige.append(Correcteurs.courant_cmd_sat(Kcour, Ticour, Tdcour, satCour, consigneCour[-1],
+                        sortie=Correcteurs.courant_cmd_sat(Kcour, Ticour, Tdcour, satCour, consigneCour[-1],
                                                                              self.pCurrentIs_i.contents.value, errCour,
-                                                                             sommeErrCour,Te))
+                                                                             sommeErrCour,Te)
+                        courantCorrige.append(sortie[0]*1000) #si trop grand enlever le mille
+                        sommeErrCour=sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
                             courantCorrige[-1] = 4000
-                        MyEpos.setCurrentMust(c_short(courantCorrige[-1]), self.pErrorCode_i)
+                        if courantCorrige[-1] <-ValMaxCourEpos:
+                            courantCorrige[-1]=-4000
+                        c=int(courantCorrige[-1])
+                        self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
-                        courantCorrige.append(Correcteurs.courant_cmd(Kcour, Ticour, Tdcour, courantCorrige[-1],
+                        sortie=Correcteurs.courant_cmd(Kcour, Ticour, Tdcour, courantCorrige[-1],
                                                                          self.pCurrentIs_i.contents.value, errCour,
-                                                                         sommeErrCour,Te))
+                                                                         sommeErrCour,Te)
+                        courantCorrige.append(sortie[0] * 1000)  # si trop grand enlever le mille
+                        sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
                             courantCorrige[-1] = 4000
-                        MyEpos.setCurrentMust(c_short(courantCorrige[-1]), self.pErrorCode_i)
+                        if courantCorrige[-1] < -ValMaxCourEpos:
+                            courantCorrige[-1] = -4000
+
+                        c = int(courantCorrige[-1])
+                        self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
                 compt += 1
                 Temps.append(time.time() - debut)
@@ -789,12 +825,266 @@ class Controleur:
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
-        return ("fin")
+        return Temps,TabPosition,TabVitesse,TabCourant
 
 
+    def rampe_vitesse(self):
+        Mode = c_int(-3)
+        self.carteEpos.setOperationMode(Mode, self.pErrorCode_i)
+        coef_dir=self.parametres.getRampe()
+        dureeExp=self.parametres.getDureeExp()
+        posFinale=dureeExp*dureeExp*coef_dir/2
 
+        if posFinale > 490 or posFinale < 10:
+            return ('Cette valeur est interdite')
+        else:
+            self.parametres.setPosFinale(posFinale)
+            self.parametres.setDureeExp(dureeExp)
 
+            Te = self.parametres.getTe()
 
+            pMode = ctypes.POINTER(ctypes.c_int)
+            pMode_i = ctypes.c_int(0)
+            pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
+            self.carteEpos.getOperationMode(pMode2, self.pErrorCode_i)
+            self.carteEpos.getOperationMode2(pMode2.contents, self.pErrorCode_i)
+
+            # set enable state
+            self.carteEpos.setDisableState(self.pErrorCode_i)
+            self.carteEpos.setEnableState(self.pErrorCode_i)
+
+            # get enabled state
+            res = self.carteEpos.getEnableState(self.pIsEnabled_i, self.pErrorCode_i)
+
+            # Phase de commande du bras pour aller d'une position à une autre
+            pPositionIs = c_long(0)
+            self.carteEpos.getPositionIs(pPositionIs, self.pErrorCode_i)  # mesure de position initiale
+
+            # on verifie que la bonne correction est activee
+            if interface.groupebuttoncor() == 4:  # si correction en cascade
+                return ("erreur il faut une commande en position pour faire une correction en cascade")
+
+            if interface.groupebuttoncor() == 3:  # si correction en courant
+                return ("erreur il faut une commande en courant pour faire une correction en courant")
+
+            if interface.groupebuttoncor() == 1:  # si correction en position
+                return ("erreur il faut une commande en position pour faire une correction en position")
+
+            # Recuperation des paramètres des correcteurs (voir si on passe par interface)
+            Kvit = self.parametres.getKvit()
+            Tivit = self.parametres.getTivit()
+            Tdvit = self.parametres.getTdvit()
+            satVit = 0  # en attente de l'interface
+
+            # initialisaton des tableaux pour les représentations graphiques
+            Temps = []
+            TabPosition = []
+            TabVitesse = []
+            TabCourant = []
+
+            # initialisation de la consigne et des erreurs (il faut remplir les tableaux d'erreurs avec deux elements (si on a un pid)
+            consigneVit = []
+            consigneCour = []
+
+            errVit = [0, 0]
+            sommeErrVit = 0
+            nombreEch = dureeExp // Te
+            compt = 0
+
+            if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+
+                debut = time.time()
+                while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+                    t = time.time()
+                    # On verfie que le mouvement est possible
+                    self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
+                    if ((self.pPositionIs_i.contents.value / mm2qc) > 490):
+                        self.carteEpos.setOperationMode(c_int(3), self.pErrorCode_i)
+                        self.carteEpos.moveWithVelocity(c_long(0), self.pErrorCode_i)
+                        self.carteEpos.setOperationMode(c_int(-3), self.pErrorCode_i)
+                        print("Le bras ne peut pas monter car il va taper la butée !!!")
+                        break
+
+                    if ((self.pPositionIs_i.contents.value / mm2qc) < -30):
+                        self.carteEpos.setOperationMode(c_int(3), self.pErrorCode_i)
+                        self.carteEpos.moveWithVelocity(c_long(0), self.pErrorCode_i)
+                        self.carteEpos.setOperationMode(c_int(-3), self.pErrorCode_i)
+                        print("Le bras ne peut pas descendre car il va taper la butée !!!")
+                        break
+
+                    else:
+                        while (time.time() - t < Te):
+                            pass
+                            # groupBoutonCore renvoie 1 2 3 4 suivant la correction choisie (defini dans interface.py)
+                            # Pour l'instant il fait rien mais on peut lui ajouter une action à réaliser pour pas avoir de temps où il ne fait rien
+
+                        # On suppose que l'on commmence à zero (en position on aura un offset)
+                        consigneVit.append(compt*Te*coef_dir)
+
+                        if satVit != 0:
+                            sortie = Correcteurs.velocity2current_sat(Kvit, Tivit, Tdvit, satVit, consigneVit[-1],
+                                                                      self.pVelocityIs_i.contents.value, errVit,
+                                                                      sommeErrVit, Te)
+                            sommeErrVit = sortie[1]
+                            consigneCour.append(sortie[0] * 1000)  # conversion en mA
+                            if consigneCour[-1] > ValMaxCourEpos:
+                                consigneCour[-1] = 4000
+                            if consigneCour[-1] < -ValMaxCourEpos:
+                                consigneCour[-1] = -4000
+                            c = int(consigneCour[-1])
+                            self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
+                        else:
+                            sortie = Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1],
+                                                                  self.pVelocityIs_i.contents.value, errVit,
+                                                                  sommeErrVit, Te)
+                            sommeErrVit = sortie[1]
+                            consigneCour.append(sortie[0] * 1000)  # conversion en mA
+                            if consigneCour[-1] > ValMaxCourEpos:
+                                consigneCour[-1] = 4000
+                            if consigneCour[-1] < -ValMaxCourEpos:
+                                consigneCour[-1] = -4000
+                            c = int(consigneCour[-1])
+                            self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
+
+                    compt += 1
+                    Temps.append(time.time() - debut)
+                    self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
+                    self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
+                    self.carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
+                    TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
+                    TabVitesse.append(self.pVelocityIs_i.contents.value)
+                    TabCourant.append(self.pCurrentIs_i.contents.value)
+
+        return Temps, TabPosition, TabVitesse, TabCourant
+
+    def rampe_vitesse(self):
+        Mode = c_int(-3)
+        self.carteEpos.setOperationMode(Mode, self.pErrorCode_i)
+        coef_dir=self.parametres.getRampe()
+        dureeExp=self.parametres.getDureeExp()
+        posFinale=dureeExp*dureeExp*coef_dir/2
+
+        if posFinale > 490 or posFinale < 10:
+            return ('Cette valeur est interdite')
+        else:
+            self.parametres.setPosFinale(posFinale)
+            self.parametres.setDureeExp(dureeExp)
+
+            Te = self.parametres.getTe()
+
+            pMode = ctypes.POINTER(ctypes.c_int)
+            pMode_i = ctypes.c_int(0)
+            pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
+            self.carteEpos.getOperationMode(pMode2, self.pErrorCode_i)
+            self.carteEpos.getOperationMode2(pMode2.contents, self.pErrorCode_i)
+
+            # set enable state
+            self.carteEpos.setDisableState(self.pErrorCode_i)
+            self.carteEpos.setEnableState(self.pErrorCode_i)
+
+            # get enabled state
+            res = self.carteEpos.getEnableState(self.pIsEnabled_i, self.pErrorCode_i)
+
+            # Phase de commande du bras pour aller d'une position à une autre
+            pPositionIs = c_long(0)
+            self.carteEpos.getPositionIs(pPositionIs, self.pErrorCode_i)  # mesure de position initiale
+
+            # on verifie que la bonne correction est activee
+            if interface.groupebuttoncor() == 4:  # si correction en cascade
+                return ("erreur il faut une commande en position pour faire une correction en cascade")
+
+            if interface.groupebuttoncor() == 2:  # si correction en vitesse
+                return ("erreur il faut une commande en vitesse pour faire une correction en vitesse")
+
+            if interface.groupebuttoncor() == 1:  # si correction en position
+                return ("erreur il faut une commande en position pour faire une correction en position")
+
+            # Recuperation des paramètres des correcteurs (voir si on passe par interface)
+            Kcour = self.parametres.getKcour()
+            Ticour = self.parametres.getTicour()
+            Tdcour = self.parametres.getTdcour()
+            satCour = 0  # en attente de l'interface
+
+            # initialisaton des tableaux pour les représentations graphiques
+            Temps = []
+            TabPosition = []
+            TabVitesse = []
+            TabCourant = []
+
+            # initialisation de la consigne et des erreurs (il faut remplir les tableaux d'erreurs avec deux elements (si on a un pid)
+            courantCorrige = []
+            consigneCour = []
+
+            errCour = [0, 0]
+            sommeErrCour = 0
+            nombreEch = dureeExp // Te
+            compt = 0
+
+            if self.interface.groupebuttoncor() == 3:  # si correction en courant
+
+                debut = time.time()
+                while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+                    t = time.time()
+                    # On verfie que le mouvement est possible
+                    self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
+                    if ((self.pPositionIs_i.contents.value / mm2qc) > 490):
+                        self.carteEpos.setOperationMode(c_int(3), self.pErrorCode_i)
+                        self.carteEpos.moveWithVelocity(c_long(0), self.pErrorCode_i)
+                        self.carteEpos.setOperationMode(c_int(-3), self.pErrorCode_i)
+                        print("Le bras ne peut pas monter car il va taper la butée !!!")
+                        break
+
+                    if ((self.pPositionIs_i.contents.value / mm2qc) < -30):
+                        self.carteEpos.setOperationMode(c_int(3), self.pErrorCode_i)
+                        self.carteEpos.moveWithVelocity(c_long(0), self.pErrorCode_i)
+                        self.carteEpos.setOperationMode(c_int(-3), self.pErrorCode_i)
+                        print("Le bras ne peut pas descendre car il va taper la butée !!!")
+                        break
+
+                    else:
+                        while (time.time() - t < Te):
+                            pass
+                            # groupBoutonCore renvoie 1 2 3 4 suivant la correction choisie (defini dans interface.py)
+                            # Pour l'instant il fait rien mais on peut lui ajouter une action à réaliser pour pas avoir de temps où il ne fait rien
+
+                        # On suppose que l'on commmence à zero (en position on aura un offset)
+                        consigneVit.append(compt*Te*coef_dir)
+
+                        if satVit != 0:
+                            sortie = Correcteurs.velocity2current_sat(Kvit, Tivit, Tdvit, satVit, consigneVit[-1],
+                                                                      self.pVelocityIs_i.contents.value, errVit,
+                                                                      sommeErrVit, Te)
+                            sommeErrVit = sortie[1]
+                            consigneCour.append(sortie[0] * 1000)  # conversion en mA
+                            if consigneCour[-1] > ValMaxCourEpos:
+                                consigneCour[-1] = 4000
+                            if consigneCour[-1] < -ValMaxCourEpos:
+                                consigneCour[-1] = -4000
+                            c = int(consigneCour[-1])
+                            self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
+                        else:
+                            sortie = Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1],
+                                                                  self.pVelocityIs_i.contents.value, errVit,
+                                                                  sommeErrVit, Te)
+                            sommeErrVit = sortie[1]
+                            consigneCour.append(sortie[0] * 1000)  # conversion en mA
+                            if consigneCour[-1] > ValMaxCourEpos:
+                                consigneCour[-1] = 4000
+                            if consigneCour[-1] < -ValMaxCourEpos:
+                                consigneCour[-1] = -4000
+                            c = int(consigneCour[-1])
+                            self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
+
+                    compt += 1
+                    Temps.append(time.time() - debut)
+                    self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
+                    self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
+                    self.carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
+                    TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
+                    TabVitesse.append(self.pVelocityIs_i.contents.value)
+                    TabCourant.append(self.pCurrentIs_i.contents.value)
+
+        return Temps, TabPosition, TabVitesse, TabCourant
 
     def rampePosition(self, coef_dir, posFinale, dureeExp):
         Mode = c_int(-3)

@@ -52,6 +52,8 @@ def pi_sat(K,Ti,err,somme_err,Sat,Te):
     result = K * err + (K / Ti) * somme_err*Te
     if result>Sat:
         result = K*err + ((Sat-result)/Ti+(K / Ti))*somme_err*Te
+    if result<-Sat:
+        result = K * err + ((-result-Sat) / Ti + (K / Ti)) * somme_err * Te
     return result
 
 #pid bourrin (mais qui marche bien)
@@ -66,12 +68,19 @@ def pid_sat(K,Ti,Td,err,somme_err,Sat,Te):
     result=K*err[-1]+(K/Ti)*somme_err*Te+(K*Td)*delta_err
     if result>Sat:
         result = K*err[-1] + ((Sat-result)/Ti+(K / Ti))*somme_err*Te + (K*Td)*delta_err
+    if result<-Sat:
+        result = K * err[-1] + ((-Sat - result) / Ti + (K / Ti)) * somme_err * Te + (K * Td) * delta_err
     return result
 
 #correcteur proportionnel
 def prop(K,err):
     return K*err
 
+def prop_sat(K,err,Sat):
+    if K*err>Sat:
+        return Sat
+    if K*err<-Sat:
+        return -Sat
 
 
 #version de correction qui n'utlise pas de transformation bilinéaire
@@ -93,7 +102,7 @@ def pos2current(K,Ti,Td,cmd,S,err,somme_err,Te):
         courant=prop(K,err[-1])
     else:
         courant=pid(K,Ti,Td,err,somme_err,Te)
-    return courant
+    return courant,somme_err
 
 
 def pos2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
@@ -103,10 +112,10 @@ def pos2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
     if Td=='' and Ti!='':
         courant=pi_sat(K,Ti,err[-1],somme_err,Sat,Te)
     elif Td=='' and Ti=='':
-        courant=prop(K,err[-1])
+        courant=prop_sat(K,err[-1],Sat)
     else:
         courant=pid_sat(K,Ti,Td,err,somme_err,Sat,Te)
-    return courant
+    return courant,somme_err
 
 
 #permet d'avoir en sortie une vitesse qu'il faudra ensuite corriger avec vit2current puis current_cmd()
@@ -121,7 +130,7 @@ def pos2velocity(K,Ti,Td,cmd,S,err,somme_err,Te):
         vitesse=prop(K,err[-1])
     else:
         vitesse=pid(K,Ti,Td,err,somme_err,Te)
-    return vitesse
+    return vitesse,somme_err
 
 
 def pos2velocity_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
@@ -131,10 +140,10 @@ def pos2velocity_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
     if Td=='' and Ti!='':
         vitesse=pi_sat(K,Ti,err[-1],somme_err,Sat,Te)
     elif Td=='' and Ti=='':
-        vitesse=prop(K,err[-1])
+        vitesse=prop_Sat(K,err[-1],Sat)
     else:
         vitesse=pid_sat(K,Ti,Td,err,somme_err,Sat,Te)
-    return vitesse
+    return vitesse,somme_err
 
 
 #conversion de la vitesse en courant
@@ -157,7 +166,7 @@ def velocity2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
     if Td=='' and Ti!='':
         courant=pi_sat(K,Ti,err[-1],somme_err,Sat,Te)
     elif Td=='' and Ti=='':
-        courant=prop(K,err[-1])
+        courant=prop_sat(K,err[-1],Sat)
     else:
         courant=pid_sat(K,Ti,Td,err,somme_err,Sat,Te)
     return courant,somme_err
@@ -175,7 +184,7 @@ def courant_cmd(K,Ti,Td,cmd,S,err,somme_err,Te):
         courantC=prop(K,err[-1])
     else:
         courantC=pid(K,Ti,Td,err,somme_err,Te)
-    return courantC
+    return courantC,somme_err
 
 
 def courant_cmd_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
@@ -185,10 +194,10 @@ def courant_cmd_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
     if Td=='' and Ti!='':
         courantC=pi_sat(K,Ti,err[-1],somme_err,Sat,Te)
     elif Td=='' and Ti=='':
-        courantC=prop(K,err[-1])
+        courantC=prop_sat(K,err[-1],Sat)
     else:
         courantC=pid_sat(K,Ti,Td,err,somme_err,Sat,Te)
-    return courantC
+    return courantC,somme_err
 
 #pour l instant bcp d'arguments mais visuellement c est plsu simple a comprendre que des tableaux
 #def regulation_cascade(Kvit,Kpos,Kcour,Tivit,Tipos,Ticour,Tdvit,Tdpos,Tdcour,cmd,errvit,errpos,errcour,Svit,Spos,Scour,courantC,vitesseC,pErrorCode_i,pCurrentIs_i,pVelocityIs_i,carteEpos):
