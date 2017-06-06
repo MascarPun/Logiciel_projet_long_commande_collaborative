@@ -670,6 +670,8 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         # début code ajouté
+        self.run_col.clicked.connect(self.runcolabo)
+        self.pushButton.clicked.connect(self.stopcolabo)
         self.run_p.clicked.connect(self.runpos)
         self.Slider_col.setMinimum(0)
         self.Slider_col.setMaximum(500)
@@ -971,8 +973,14 @@ class Ui_MainWindow(object):
             if self.radioButtonCas_col.isChecked() == True:  # rends 4 si correction en cascade
                 return 4
 
+    def runcolabo(self):
+        print('merde')
+        self.controleur.parametres.setCollaborativeRunning(True)
+        self.controleur.teststop()
 
-        # fin code ajouté
+    def stopcolabo(self):
+        self.controleur.parametres.setCollaborativeRunning(False)
+# fin code ajouté
 
 if __name__ == "__main__":
     import sys
