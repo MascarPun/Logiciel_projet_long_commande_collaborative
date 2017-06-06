@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>920</width>
-    <height>586</height>
+    <width>875</width>
+    <height>608</height>
    </rect>
   </property>
   <property name="font">
@@ -23,7 +23,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="1">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="tabs">
       <property name="font">
        <font>
@@ -34,7 +34,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -990,103 +990,188 @@
        <attribute name="title">
         <string>Collaboratif</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_31">
-            <property name="text">
-             <string>Position du bras</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QSlider" name="Slider_col">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="poLabelValeurPosAct_col">
-            <property name="text">
-             <string>poLabelValeurPosAct</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="1" column="4">
+         <spacer name="verticalSpacer_14">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
-        <item>
+        <item row="3" column="2">
+         <widget class="QLineEdit" name="lineEdit_3"/>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLabel" name="label_55">
+          <property name="text">
+           <string>Td</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLineEdit" name="lineEdit_2"/>
+        </item>
+        <item row="2" column="4">
+         <spacer name="verticalSpacer_15">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="4">
+         <spacer name="verticalSpacer_16">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="2">
          <widget class="QPushButton" name="run_col">
           <property name="text">
            <string>Run</string>
           </property>
          </widget>
+        </item>
+        <item row="0" column="8" rowspan="5">
+         <widget class="QSlider" name="Slider_col">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="9">
+         <widget class="QLabel" name="poLabelValeurPosAct_col">
+          <property name="text">
+           <string>poLabelValeurPosAct</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="4">
+         <spacer name="verticalSpacer_23">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="6">
+         <widget class="QLabel" name="label_31">
+          <property name="text">
+           <string>Position du bras</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="4">
+         <spacer name="verticalSpacer_22">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="lineEdit"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="label_39">
+          <property name="text">
+           <string>K</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="label_40">
+          <property name="text">
+           <string>Ti</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_56">
+          <property name="text">
+           <string>Correcteur d'effort</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="7">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="0">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="10">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="5">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -1455,7 +1540,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>920</width>
+     <width>875</width>
      <height>21</height>
     </rect>
    </property>
@@ -1489,9 +1574,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_v"/>
   <buttongroup name="buttonGroup_c"/>
   <buttongroup name="buttonGroup_p"/>
+  <buttongroup name="buttonGroup_v"/>
   <buttongroup name="buttonGroup_cor"/>
  </buttongroups>
 </ui>
