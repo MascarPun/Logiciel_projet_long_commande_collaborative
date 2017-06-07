@@ -29,7 +29,7 @@ class Parametre:
 
         self.mode = 0       # si 0 position si 1 vitesse si 2 courant si 3 collaboratif
 
-        self.dureeExp = 1
+        self.dureeExp = 5
 
         # Parametres du logiciel Comax
         self.NominalCurrent = 5000
@@ -40,9 +40,9 @@ class Parametre:
         #parametre de commande
         self.position = 0
         self.posfinale = 0
-        self.frequence = 0
-        self.amplitude = 0
-        self.rampe = 0
+        self.frequence = 5
+        self.amplitude = 2000
+        self.rampe = 10000
 
         self.Te = 0.001
 
