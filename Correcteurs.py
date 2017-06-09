@@ -81,6 +81,8 @@ def prop_sat(K,err,Sat):
         return Sat
     if K*err<-Sat:
         return -Sat
+    else:
+        return K*err
 
 
 #version de correction qui n'utlise pas de transformation bilinéaire

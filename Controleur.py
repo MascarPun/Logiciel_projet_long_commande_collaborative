@@ -1676,7 +1676,7 @@ class Controleur:
                         # Pour l'instant il fait rien mais on peut lui ajouter une action à réaliser pour pas avoir de temps où il ne fait rien
 
                     # On suppose que l'on commmence à zero (en position on aura un offset)
-                    consigneVit.append(amp * math.sin(compt * Te * freq*2*pi) + positionInitiale)
+                    consigneVit.append(amp * math.sin(compt * Te * freq*2*pi))
                     self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
 
                     if satVit != 0:
