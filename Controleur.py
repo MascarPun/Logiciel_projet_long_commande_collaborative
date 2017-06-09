@@ -2024,16 +2024,12 @@ class Controleur:
         sommeErreurPos = 0
         sommeErreurVit = 0
         sommeErreurCour = 0
-<<<<<<< Updated upstream
         rad_m = 1 #A Ajuster
 
         t0 = time.time()
         t = time.time()
         dureeExp = self.parametres.getDureeExp
         while t-t0< dureeExp:
-=======
-        while t - t0 < dureeExp:
->>>>>>> Stashed changes
             while time.time() - t < Te:
                 a = 0
             t = time.time()
@@ -2061,7 +2057,142 @@ class Controleur:
 
         return ("fini")
 
+
+############ Commande Collaborative ############
+
+
+    def commandeCollabo(self):
+        self.echelonPosition(250)  # On impose un echelon avant de commencer ? (pcq il manque qq arguments)
+
+        Mode = c_int(-3)
+        self.carteEpos.setOperationMode(Mode, self.pErrorCode_i)
+
+        Te = self.parametres.getTe()
+
+        pMode = ctypes.POINTER(ctypes.c_int)
+        pMode_i = ctypes.c_int(0)
+        pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
+        self.carteEpos.getOperationMode(pMode2, self.pErrorCode_i)
+        self.carteEpos.getOperationMode2(pMode2.contents, self.pErrorCode_i)
+
+        pAnalogValue_i= ctypes.POINTER(ctypes.c_int)
+        pAnalogValue2 = ctypes.c_int(0)
+        pAnalogValue = ctypes.cast(ctypes.addressof(pAnalogValue2), pAnalogValue_i)
+
+        # set enable state
+        self.carteEpos.setDisableState(self.pErrorCode_i)
+        self.carteEpos.setEnableState(self.pErrorCode_i)
+
+        # get enabled state
+        res = self.carteEpos.getEnableState(self.pIsEnabled_i, self.pErrorCode_i)
+
+        # Phase de commande du bras pour aller d'une position à une autre
+        pPositionIs = c_long(0)
+        self.carteEpos.getPositionIs(pPositionIs, self.pErrorCode_i)  # mesure de position initiale
+
+        Timeout_i = c_long(5000)
+        t0 = time.time()
+        t = time.time()
+
+
+
+        Kfor = self.parametres.getKfor()
+        Tifor = self.parametres.getTifor()
+        Tdfor = self.parametres.getTdfor()
+
+        Kvit = self.parametres.getKvit()
+        Tivit = self.parametres.getTivit()
+        Tdvit = self.parametres.getTdvit()
+
+        Kcour = self.parametres.getKcour()
+        Ticour = self.parametres.getTicour()
+        Tdcour = self.parametres.getTdcour()
+
+        Te = self.parametres.getTe()
+
+        i = 0
+        forces = [0,0,0]
+        positions = []
+        vitesses = []
+        courants = []
+        consigneVit = [0,0]
+        consigneCour = []
+        courantImposePI = []
+        mm2qc = 294
+        # pPositionIs = c_long(0)
+        erreurVit = [0, 0]
+        erreurCour = [0, 0]
+        sommeErreurVit = 0
+        sommeErreurCour = 0
+        rad_m = 0.0011 #A Ajuster
+
+        t0 = time.time()
+        t=time.time()
+        dureeExp = 10
+        while t-t0<dureeExp:
+            while time.time() - t < Te:
+                a = 0
+            t = time.time()
+
+        ####### Mesure de la position actuelle #########################
+            self.carteEpos.getPositionIs(pPositionIs, self.pErrorCode_i)  # mesure de position initiale
+            positionLueMm = self.pPositionIs_i.contents.value / mm2qc  # conversion qc en mm
+            positions.append(positionLueMm)
+
+        #######  Mesure de la valeur de l'input en force sorti du capteur ##########
+            InputNumber = c_int(1)
+
+            self.carteEpos.getAnalogInput(InputNumber, pAnalogValue, self.pErrorCode_i)
+            self.carteEpos.getAnalogInput2(InputNumber, pAnalogValue.contents, self.pErrorCode_i)
+
+            forces.append(pAnalogValue.contents.value - 2503)
+            print(forces[-1])
+
+
+        ############ Elaboration Consigne Vitesse a partir de la Consigne Force ############
+
+            """consigneVitesseActuelle = consigneVit[-2] + (Kfor/rad_m)/(2*Tifor*Te)*(
+                (2*Tifor*Te + Te*Te + 4*Tdfor*Tifor)*forces[-1] +
+                (2*Te*Te - 8*Tifor*Tdfor)*forces[-2] +
+                (Te*Te - 2*Tifor*Te + 4*Tdfor*Tifor)*forces[-3]
+            )"""
+            consigneVitesseActuelle = 100*forces[-1]
+            #consigneVitesseActuelle = (Kfor/rad_m)*forces[-1]
+            consigneVit.append(consigneVitesseActuelle)
+            print('convit=' + str(consigneVitesseActuelle))
+        ############ Elaboration Consigne Courant a partir de la Consigne Vitesse ############
+            self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
+            vitesseLue = self.pVelocityIs_i.contents.value  # en tour par minute ATTENTION ERREUR UNITE SOMMATEUR!
+            vitesses.append(vitesseLue*2*math.pi/60)
+            a = Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1], vitesseLue,erreurVit, sommeErreurVit,self.parametres.getTe())
+            consigneCour.append(a[0])
+            sommeErreurVit = sommeErreurVit + a[1]
+
+        ############ Elaboration Consigne Courant Envoye a partir de la Consigne Courant ############
+            self.carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
+            courantLu = self.pCurrentIs_i.contents.value / 1000  # en A
+            courants.append(courantLu)
+            print('courantLu='+str(courantLu))
+
+            #a = Correcteurs.courant_cmd(Kcour, Ticour, Tdcour,consigneCour[-1], courantLu, erreurCour, sommeErreurCour, self.parametres.getTe())
+            b=a[0]
+            if abs(b)>4000:
+                b=4000*abs(b)/b
+            courantImposePI.append(b)
+            sommeErreurCour = sommeErreurCour + a[1]
+            print('commandeCour='+str(b))
+
+            self.carteEpos.setCurrentMust(c_short(int(courantImposePI[-1])), self.pErrorCode_i)
+
+            i = i + 1
+
+        return ("fini")
+
+
+
 c=Controleur()
+#c.sinus_vitesse()
+#c.commandeCollabo()
 #c.run()
 c.launch()
 c.interface.actualisationAffichage(c.interface,12)
