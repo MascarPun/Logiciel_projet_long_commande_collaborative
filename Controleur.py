@@ -97,7 +97,7 @@ class Controleur:
         print("ca marche")
         self.run()
 
-
+########################################################################################################################
 
 ####################FONCTION DES AUTRES##############################
 
@@ -315,6 +315,7 @@ class Controleur:
         xlabel('Temps (s)')
         show()
 
+########################################################################################################################
 
 #######################NOS FONCTIONS##################################
 
@@ -1836,9 +1837,14 @@ class Controleur:
 
 
 
+########################################################################################################################
 
+########## Autre implementation des fonctions pour le mode cascade ##########
 
-
+    #on definit d'abord une liste de consigne de position, correspondant aux differentes forme de consigne :
+    #rampe, echelon, sinusoide
+    #puis on appelle la fonction commandeCascade qui a partir de la position renvoie une consigne de courant obtenue par
+    # correction cascade
 
     def rampePosition(self, coef_dir, posFinale, dureeExp):
         Mode = c_int(-3)
@@ -2042,6 +2048,8 @@ class Controleur:
 
         return ("fini")
 
+
+########################################################################################################################
 
 ############ Commande Collaborative ############
 
