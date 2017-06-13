@@ -2136,22 +2136,19 @@ class Controleur:
 
         ############ Elaboration Consigne Vitesse a partir de la Consigne Force ############
 
-            """consigneVitesseActuelle = consigneVit[-2] + (Kfor/rad_m)/(2*Tifor*Te)*(
-                (2*Tifor*Te + Te*Te + 4*Tdfor*Tifor)*forces[-1] +
-                (2*Te*Te - 8*Tifor*Tdfor)*forces[-2] +
-                (Te*Te - 2*Tifor*Te + 4*Tdfor*Tifor)*forces[-3]
-            )"""
-            consigneVitesseActuelle = 100*forces[-1]
+            consigneVitesseActuelle = Kfor*forces[-1]
             #consigneVitesseActuelle = (Kfor/rad_m)*forces[-1]
             consigneVit.append(consigneVitesseActuelle)
             print('convit=' + str(consigneVitesseActuelle))
+
+
         ############ Elaboration Consigne Courant a partir de la Consigne Vitesse ############
             self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
             vitesseLue = self.pVelocityIs_i.contents.value  # en tour par minute ATTENTION ERREUR UNITE SOMMATEUR!
             vitesses.append(vitesseLue*2*math.pi/60)
             a = Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1], vitesseLue,erreurVit, sommeErreurVit,self.parametres.getTe())
             consigneCour.append(a[0])
-            sommeErreurVit = sommeErreurVit + a[1]
+            sommeErreurVit = a[1]
 
         ############ Elaboration Consigne Courant Envoye a partir de la Consigne Courant ############
             self.carteEpos.getCurrentIs(self.pCurrentIs_i, self.pErrorCode_i)
@@ -2164,7 +2161,7 @@ class Controleur:
             if abs(b)>4000:
                 b=4000*abs(b)/b
             courantImposePI.append(b)
-            sommeErreurCour = sommeErreurCour + a[1]
+            sommeErreurCour = a[1]
             print('commandeCour='+str(b))
 
             self.carteEpos.setCurrentMust(c_short(int(courantImposePI[-1])), self.pErrorCode_i)

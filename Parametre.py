@@ -21,7 +21,8 @@ class Parametre:
         self.tdcour = 1
 
         # parametres de correcteur d'effort
-        self.kfor = 1
+        self.kfor = 100
+            #la correction integrale et derivee necessite d'abord l'integration de l'accelerometre
         self.tifor = 1
         self.tdfor = 1
 
