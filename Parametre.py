@@ -6,13 +6,13 @@ class Parametre:
     def __init__(self):
 
         # parametre du corecteur pid pour la boucle de position
-        self.kpos = 1
-        self.tipos = 1
-        self.tdpos = 1
+        self.kpos = 18740
+        self.tipos = 0.062
+        self.tdpos = 0.016
 
         # parametre de corecteur pid pour la boucle de vitesse
-        self.kvit = 0.02
-        self.tivit = 1
+        self.kvit = 0.024
+        self.tivit = 0.17
         self.tdvit = 1
 
         # parametre de corecteur pour la boucle de courant

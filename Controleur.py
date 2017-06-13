@@ -102,6 +102,7 @@ class Controleur:
 ####################FONCTION DES AUTRES##############################
 
     def echelonPosition(self, posFinale):
+        mm2qc=294
 
         Mode = c_int(-1)
         self.carteEpos.setOperationMode(Mode, self.pErrorCode_i)
@@ -135,6 +136,7 @@ class Controleur:
 
             self.carteEpos.setPositionMust(positionFinaleQc, self.pErrorCode_i)  # on initialise la position à l'origine
             # définie précédemment. On met 1 en second argument pour un déplacement absolu, 0 pour un déplacement relatif
+        time.sleep(3)
         return("fini")
 
 
@@ -389,13 +391,12 @@ class Controleur:
         sommeErrPos = 0
         sommeErrVit = 0
         sommeErrCour = 0
-        nombreEch = dureeExp // Te
         compt = 0
 
         if self.interface.groupebuttoncor() == 1:  # si correction en position
 
             debut = time.time()
-            while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+            while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -406,7 +407,7 @@ class Controleur:
                     print("Le bras ne peut pas monter car il va taper la butée !!!")
                     break
 
-                if ((self.pPositionIs_i.contents.value / mm2qc) < -2):
+                if ((self.pPositionIs_i.contents.value / mm2qc) < -30):
                     self.carteEpos.setOperationMode(c_int(3), self.pErrorCode_i)
                     self.carteEpos.moveWithVelocity(c_long(0), self.pErrorCode_i)
                     self.carteEpos.setOperationMode(c_int(-3), self.pErrorCode_i)
@@ -447,7 +448,6 @@ class Controleur:
                             consigneCour[-1] = -4000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
-                compt+=1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -460,7 +460,7 @@ class Controleur:
         elif self.interface.groupebuttoncor() == 4:  # si correction en cascade
 
             debut = time.time()
-            while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+            while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -537,7 +537,6 @@ class Controleur:
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
-                compt+=1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -626,7 +625,7 @@ class Controleur:
         if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
 
             debut = time.time()
-            while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+            while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -679,7 +678,7 @@ class Controleur:
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
-                compt+=1
+
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -761,7 +760,7 @@ class Controleur:
 
             debut = time.time()
             while (
-                compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+                time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -815,8 +814,6 @@ class Controleur:
 
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
-
-                compt += 1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -906,7 +903,7 @@ class Controleur:
             positionInitiale=self.carteEpos.getPositionIs(self.pPositionIs_i,self.pErrorCode_i)
 
             debut = time.time()
-            while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+            while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -959,8 +956,6 @@ class Controleur:
                             consigneCour[-1] = -4000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
-
-                compt += 1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -974,7 +969,7 @@ class Controleur:
 
             debut = time.time()
             while (
-                compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+                time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -1052,8 +1047,6 @@ class Controleur:
                             courantCorrige[-1] = -4000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
-
-                compt += 1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -1142,7 +1135,7 @@ class Controleur:
         if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
 
             debut = time.time()
-            while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+            while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -1194,8 +1187,6 @@ class Controleur:
                             consigneCour[-1] = -4000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
-
-                compt += 1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -1274,7 +1265,7 @@ class Controleur:
             courantInitial=self.carteEpos.getCurrentIs(self.pCurrentIs_i,self.pErrorCode_i)/1000
 
             debut = time.time()
-            while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+            while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -1326,8 +1317,6 @@ class Controleur:
                             courantCorrige[-1] = -4000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
-
-                compt += 1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -1420,7 +1409,7 @@ class Controleur:
 
             debut = time.time()
             while (
-                compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+                time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -1472,8 +1461,6 @@ class Controleur:
                             consigneCour[-1] = -4000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
-
-                compt += 1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -1486,7 +1473,7 @@ class Controleur:
             positionInitiale = self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
 
             debut = time.time()
-            while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+            while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -1565,7 +1552,6 @@ class Controleur:
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
-                compt += 1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -1579,6 +1565,7 @@ class Controleur:
 
     def sinus_vitesse(self):
         mm2qc = 294
+        self.echelonPosition(250)
         freq = self.parametres.getFrequence()
         amp = self.parametres.getAmplitude()
         dureeExp = self.parametres.getDureeExp()
@@ -1651,7 +1638,7 @@ class Controleur:
         if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
 
             debut = time.time()
-            while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+            while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -1704,7 +1691,6 @@ class Controleur:
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
-                compt += 1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -1784,7 +1770,7 @@ class Controleur:
             courantInitial=self.carteEpos.getCurrentIs(self.pCurrentIs_i,self.pErrorCode_i)/1000
 
             debut = time.time()
-            while (compt <= nombreEch - 1):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
+            while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
                 # On verfie que le mouvement est possible
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -1838,7 +1824,6 @@ class Controleur:
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
-                compt += 1
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
