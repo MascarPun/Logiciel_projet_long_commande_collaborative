@@ -24,10 +24,11 @@ class Parametre:
         self.satcour = 0
 
         # parametres de correcteur d'effort
-        self.kfor = 100
+        self.kfor = 75
             #la correction integrale et derivee necessite d'abord l'integration de l'accelerometre
         self.tifor = 1
         self.tdfor = 1
+
 
         # parametres du filtre rejecteur
         self.z1 = 0.001

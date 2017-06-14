@@ -460,6 +460,7 @@ class Controleur:
                             consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
+
                 Temps.append(time.time() - debut)
                 self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
                 self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
@@ -1572,6 +1573,8 @@ class Controleur:
         freq = self.parametres.getFrequence()
         amp = self.parametres.getAmplitude()
         dureeExp = self.parametres.getDureeExp()
+        posFinale=250
+        ValMaxCourEpos=5000
 
         if amp > 20000:
             return ('Trop d amplitude')
@@ -2162,10 +2165,13 @@ class Controleur:
 
         ############ Elaboration Consigne Vitesse a partir de la Consigne Force ############
 
+
             vitessePreRejecteur.append(Kfor*forces[-1])
+
             #consigneVitesseActuelle = (Kfor/rad_m)*forces[-1]
 
         ########### Application du filtre rejecteur de mode de structure ###################
+
 
 
             vitesseSortieRejecteur = 1/a2 *(-c*consigneVit[-1] - b2* consigneVit[-2] + a1* vitessePreRejecteur[-1] +
@@ -2178,6 +2184,7 @@ class Controleur:
         ############ Elaboration Consigne Courant a partir de la Consigne Vitesse ############
             self.carteEpos.getVelocityIs(self.pVelocityIs_i, self.pErrorCode_i)
             vitesseLue = self.pVelocityIs_i.contents.value  # en tour par minute ATTENTION ERREUR UNITE SOMMATEUR!
+            #vitesses.append(vitesseLue)
             vitesses.append(vitesseLue*2*math.pi/60)
             a = Correcteurs.velocity2current(Kvit, Tivit, Tdvit, consigneVit[-1], vitesseLue,erreurVit, sommeErreurVit,self.parametres.getTe())
             consigneCour.append(a[0])
@@ -2191,8 +2198,10 @@ class Controleur:
 
             #a = Correcteurs.courant_cmd(Kcour, Ticour, Tdcour,consigneCour[-1], courantLu, erreurCour, sommeErreurCour, self.parametres.getTe())
             b=a[0]
-            if abs(b)>4000:
-                b=4000*abs(b)/b
+            if b>4000:
+                b=4000
+            if b<-4000:
+                b=-4000
             courantImposePI.append(b)
             sommeErreurCour = a[1]
             print('commandeCour='+str(b))
@@ -2206,8 +2215,9 @@ class Controleur:
 
 
 c=Controleur()
+#c.echelon_position()
 #c.sinus_vitesse()
-#c.commandeCollabo()
+c.commandeCollabo()
 #c.run()
-c.launch()
-c.interface.actualisationAffichage(c.interface,12)
+#c.launch()
+#c.interface.actualisationAffichage(c.interface,12)
