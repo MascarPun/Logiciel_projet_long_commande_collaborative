@@ -30,14 +30,7 @@ class Controleur:
         self.pPositionIs_i = Initialisation_CoMax.pPositionIs_i
         self.pCurrentIs_i = Initialisation_CoMax.pCurrentIs_i
         self.pVelocityIs_i = Initialisation_CoMax.pVelocityIs_i
-
-
-    def run(self):
-        print("setTiVit")
-        self.parametres.setTivit(300)
-        self.parametres.getTivit()
-        self.parametres.setDureeExp(10)
-        mm2qc = 294
+        Mode = c_int(-1)
 
         NominalCurrent = self.parametres.getNominalCurrent()  # Parametre du logiciel Comax
         MaxOutputCurrent = self.parametres.getMaxOutputCurrent()  # Parametre du logiciel Comax
@@ -46,6 +39,24 @@ class Controleur:
 
         self.carteEpos.setDcMotorParameter(NominalCurrent, MaxOutputCurrent, ThermalTimeConstant, self.pErrorCode_i)
         self.carteEpos.setMaxAcceleration(MaxAcceleration, self.pErrorCode_i)
+        self.carteEpos.setOperationMode(Mode, self.pErrorCode_i)
+
+        self.pMode = ctypes.POINTER(ctypes.c_int)
+        self.pMode_i = ctypes.c_int(0)
+        self.pMode2 = ctypes.cast(ctypes.addressof(self.pMode_i), self.pMode)
+        self.carteEpos.getOperationMode(self.pMode2, self.pErrorCode_i)
+        self.carteEpos.getOperationMode2(self.pMode2.contents, self.pErrorCode_i)
+
+        self.pAnalogValue_i = ctypes.POINTER(ctypes.c_int)
+        self.pAnalogValue2 = ctypes.c_int(0)
+        self.pAnalogValue = ctypes.cast(ctypes.addressof(self.pAnalogValue2), self.pAnalogValue_i)
+
+
+    def run(self):
+        self.parametres.setTivit(300)
+        self.parametres.getTivit()
+        self.parametres.setDureeExp(10)
+        mm2qc = 294
 
 
     def setMode(self, i):
@@ -2053,15 +2064,15 @@ class Controleur:
 
         Te = self.parametres.getTe()
 
-        pMode = ctypes.POINTER(ctypes.c_int)
-        pMode_i = ctypes.c_int(0)
-        pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
-        self.carteEpos.getOperationMode(pMode2, self.pErrorCode_i)
-        self.carteEpos.getOperationMode2(pMode2.contents, self.pErrorCode_i)
+        # pMode = ctypes.POINTER(ctypes.c_int)
+        # pMode_i = ctypes.c_int(0)
+        # pMode2 = ctypes.cast(ctypes.addressof(pMode_i), pMode)
+        self.carteEpos.getOperationMode(self.pMode2, self.pErrorCode_i)
+        self.carteEpos.getOperationMode2(self.pMode2.contents, self.pErrorCode_i)
 
-        pAnalogValue_i= ctypes.POINTER(ctypes.c_int)
-        pAnalogValue2 = ctypes.c_int(0)
-        pAnalogValue = ctypes.cast(ctypes.addressof(pAnalogValue2), pAnalogValue_i)
+        # pAnalogValue_i= ctypes.POINTER(ctypes.c_int)
+        # pAnalogValue2 = ctypes.c_int(0)
+        # pAnalogValue = ctypes.cast(ctypes.addressof(pAnalogValue2), pAnalogValue_i)
 
         # set enable state
         self.carteEpos.setDisableState(self.pErrorCode_i)
@@ -2142,10 +2153,10 @@ class Controleur:
         #######  Mesure de la valeur de l'input en force sorti du capteur ##########
             InputNumber = c_int(1)
 
-            self.carteEpos.getAnalogInput(InputNumber, pAnalogValue, self.pErrorCode_i)
-            self.carteEpos.getAnalogInput2(InputNumber, pAnalogValue.contents, self.pErrorCode_i)
+            self.carteEpos.getAnalogInput(InputNumber, self.pAnalogValue, self.pErrorCode_i)
+            self.carteEpos.getAnalogInput2(InputNumber, self.pAnalogValue.contents, self.pErrorCode_i)
 
-            forces.append(pAnalogValue.contents.value - 2503)
+            forces.append(self.pAnalogValue.contents.value - 2503)
             print(forces[-1])
 
 
