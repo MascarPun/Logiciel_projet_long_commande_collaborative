@@ -704,6 +704,8 @@ class Ui_MainWindow(object):
         self.lineEditTi_col.setText('0')
         self.lineEditTd_col.setText('0')
         self.lineEdit.setText('0')
+        self.actualisationAffichage(0)
+        #self.actualisationAffichage(self.controleur.carteEpos.getPositionIs(self.controleur.pPositionIs_i,self.controleur.pErrorCode_i))   # à tester
         # fin code ajouté
 
     def retranslateUi(self, MainWindow):
@@ -730,8 +732,8 @@ class Ui_MainWindow(object):
         self.label_16.setText(_translate("MainWindow", "position actuelle"))
         self.radioButtonEch_v.setText(_translate("MainWindow", "Echelon"))
         self.label_12.setText(_translate("MainWindow", "cm"))
-        self.label_11.setText(_translate("MainWindow", "position finale"))
-        self.label_18.setText(_translate("MainWindow", "position finale"))
+        self.label_11.setText(_translate("MainWindow", "vitesse finale"))
+        self.label_18.setText(_translate("MainWindow", "vitesse finale"))
         self.label_9.setText(_translate("MainWindow", "fréquence"))
         self.label_17.setText(_translate("MainWindow", "secondes"))
         self.radioButtonTri_v.setText(_translate("MainWindow", "Rampe"))
@@ -748,10 +750,10 @@ class Ui_MainWindow(object):
         self.label_29.setText(_translate("MainWindow", "Durée expérimentale"))
         self.run_c.setText(_translate("MainWindow", "run"))
         self.label_24.setText(_translate("MainWindow", "cm"))
-        self.label_28.setText(_translate("MainWindow", "position finale"))
+        self.label_28.setText(_translate("MainWindow", "courant finale"))
         self.radioButtonEch_c.setText(_translate("MainWindow", "Echelon"))
         self.radioButtonRam_c.setText(_translate("MainWindow", "Rampe"))
-        self.label_23.setText(_translate("MainWindow", "position finale"))
+        self.label_23.setText(_translate("MainWindow", "courant finale"))
         self.label_21.setText(_translate("MainWindow", "fréquence"))
         self.label_22.setText(_translate("MainWindow", "coefficient directeur"))
         self.radioButtonSin_c.setText(_translate("MainWindow", "Sinus Asin(2pi*f*t)"))
@@ -957,8 +959,32 @@ class Ui_MainWindow(object):
                 return 4
 
     def runcolabo(self):
+        self.controleur.parametres.setKpos(self.num(self.lineEditKPos_cor.text()))
+        self.controleur.parametres.setTipos(self.num(self.lineEditTiPos_cor.text()))
+        self.controleur.parametres.setTdpos(self.num(self.lineEditTdPos_cor.text()))
+        self.controleur.parametres.setKvit(self.num(self.lineEditKVit_cor.text()))
+        self.controleur.parametres.setTivit(self.num(self.lineEditTiVit_cor.text()))
+        self.controleur.parametres.setTdvit(self.num(self.lineEditTdVit_cor.text()))
+        self.controleur.parametres.setKcour(self.num(self.lineEditKCour_cor.text()))
+        self.controleur.parametres.setTicour(self.num(self.lineEditTiCour_cor.text()))
+        self.controleur.parametres.setTdcour(self.num(self.lineEditTdCour_cor.text()))
+
+        self.controleur.parametres.satpos = self.num(self.lineEditSatPos_cor.text())
+        self.controleur.parametres.satvit = self.num(self.lineEditSatVit_cor.text())
+        self.controleur.parametres.satcour = self.num(self.lineEditSatCour_cor.text())
+
+        self.controleur.parametres.setKfor(self.num(self.lineEditK_col.text()))
+        self.controleur.parametres.setTifor(self.num(self.lineEditTi_col.text()))
+        self.controleur.parametres.setTdfor(self.num(self.lineEditTd_col.text()))
+
+        self.controleur.parametres.mode = 0
+        if self.groupebuttoncor() == 4:
+            self.controleur.parametres.cascade = 1
+        else:
+            self.controleur.parametres.cascade = 0
+
         self.controleur.parametres.setCollaborativeRunning(True)
-        self.controleur.teststop()
+        self.controleur.commandeCollabo()
 
     def runpos(self):
         self.controleur.parametres.setKpos(self.num(self.lineEditKPos_cor.text()))
@@ -980,14 +1006,18 @@ class Ui_MainWindow(object):
             self.controleur.parametres.cascade = 1
         else:
             self.controleur.parametres.cascade = 0
+
         if self.groupebuttonpos() == 1:
-             self.controleur.parametres.setPosFinale(self.num(self.lineEditPosFEch_p.text()))
+            self.controleur.parametres.setPosFinale(self.num(self.lineEditPosFEch_p.text()))
+            self.controleur.echelon_position()
         if self.groupebuttonpos() == 2:
-             self.controleur.parametres.setPosFinale(self.num(self.lineEditPosFRam_p.text()))
-             self.controleur.parametres.setRampe(self.num(self.lineEditCoefDir_p.text()))
+            self.controleur.parametres.setPosFinale(self.num(self.lineEditPosFRam_p.text()))
+            self.controleur.parametres.setRampe(self.num(self.lineEditCoefDir_p.text()))
+            self.controleur.rampe_position()
         if self.groupebuttonpos() == 3:
-             self.controleur.parametres.setAmplitude(self.num(self.lineEditAmp_p.text()))
-             self.controleur.parametres.setFrequence(self.num(self.lineEditFreq_p.text()))
+            self.controleur.parametres.setAmplitude(self.num(self.lineEditAmp_p.text()))
+            self.controleur.parametres.setFrequence(self.num(self.lineEditFreq_p.text()))
+            self.controleur.sinus_position()
 
 
 
@@ -996,10 +1026,71 @@ class Ui_MainWindow(object):
 #        print(a)
 
     def runvit(self):
-        return 1
+        self.controleur.parametres.setKpos(self.num(self.lineEditKPos_cor.text()))
+        self.controleur.parametres.setTipos(self.num(self.lineEditTiPos_cor.text()))
+        self.controleur.parametres.setTdpos(self.num(self.lineEditTdPos_cor.text()))
+        self.controleur.parametres.setKvit(self.num(self.lineEditKVit_cor.text()))
+        self.controleur.parametres.setTivit(self.num(self.lineEditTiVit_cor.text()))
+        self.controleur.parametres.setTdvit(self.num(self.lineEditTdVit_cor.text()))
+        self.controleur.parametres.setKcour(self.num(self.lineEditKCour_cor.text()))
+        self.controleur.parametres.setTicour(self.num(self.lineEditTiCour_cor.text()))
+        self.controleur.parametres.setTdcour(self.num(self.lineEditTdCour_cor.text()))
+
+        self.controleur.parametres.satpos = self.num(self.lineEditSatPos_cor.text())
+        self.controleur.parametres.satvit = self.num(self.lineEditSatVit_cor.text())
+        self.controleur.parametres.satcour = self.num(self.lineEditSatCour_cor.text())
+
+        self.controleur.parametres.mode = 1
+        if self.groupebuttoncor() == 4:
+            self.controleur.parametres.cascade = 1
+        else:
+            self.controleur.parametres.cascade = 0
+
+        if self.groupebuttonvit() == 1:
+            self.controleur.parametres.vitfinale = self.num(self.lineEditPosFEch_v.text())
+            self.controleur.echelon_vitesse()
+        if self.groupebuttonvit() == 2:
+            self.controleur.parametres.vitfinale = self.num(self.lineEditPosFTri_v.text())
+            self.controleur.parametres.setRampe(self.num(self.lineEditCoefDir_v.text()))
+            self.controleur.rampe_vitesse()
+        if self.groupebuttonvit() == 3:
+            self.controleur.parametres.setAmplitude(self.num(self.lineEditAmp_v.text()))
+            self.controleur.parametres.setFrequence(self.num(self.lineEditFreq_v.text()))
+            self.controleur.sinus_vitesse()
+
 
     def runcour(self):
-        return 1
+        self.controleur.parametres.setKpos(self.num(self.lineEditKPos_cor.text()))
+        self.controleur.parametres.setTipos(self.num(self.lineEditTiPos_cor.text()))
+        self.controleur.parametres.setTdpos(self.num(self.lineEditTdPos_cor.text()))
+        self.controleur.parametres.setKvit(self.num(self.lineEditKVit_cor.text()))
+        self.controleur.parametres.setTivit(self.num(self.lineEditTiVit_cor.text()))
+        self.controleur.parametres.setTdvit(self.num(self.lineEditTdVit_cor.text()))
+        self.controleur.parametres.setKcour(self.num(self.lineEditKCour_cor.text()))
+        self.controleur.parametres.setTicour(self.num(self.lineEditTiCour_cor.text()))
+        self.controleur.parametres.setTdcour(self.num(self.lineEditTdCour_cor.text()))
+
+        self.controleur.parametres.satpos = self.num(self.lineEditSatPos_cor.text())
+        self.controleur.parametres.satvit = self.num(self.lineEditSatVit_cor.text())
+        self.controleur.parametres.satcour = self.num(self.lineEditSatCour_cor.text())
+
+        self.controleur.parametres.mode = 2
+        if self.groupebuttoncor() == 4:
+            self.controleur.parametres.cascade = 1
+        else:
+            self.controleur.parametres.cascade = 0
+
+        if self.groupebuttoncour() == 1:
+            self.controleur.parametres.vitfinale = self.num(self.lineEditPosFEch_c.text())
+            self.controleur.echelon_courant()
+        if self.groupebuttoncour() == 2:
+            self.controleur.parametres.vitfinale = self.num(self.lineEditPosFTri_c.text())
+            self.controleur.parametres.setRampe(self.num(self.lineEditCoefDir_c.text()))
+            self.controleur.rampe_courant()
+        if self.groupebuttoncour() == 3:
+            self.controleur.parametres.setAmplitude(self.num(self.lineEditAmp_c.text()))
+            self.controleur.parametres.setFrequence(self.num(self.lineEditFreq_c.text()))
+            self.controleur.sinus_courant()
 # fin code ajouté
 
 
