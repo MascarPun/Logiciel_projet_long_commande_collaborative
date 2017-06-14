@@ -2165,21 +2165,12 @@ class Controleur:
 
         ########### Application du filtre rejecteur de mode de structure ###################
 
-            w0 = self.parametres.getW0()
-            z1 = self.parametres.getZ1()
-            z2 = self.parametres.getZ2()
 
-            a2 = w0 ** 2 + 4 * z2 * w0 / Te + 4 / (Te ** 2)
-            a1 = w0 ** 2 + 4 * z1 * w0 / Te + 4 / (Te ** 2)
-            b1 = w0 ** 2 - 4 * z1 * w0 / Te + 4 / (Te ** 2)
-            b2 = w0 ** 2 - 4 * z2 * w0 / Te + 4 / (Te ** 2)
-            c = 2 * w0 * w0 - 8 / (Te ** 2)
+            vitesseSortieRejecteur = 1/a2 *(-c*consigneVit[-1] - b2* consigneVit[-2] + a1* vitessePreRejecteur[-1] +
+                                            c* vitessePreRejecteur[-2] + b1 * vitessePreRejecteur[-3])
 
-            VitesseSortieRejecteur = 1/a2 *(-c*consigneVit[-1] - b2* consigneVit[-2] + a1* vitessePreRejecteur[-1] +
-                                            c* )
-
-            consigneVit.append(consigneVitesseActuelle)
-            print('convit=' + str(consigneVitesseActuelle))
+            consigneVit.append(vitesseSortieRejecteur)
+            print('convit=' + str(vitesseSortieRejecteur))
 
 
         ############ Elaboration Consigne Courant a partir de la Consigne Vitesse ############
