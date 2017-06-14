@@ -2119,9 +2119,25 @@ class Controleur:
         sommeErreurCour = 0
         rad_m = 0.0011 #A Ajuster
 
+        vitessePreRejecteur = [0,0,0]
+
         t0 = time.time()
         t=time.time()
         dureeExp = 10
+
+
+        #calcul des parametres du filtre rejecteur
+        w0 = self.parametres.getW0()
+        z1 = self.parametres.getZ1()
+        z2 = self.parametres.getZ2()
+
+        a2 = w0 ** 2 + 4 * z2 * w0 / Te + 4 / (Te ** 2)
+        a1 = w0 ** 2 + 4 * z1 * w0 / Te + 4 / (Te ** 2)
+        b1 = w0 ** 2 - 4 * z1 * w0 / Te + 4 / (Te ** 2)
+        b2 = w0 ** 2 - 4 * z2 * w0 / Te + 4 / (Te ** 2)
+        c = 2 * w0 * w0 - 8 / (Te ** 2)
+
+        #boucle de commande
         while t-t0<dureeExp:
             while time.time() - t < Te:
                 a = 0
@@ -2144,8 +2160,24 @@ class Controleur:
 
         ############ Elaboration Consigne Vitesse a partir de la Consigne Force ############
 
-            consigneVitesseActuelle = Kfor*forces[-1]
+            vitessePreRejecteur.append(Kfor*forces[-1])
             #consigneVitesseActuelle = (Kfor/rad_m)*forces[-1]
+
+        ########### Application du filtre rejecteur de mode de structure ###################
+
+            w0 = self.parametres.getW0()
+            z1 = self.parametres.getZ1()
+            z2 = self.parametres.getZ2()
+
+            a2 = w0 ** 2 + 4 * z2 * w0 / Te + 4 / (Te ** 2)
+            a1 = w0 ** 2 + 4 * z1 * w0 / Te + 4 / (Te ** 2)
+            b1 = w0 ** 2 - 4 * z1 * w0 / Te + 4 / (Te ** 2)
+            b2 = w0 ** 2 - 4 * z2 * w0 / Te + 4 / (Te ** 2)
+            c = 2 * w0 * w0 - 8 / (Te ** 2)
+
+            VitesseSortieRejecteur = 1/a2 *(-c*consigneVit[-1] - b2* consigneVit[-2] + a1* vitessePreRejecteur[-1] +
+                                            c* )
+
             consigneVit.append(consigneVitesseActuelle)
             print('convit=' + str(consigneVitesseActuelle))
 

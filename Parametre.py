@@ -26,6 +26,11 @@ class Parametre:
         self.tifor = 1
         self.tdfor = 1
 
+        # parametres du filtre rejecteur
+        self.z1 = 0.001
+        self.z2 = 0.7
+        self.w0 = 100
+
         self.cascade = 0    # si est egale a 0 on ne fait pas de correction en cascade
 
         self.mode = 0       # si 0 position si 1 vitesse si 2 courant si 3 collaboratif
@@ -192,40 +197,58 @@ class Parametre:
         self.position = p
 
     def getPosition(self):
-        return(self.position)
+        return self.position
 
     def setPosFinale(self,p):
         self.posfinale = p
 
     def getPosFinale(self):
-        return(self.posfinale)
+        return self.posfinale
 
     def setFrequence(self,f):
         self.frequence = f
 
     def getFrequence(self):
-        return (self.frequence)
+        return self.frequence
 
     def setAmplitude(self,a):
         self.amplitude = a
 
     def getAmplitude(self):
-        return (self.amplitude)
+        return self.amplitude
 
     def setRampe(self, r):
         self.rampe = r
 
     def getRampe(self):
-        return (self.rampe)
+        return self.rampe
 
     def setTe(self, t):
         self.Te = t
 
     def getTe(self):
-        return (self.Te)
+        return self.Te
 
     def setCollaborativeRunning(self, b):
         self.collaborativeRunning = b
 
     def getCollaborativeRunning(self):
-        return (self.collaborativeRunning)
+        return self.collaborativeRunning
+
+    def setZ1(self, z):
+        self.z1 = z
+
+    def getZ1(self):
+        return self.z1
+
+    def setZ2(self, z):
+        self.z2 = z
+
+    def getZ2(self):
+        return self.z2
+
+    def setW0(self, w0):
+        self.w0 = w0
+
+    def getW0(self):
+        return self.w0
