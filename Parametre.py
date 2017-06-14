@@ -9,16 +9,19 @@ class Parametre:
         self.kpos = 18740
         self.tipos = 0.062
         self.tdpos = 0.016
+        self.satpos = 0
 
         # parametre de corecteur pid pour la boucle de vitesse
         self.kvit = 0.024
         self.tivit = 0.17
         self.tdvit = 1
+        self.satvit = 0
 
         # parametre de corecteur pour la boucle de courant
         self.kcour = 1
         self.ticour = 1
         self.tdcour = 1
+        self.satcour = 0
 
         # parametres de correcteur d'effort
         self.kfor = 100
