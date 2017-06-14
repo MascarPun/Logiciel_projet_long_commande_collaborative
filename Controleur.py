@@ -557,7 +557,7 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-
+        self.echelonPosition(TabPosition[-1])
         return (Temps,[TabPosition,TabVitesse,TabCourant])
 
 
@@ -1562,7 +1562,7 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-
+        self.echelonPosition(250)
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
 
@@ -1704,7 +1704,7 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-
+        self.echelonPosition(250)
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
 
@@ -1837,7 +1837,7 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-
+        self.echelonPosition(250)
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
 
@@ -2060,7 +2060,6 @@ class Controleur:
 
 
     def commandeCollabo(self):
-        self.echelonPosition(250)  # On impose un echelon avant de commencer ? (pcq il manque qq arguments)
 
         Mode = c_int(-3)
         self.carteEpos.setOperationMode(Mode, self.pErrorCode_i)
@@ -2217,7 +2216,7 @@ class Controleur:
 c=Controleur()
 #c.echelon_position()
 #c.sinus_vitesse()
-c.commandeCollabo()
-#c.run()
-#c.launch()
+#c.commandeCollabo()
+c.run()
+c.launch()
 #c.interface.actualisationAffichage(c.interface,12)

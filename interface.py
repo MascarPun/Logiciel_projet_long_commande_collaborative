@@ -991,7 +991,6 @@ class Ui_MainWindow(object):
 
 
 
-        self.controleur.run()
 #        a=self.groupebuttoncor()
 #        print(self.controleur.parametres.getTdcour())
 #        print(a)

@@ -14,7 +14,7 @@ class Parametre:
         # parametre de corecteur pid pour la boucle de vitesse
         self.kvit = 0.024
         self.tivit = 0.17
-        self.tdvit = 1
+        self.tdvit = ''
         self.satvit = 0
 
         # parametre de corecteur pour la boucle de courant
@@ -49,7 +49,7 @@ class Parametre:
 
         #parametre de commande
         self.position = 0
-        self.posfinale = 0
+        self.posfinale = 200
         self.vitfinale = 0
         self.courfinal = 0
         self.frequence = 5
