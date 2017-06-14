@@ -325,7 +325,7 @@ class Controleur:
         ValMaxCourEpos = 5000  # on s'arrange pour ne pas depasser 5A en courant dans tous les cas
         mm2qc = 294
         dureeExp=self.parametres.getDureeExp()
-        posFinale=self.interface.getposfinechelonpos() #a coder en dur pour les tests
+        posFinale=self.parametres.getPosFinale() #a coder en dur pour les tests
 
         if posFinale > 490 or posFinale < 10:
             return ('Cette valeur est interdite')
@@ -336,10 +336,10 @@ class Controleur:
             Te = self.parametres.getTe() #Te est en secondes
 
         # on verifie que la bonne correction est activee
-        if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+        if self.parametres.getMode() == 1:  # si correction en vitesse
             return ("erreur il faut une commande en vitesse pour faire une correction en vitesse")
 
-        if self.interface.groupebuttoncor() == 3:  # si correction en courant
+        if self.parametres.getMode() == 2:  # si correction en courant
             return ("erreur il faut une commande en vitesse pour faire une correction en vitesse")
 
         # Recuperation des paramètres des correcteurs (voir si on passe par interface)
@@ -394,7 +394,7 @@ class Controleur:
         sommeErrCour = 0
         compt = 0
 
-        if self.interface.groupebuttoncor() == 1:  # si correction en position
+        if self.parametres.getMode() == 0:  # si correction en position
 
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -432,9 +432,9 @@ class Controleur:
                         consigneCour.append(sortie[0]*1000)
                         sommeErrPos=sortie[1]
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c=int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -444,9 +444,9 @@ class Controleur:
                         consigneCour.append(sortie[0] * 1000)
                         sommeErrPos = sortie[1]
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                 Temps.append(time.time() - debut)
@@ -458,7 +458,7 @@ class Controleur:
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
 
-        elif self.interface.groupebuttoncor() == 4:  # si correction en cascade
+        elif self.parametres.getCascade() == 1:  # si correction en cascade
 
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -520,9 +520,9 @@ class Controleur:
                         courantCorrige.append(sortie[0] * 1000)
                         sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -532,9 +532,9 @@ class Controleur:
                         courantCorrige.append(sortie[0] * 1000)
                         sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
@@ -546,7 +546,7 @@ class Controleur:
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
-        return Temps,TabPosition,TabVitesse,TabCourant
+        return (Temps,[TabPosition,TabVitesse,TabCourant])
 
 
 
@@ -555,9 +555,9 @@ class Controleur:
         ValMaxCourEpos = 5000  # on s'arrange pour ne pas depasser 5A en courant dans tous les cas
         mm2qc = 294
         dureeExp=self.parametres.getDureeExp()
-        vitFinale=2000         #en attente interface (en rpm)
-        rapportReduction = 0.1082 / (2 * math.pi * 15.88)
-        posFinale = 2 * math.pi * rapportReduction * dureeExp * vitFinale
+        vitFinale=self.parametres.getVitFinale()        #en attente interface (en rpm)
+        rapportReduction = 0.1082 / 15.88
+        posFinale = rapportReduction * dureeExp * vitFinale
 
         if posFinale > 490 or posFinale < 10:
             return ('Cette valeur est interdite')
@@ -568,13 +568,13 @@ class Controleur:
             Te = self.parametres.getTe() #Te est en secondes
 
         # on verifie que la bonne correction est activee
-        if self.interface.groupebuttoncor() == 4:  # si correction en cascade
+        if self.parametres.getCascade() == 1:  # si correction en cascade
             return ("erreur il faut une commande en position pour faire une correction en cascade")
 
-        if self.interface.groupebuttoncor() == 3:  # si correction en courant
+        if self.parametres.getMode() == 2:  # si correction en courant
             return ("erreur il faut une commande en courant pour faire une correction en courant")
 
-        if self.interface.groupebuttoncor() == 1:  # si correction en position
+        if self.parametres.getMode() == 0:  # si correction en position
             return ("erreur il faut une commande en position pour faire une correction en position")
 
         # Recuperation des paramètres des correcteurs (voir si on passe par interface)
@@ -623,7 +623,7 @@ class Controleur:
         nombreEch = dureeExp // Te
         compt = 0
 
-        if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+        if self.parametres.getMode() == 1:  # si correction en vitesse
 
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -661,9 +661,9 @@ class Controleur:
                         sommeErrVit=sortie[1]
                         consigneCour.append(sortie[0]*1000) #conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1]<-ValMaxCourEpos:
-                            consigneCour[-1]=-4000
+                            consigneCour[-1]=-5000
                         c=int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -673,9 +673,9 @@ class Controleur:
                         sommeErrVit = sortie[1]
                         consigneCour.append(sortie[0]*1000)#conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
@@ -688,7 +688,7 @@ class Controleur:
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
-        return Temps, TabPosition,TabVitesse,TabCourant
+        return (Temps, [TabPosition,TabVitesse,TabCourant])
 
 
 
@@ -697,25 +697,20 @@ class Controleur:
         mm2qc=294
         ValMaxCourEpos = 5000  # on s'arrange pour ne pas depasser 5A en courant dans tous les cas
         dureeExp = self.parametres.getDureeExp()
-        courFinal= 3000 #à relier ensuite avec interface
-        posFinale=250 #temporaire, à exprimer en fonction du courant
+        courFinal= self.parametres.getCourFinal() #à relier ensuite avec interface
 
-        if posFinale > 490 or posFinale < 10:
-            return ('Cette valeur est interdite')
-        else:
-            self.parametres.setPosFinale(posFinale)
-            self.parametres.setDureeExp(dureeExp)
+        self.parametres.setDureeExp(dureeExp)
 
-            Te = self.parametres.getTe()  # Te est en secondes
+        Te = self.parametres.getTe()  # Te est en secondes
 
         # on verifie que la bonne correction est activee
-        if self.interface.groupebuttoncor() == 4:  # si correction en cascade
+        if self.parametres.getCascade() == 1:  # si correction en cascade
             return ("erreur il faut une commande en position pour faire une correction en cascade")
 
-        if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+        if self.parametres.getMode() == 1:  # si correction en vitesse
             return ("erreur il faut une commande en courant pour faire une correction en courant")
 
-        if self.interface.groupebuttoncor() == 1:  # si correction en position
+        if self.parametres.getMode() == 0:  # si correction en position
             return ("erreur il faut une commande en position pour faire une correction en position")
 
         # Recuperation des paramètres des correcteurs (voir si on passe par interface)
@@ -757,7 +752,7 @@ class Controleur:
         nombreEch = dureeExp // Te
         compt = 0
 
-        if self.interface.groupebuttoncor() == 3:  # si correction en courant
+        if self.parametres.getMode() == 2:  # si correction en courant
 
             debut = time.time()
             while (
@@ -772,7 +767,7 @@ class Controleur:
                     print("Le bras ne peut pas monter car il va taper la butée !!!")
                     break
 
-                if ((self.pPositionIs_i.contents.value / mm2qc) < -2):
+                if ((self.pPositionIs_i.contents.value / mm2qc) < -30):
                     self.carteEpos.setOperationMode(c_int(3), self.pErrorCode_i)
                     self.carteEpos.moveWithVelocity(c_long(0), self.pErrorCode_i)
                     self.carteEpos.setOperationMode(c_int(-3), self.pErrorCode_i)
@@ -797,9 +792,9 @@ class Controleur:
                         courantCorrige.append(sortie[0]*1000) #si trop grand enlever le mille
                         sommeErrCour=sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] <-ValMaxCourEpos:
-                            courantCorrige[-1]=-4000
+                            courantCorrige[-1]=-5000
                         c=int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -809,9 +804,9 @@ class Controleur:
                         courantCorrige.append(sortie[0] * 1000)  # si trop grand enlever le mille
                         sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
 
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
@@ -823,10 +818,11 @@ class Controleur:
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
-        return Temps,TabPosition,TabVitesse,TabCourant
+        return (Temps,[TabPosition,TabVitesse,TabCourant])
 
 
     def rampe_position(self):
+        ValMaxCourEpos=5000
         mm2qc=294
         coef_dir=self.parametres.getRampe()
         dureeExp=self.parametres.getDureeExp()
@@ -841,10 +837,10 @@ class Controleur:
             Te = self.parametres.getTe() #Te est en secondes
 
         # on verifie que la bonne correction est activee
-        if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+        if self.parametres.getMode() == 1:  # si correction en vitesse
             return ("erreur il faut une commande en vitesse pour faire une correction en vitesse")
 
-        if self.interface.groupebuttoncor() == 3:  # si correction en courant
+        if self.parametres.getMode() == 2:  # si correction en courant
             return ("erreur il faut une commande en vitesse pour faire une correction en vitesse")
 
         # Recuperation des paramètres des correcteurs (voir si on passe par interface)
@@ -900,7 +896,7 @@ class Controleur:
         nombreEch = dureeExp // Te
         compt = 0
 
-        if self.interface.groupebuttoncor() == 1:  # si correction en position
+        if self.parametres.getMode() == 0:  # si correction en position
             positionInitiale=self.carteEpos.getPositionIs(self.pPositionIs_i,self.pErrorCode_i)
 
             debut = time.time()
@@ -940,9 +936,9 @@ class Controleur:
                         sommeErrPos = sortie[1]
                         consigneCour.append(sortie[0] * 1000)  # conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -952,9 +948,9 @@ class Controleur:
                         sommeErrPos = sortie[1]
                         consigneCour.append(sortie[0] * 1000)  # conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                 Temps.append(time.time() - debut)
@@ -965,7 +961,7 @@ class Controleur:
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
-        if self.interface.groupebuttoncor() == 4:  # si correction en cascade
+        if self.parametres.getCascade() == 1:  # si correction en cascade
             positionInitiale = self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
 
             debut = time.time()
@@ -1031,9 +1027,9 @@ class Controleur:
                         courantCorrige.append(sortie[0] * 1000)
                         sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -1043,9 +1039,9 @@ class Controleur:
                         courantCorrige.append(sortie[0] * 1000)
                         sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                 Temps.append(time.time() - debut)
@@ -1065,26 +1061,21 @@ class Controleur:
         mm2qc = 294
         dureeExp = self.parametres.getDureeExp()
         coef_dir=self.parametres.getRampe()
-        vitFinale = 2000  # en attente interface (en rpm)
-        rapportReduction = 0.1082 / (2 * math.pi * 15.88)
-        posFinale = 250 #a mettre au propre
 
-        if posFinale > 490 or posFinale < 10:
-            return ('Cette valeur est interdite')
-        else:
-            self.parametres.setPosFinale(posFinale)
-            self.parametres.setDureeExp(dureeExp)
 
-            Te = self.parametres.getTe()  # Te est en secondes
+        self.parametres.setPosFinale(posFinale)
+        self.parametres.setDureeExp(dureeExp)
+
+        Te = self.parametres.getTe()  # Te est en secondes
 
         # on verifie que la bonne correction est activee
-        if self.interface.groupebuttoncor() == 4:  # si correction en cascade
+        if self.parametres.getCascade() == 1:  # si correction en cascade
             return ("erreur il faut une commande en position pour faire une correction en cascade")
 
-        if self.interface.groupebuttoncor() == 3:  # si correction en courant
+        if self.parametres.getMode() == 2:  # si correction en courant
             return ("erreur il faut une commande en courant pour faire une correction en courant")
 
-        if self.interface.groupebuttoncor() == 1:  # si correction en position
+        if self.parametres.getMode() == 0:  # si correction en position
             return ("erreur il faut une commande en position pour faire une correction en position")
 
         # Recuperation des paramètres des correcteurs (voir si on passe par interface)
@@ -1133,7 +1124,7 @@ class Controleur:
         nombreEch = dureeExp // Te
         compt = 0
 
-        if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+        if self.parametres.getMode() == 1:  # si correction en vitesse
 
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -1171,9 +1162,9 @@ class Controleur:
                         sommeErrVit = sortie[1]
                         consigneCour.append(sortie[0] * 1000)  # conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -1183,9 +1174,9 @@ class Controleur:
                         sommeErrVit = sortie[1]
                         consigneCour.append(sortie[0] * 1000)  # conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                 Temps.append(time.time() - debut)
@@ -1200,27 +1191,24 @@ class Controleur:
 
 
     def rampe_courant(self):
+        ValMaxCourEpos=5000
         mm2qc=294
         coef_dir=self.parametres.getRampe() #en Ampere
         dureeExp=self.parametres.getDureeExp()
-        posFinale=250
 
-        if posFinale > 490 or posFinale < 10:
-            return ('Cette valeur est interdite')
-        else:
-            self.parametres.setPosFinale(posFinale)
-            self.parametres.setDureeExp(dureeExp)
+        self.parametres.setPosFinale(posFinale)
+        self.parametres.setDureeExp(dureeExp)
 
-            Te = self.parametres.getTe()  # Te est en secondes
+        Te = self.parametres.getTe()  # Te est en secondes
 
         # on verifie que la bonne correction est activee
-        if self.interface.groupebuttoncor() == 4:  # si correction en cascade
+        if self.parametres.getCascade() == 1:  # si correction en cascade
             return ("erreur il faut une commande en position pour faire une correction en cascade")
 
-        if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+        if self.parametres.getMode() == 1:  # si correction en vitesse
             return ("erreur il faut une commande en courant pour faire une correction en courant")
 
-        if self.interface.groupebuttoncor() == 1:  # si correction en position
+        if self.parametres.getMode() == 0:  # si correction en position
             return ("erreur il faut une commande en position pour faire une correction en position")
 
         # Recuperation des paramètres des correcteurs (voir si on passe par interface)
@@ -1262,7 +1250,7 @@ class Controleur:
         nombreEch = dureeExp // Te
         compt = 0
 
-        if self.interface.groupebuttoncor() == 3:  # si correction en courant
+        if self.parametres.getMode() == 2:  # si correction en courant
             courantInitial=self.carteEpos.getCurrentIs(self.pCurrentIs_i,self.pErrorCode_i)/1000
 
             debut = time.time()
@@ -1300,9 +1288,9 @@ class Controleur:
                         sommeErrCour = sortie[1]
                         courantCorrige.append(sortie[0] * 1000)  # conversion en mA
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -1313,9 +1301,9 @@ class Controleur:
                         sommeErrCour = sortie[1]
                         courantCorrige.append(sortie[0] * 1000)  # conversion en mA
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                 Temps.append(time.time() - debut)
@@ -1331,10 +1319,12 @@ class Controleur:
 
 
     def sinus_position(self):
+        ValMaxCourEpos=5000
         mm2qc = 294
         freq = self.parametres.getFrequence()
         amp=self.parametres.getAmplitude()
         dureeExp = self.parametres.getDureeExp()
+        self.echelonPosition(250) #on se place à 250 avant d osciller (attention il faut lancer mainEchelonPostion() avant de commencer)
 
         if amp > 200:
             return ('Trop d amplitude')
@@ -1346,10 +1336,10 @@ class Controleur:
             Te = self.parametres.getTe()  # Te est en secondes
 
         # on verifie que la bonne correction est activee
-        if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+        if self.parametres.getMode() == 1:  # si correction en vitesse
             return ("erreur il faut une commande en vitesse pour faire une correction en vitesse")
 
-        if self.interface.groupebuttoncor() == 3:  # si correction en courant
+        if self.parametres.getMode() == 2:  # si correction en courant
             return ("erreur il faut une commande en vitesse pour faire une correction en vitesse")
 
         # Recuperation des paramètres des correcteurs (voir si on passe par interface)
@@ -1405,7 +1395,7 @@ class Controleur:
         nombreEch = dureeExp // Te
         compt = 0
 
-        if self.interface.groupebuttoncor() == 1:  # si correction en position
+        if self.parametres.getMode() == 0:  # si correction en position
             positionInitiale = self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
 
             debut = time.time()
@@ -1445,9 +1435,9 @@ class Controleur:
                         sommeErrPos = sortie[1]
                         consigneCour.append(sortie[0] * 1000)  # conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -1457,9 +1447,9 @@ class Controleur:
                         sommeErrPos = sortie[1]
                         consigneCour.append(sortie[0] * 1000)  # conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                 Temps.append(time.time() - debut)
@@ -1470,7 +1460,7 @@ class Controleur:
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
 
-        if self.interface.groupebuttoncor() == 4:  # si correction en cascade
+        if self.parametres.getCascade() == 1:  # si correction en cascade
             positionInitiale = self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
 
             debut = time.time()
@@ -1535,9 +1525,9 @@ class Controleur:
                         courantCorrige.append(sortie[0] * 1000)
                         sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -1547,9 +1537,9 @@ class Controleur:
                         courantCorrige.append(sortie[0] * 1000)
                         sommeErrCour = sortie[1]
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
@@ -1565,6 +1555,7 @@ class Controleur:
 
 
     def sinus_vitesse(self):
+        ValMaxCourEpos=5000
         mm2qc = 294
         self.echelonPosition(250)
         freq = self.parametres.getFrequence()
@@ -1581,13 +1572,13 @@ class Controleur:
             Te = self.parametres.getTe()  # Te est en secondes
 
         # on verifie que la bonne correction est activee
-        if self.interface.groupebuttoncor() == 4:  # si correction en cascade
+        if self.parametres.getCascade() == 1:  # si correction en cascade
             return ("erreur il faut une commande en position pour faire une correction en cascade")
 
-        if self.interface.groupebuttoncor() == 3:  # si correction en courant
+        if self.parametres.getMode() == 2:  # si correction en courant
             return ("erreur il faut une commande en courant pour faire une correction en courant")
 
-        if self.interface.groupebuttoncor() == 1:  # si correction en position
+        if self.parametres.getMode() == 0:  # si correction en position
             return ("erreur il faut une commande en position pour faire une correction en position")
 
         # Recuperation des paramètres des correcteurs (voir si on passe par interface)
@@ -1636,7 +1627,7 @@ class Controleur:
         nombreEch = dureeExp // Te
         compt = 0
 
-        if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+        if self.parametres.getMode() == 1:  # si correction en vitesse
 
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -1674,9 +1665,9 @@ class Controleur:
                         sommeErrVit = sortie[1]
                         consigneCour.append(sortie[0] * 1000)  # conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -1686,9 +1677,9 @@ class Controleur:
                         sommeErrVit = sortie[1]
                         consigneCour.append(sortie[0] * 1000)  # conversion en mA
                         if consigneCour[-1] > ValMaxCourEpos:
-                            consigneCour[-1] = 4000
+                            consigneCour[-1] = 5000
                         if consigneCour[-1] < -ValMaxCourEpos:
-                            consigneCour[-1] = -4000
+                            consigneCour[-1] = -5000
                         c = int(consigneCour[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 
@@ -1704,14 +1695,14 @@ class Controleur:
 
 
     def sinus_courant(self):
+        ValMaxCourEpos=5000
         mm2qc=294
         freq = self.parametres.getFrequence()
         amp = self.parametres.getAmplitude()
         dureeExp=self.parametres.getDureeExp()
-        posFinale=250
 
-        if posFinale > 490 or posFinale < 10:
-            return ('Cette valeur est interdite')
+        if amp > ValMaxCourEpos:
+            return ('Trop d amplitude')
         else:
             self.parametres.setPosFinale(posFinale)
             self.parametres.setDureeExp(dureeExp)
@@ -1719,13 +1710,13 @@ class Controleur:
             Te = self.parametres.getTe()  # Te est en secondes
 
         # on verifie que la bonne correction est activee
-        if self.interface.groupebuttoncor() == 4:  # si correction en cascade
+        if self.parametres.getCascade() == 1:  # si correction en cascade
             return ("erreur il faut une commande en position pour faire une correction en cascade")
 
-        if self.interface.groupebuttoncor() == 2:  # si correction en vitesse
+        if self.parametres.getMode() == 1:  # si correction en vitesse
             return ("erreur il faut une commande en courant pour faire une correction en courant")
 
-        if self.interface.groupebuttoncor() == 1:  # si correction en position
+        if self.parametres.getMode() == 0:  # si correction en position
             return ("erreur il faut une commande en position pour faire une correction en position")
 
         # Recuperation des paramètres des correcteurs (voir si on passe par interface)
@@ -1767,7 +1758,7 @@ class Controleur:
         nombreEch = dureeExp // Te
         compt = 0
 
-        if self.interface.groupebuttoncor() == 3:  # si correction en courant
+        if self.parametres.getMode() == 2:  # si correction en courant
             courantInitial=self.carteEpos.getCurrentIs(self.pCurrentIs_i,self.pErrorCode_i)/1000
 
             debut = time.time()
@@ -1806,9 +1797,9 @@ class Controleur:
                         sommeErrCour = sortie[1]
                         courantCorrige.append(sortie[0] * 1000)  # conversion en mA
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
                     else:
@@ -1819,9 +1810,9 @@ class Controleur:
                         sommeErrCour = sortie[1]
                         courantCorrige.append(sortie[0] * 1000)  # conversion en mA
                         if courantCorrige[-1] > ValMaxCourEpos:
-                            courantCorrige[-1] = 4000
+                            courantCorrige[-1] = 5000
                         if courantCorrige[-1] < -ValMaxCourEpos:
-                            courantCorrige[-1] = -4000
+                            courantCorrige[-1] = -5000
                         c = int(courantCorrige[-1])
                         self.carteEpos.setCurrentMust(c_short(c), self.pErrorCode_i)
 

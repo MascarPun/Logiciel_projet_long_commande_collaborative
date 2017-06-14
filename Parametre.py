@@ -49,6 +49,8 @@ class Parametre:
         #parametre de commande
         self.position = 0
         self.posfinale = 0
+        self.vitfinale = 0
+        self.courfinal = 0
         self.frequence = 5
         self.amplitude = 2000
         self.rampe = 10000
@@ -207,6 +209,18 @@ class Parametre:
 
     def getPosFinale(self):
         return self.posfinale
+
+    def setVitFinale(self,v):
+        self.vitfinale = v
+
+    def getVitFinale(self):
+        return self.vitfinale
+
+    def setCourFinal(self,c):
+        self.courfinal = c
+
+    def getCourFinal(self):
+        return self.courfinal
 
     def setFrequence(self,f):
         self.frequence = f
