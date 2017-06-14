@@ -143,7 +143,15 @@ class Ui_MainWindow(object):
             s = numpy.array([])
             self.sc.actualisation_graph(t,s)
 
-
+    def launch(self,t,s):
+        if __name__ == "__main__":
+            import sys
+            app = QtWidgets.QApplication(sys.argv)
+            MainWindow = QtWidgets.QMainWindow()
+            ui = Ui_MainWindow(s, t)
+            ui.setupUi(MainWindow)
+            MainWindow.show()
+            sys.exit(app.exec_())
 
 if __name__ == "__main__":
     import sys

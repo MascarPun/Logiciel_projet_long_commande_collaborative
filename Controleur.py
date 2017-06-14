@@ -15,6 +15,7 @@ from Correcteurs import *
 from Commandes import *
 
 
+
 class Controleur:
 
 
@@ -406,7 +407,7 @@ class Controleur:
         compt = 0
 
         if self.parametres.getMode() == 0:  # si correction en position
-
+            i=0
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
@@ -468,10 +469,15 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i=i+1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,self.controleur.pErrorCode_i)) #si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
+
 
 
         elif self.parametres.getCascade() == 1:  # si correction en cascade
-
+            i=0
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
@@ -557,6 +563,11 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
         self.echelonPosition(TabPosition[-1])
         return (Temps,[TabPosition,TabVitesse,TabCourant])
 
@@ -636,7 +647,7 @@ class Controleur:
         compt = 0
 
         if self.parametres.getMode() == 1:  # si correction en vitesse
-
+            i=0
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
@@ -699,6 +710,11 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
 
         return (Temps, [TabPosition,TabVitesse,TabCourant])
 
@@ -765,7 +781,7 @@ class Controleur:
         compt = 0
 
         if self.parametres.getMode() == 2:  # si correction en courant
-
+            i=0
             debut = time.time()
             while (
                 time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -829,6 +845,11 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
 
         return (Temps,[TabPosition,TabVitesse,TabCourant])
 
@@ -910,7 +931,7 @@ class Controleur:
 
         if self.parametres.getMode() == 0:  # si correction en position
             positionInitiale=self.carteEpos.getPositionIs(self.pPositionIs_i,self.pErrorCode_i)
-
+            i=0
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
@@ -972,10 +993,15 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
 
         if self.parametres.getCascade() == 1:  # si correction en cascade
             positionInitiale = self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
-
+            i=0
             debut = time.time()
             while (
                 time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -1063,6 +1089,11 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
 
 
         return (Temps, [TabPosition, TabVitesse, TabCourant])
@@ -1137,7 +1168,7 @@ class Controleur:
         compt = 0
 
         if self.parametres.getMode() == 1:  # si correction en vitesse
-
+            i=0
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
@@ -1198,6 +1229,11 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
 
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
@@ -1264,7 +1300,7 @@ class Controleur:
 
         if self.parametres.getMode() == 2:  # si correction en courant
             courantInitial=self.carteEpos.getCurrentIs(self.pCurrentIs_i,self.pErrorCode_i)/1000
-
+            i=0
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
@@ -1325,6 +1361,11 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
 
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
@@ -1409,7 +1450,7 @@ class Controleur:
 
         if self.parametres.getMode() == 0:  # si correction en position
             positionInitiale = self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
-
+            i=0
             debut = time.time()
             while (
                 time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
@@ -1471,10 +1512,15 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
 
         if self.parametres.getCascade() == 1:  # si correction en cascade
             positionInitiale = self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
-
+            i=0
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
@@ -1562,6 +1608,11 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
         self.echelonPosition(250)
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
@@ -1642,7 +1693,7 @@ class Controleur:
         compt = 0
 
         if self.parametres.getMode() == 1:  # si correction en vitesse
-
+            i=0
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
@@ -1704,6 +1755,11 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
         self.echelonPosition(250)
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
@@ -1774,7 +1830,7 @@ class Controleur:
 
         if self.parametres.getMode() == 2:  # si correction en courant
             courantInitial=self.carteEpos.getCurrentIs(self.pCurrentIs_i,self.pErrorCode_i)/1000
-
+            i=0
             debut = time.time()
             while (time.time()-debut<dureeExp):  # a priori meme condition mais la deuxième peut peut etre eviter des pb (pour le moment c est provisoir)
                 t = time.time()
@@ -1837,6 +1893,11 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
+                i = i + 1
+                if i == 500:
+                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                    i = 0
         self.echelonPosition(250)
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
@@ -2143,6 +2204,7 @@ class Controleur:
 
         #boucle de commande
         while t-t0<dureeExp:
+            j=0
             while time.time() - t < Te:
                 a = 0
             t = time.time()
@@ -2208,6 +2270,11 @@ class Controleur:
             self.carteEpos.setCurrentMust(c_short(int(courantImposePI[-1])), self.pErrorCode_i)
 
             i = i + 1
+            j = j + 1
+            if j == 500:
+                self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
+                                                                                   self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
+                j = 0
 
         return ("fini")
 
