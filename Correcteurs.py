@@ -57,10 +57,15 @@ def pi_sat(K,Ti,err,somme_err,Sat,Te):
     return result
 
 #pid bourrin (mais qui marche bien)
-def pid(K,Ti,Td,err,somme_err,Te):
-    delta_err=(err[-1]-err[-2])/Te
-    result=K*err[-1]+(K/Ti)*somme_err*Te+(K*Td)*delta_err
-    return result
+#def pid(K,Ti,Td,err,somme_err,Te):
+#    delta_err=(err[-1]-err[-2])/Te
+#    result=K*err[-1]+(K/Ti)*somme_err*Te+(K*Td)*delta_err
+#    return result
+
+#filtrage de l'action intégrale
+#cette fois err prend 3 paramètres et il n'y a plus de
+def pid(K,Ti,Td,err,sort_prec,Te):
+    return ((K((Te*Ti*10*Te+Te*Ti*Td+Te*Te*Te*10+Te*Te*Td+Td*Te*10*Ti)*err[-1]-(Te*Ti*Td+10*Ti*Te*Te+Te*Ti*Td+Te*Te*Td+2*Td*Te*10*Ti)*err[-2]+(Te*Ti*Td+10*Ti*Te*Td)*err[-3])+(Ti*Td+10*Te*Ti+Td*Ti)*sort_prec[-1]-Ti*Td*sort_prec[-2])/(10*Te*Ti+Ti*Td))
 
 
 def pid_sat(K,Ti,Td,err,somme_err,Sat,Te):
@@ -94,17 +99,31 @@ def prop_sat(K,err,Sat):
 #LES FONCTIONS SUIVANTES SONT A ITERER
 
 #permet d'avoir en sortie un courant qu'il faudra ensuite corriger avec current_cmd()
-def pos2current(K,Ti,Td,cmd,S,err,somme_err,Te):
+#def pos2current(K,Ti,Td,cmd,S,err,somme_err,Te):
+#    err[0]=err[1]
+#    err[1]=cmd-S
+#    somme_err+=err[1]
+#    if Td=='' and Ti!='':
+#        courant=pi(K,Ti,err[-1],somme_err,Te)
+#    elif Td=='' and Ti=='':
+#        courant=prop(K,err[-1])
+#    else:
+#        courant=pid(K,Ti,Td,err,somme_err,Te)
+#    return courant,somme_err
+
+#a virer si ne marche pas (tentative de filtrage de l'action dérivée)
+def pos2current(K,Ti,Td,cmd,S,err,sort_prec,Te):
     err[0]=err[1]
-    err[1]=cmd-S
-    somme_err+=err[1]
+    err[1]=err[2]
+    err[2]=cmd-S
     if Td=='' and Ti!='':
         courant=pi(K,Ti,err[-1],somme_err,Te)
     elif Td=='' and Ti=='':
         courant=prop(K,err[-1])
     else:
-        courant=pid(K,Ti,Td,err,somme_err,Te)
-    return courant,somme_err
+        courant=pid(K,Ti,Td,err,sort_prec,Te)
+    sort_prec=[sort_prec[1],courant]
+    return courant,sort_prec
 
 
 def pos2current_sat(K,Ti,Td,Sat,cmd,S,err,somme_err,Te):
