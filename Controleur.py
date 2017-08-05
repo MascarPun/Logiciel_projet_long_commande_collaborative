@@ -331,7 +331,7 @@ class Controleur:
 
 #######################NOS FONCTIONS##################################
 
-
+    #pourra servir aux prochains s'ils veulent améliorer les corrections car pour le moment c'est pas au point
     def echelon_position_test(self):
         # initialisation des constantes
         ValMaxCourEpos = 5000  # on s'arrange pour ne pas depasser 5A en courant dans tous les cas
@@ -686,10 +686,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i=i+1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,self.controleur.pErrorCode_i)) #si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
 
 
 
@@ -780,11 +776,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
         self.echelonPosition(TabPosition[-1])
         return (Temps,[TabPosition,TabVitesse,TabCourant])
 
@@ -927,11 +918,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
 
         return (Temps, [TabPosition,TabVitesse,TabCourant])
 
@@ -1062,11 +1048,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
 
         return (Temps,[TabPosition,TabVitesse,TabCourant])
 
@@ -1210,11 +1191,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
 
         if self.parametres.getCascade() == 1:  # si correction en cascade
             positionInitiale = self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -1306,11 +1282,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
 
 
         return (Temps, [TabPosition, TabVitesse, TabCourant])
@@ -1446,11 +1417,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
 
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
@@ -1578,11 +1544,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
 
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
@@ -1729,11 +1690,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
 
         if self.parametres.getCascade() == 1:  # si correction en cascade
             positionInitiale = self.carteEpos.getPositionIs(self.pPositionIs_i, self.pErrorCode_i)
@@ -1825,11 +1781,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
         self.echelonPosition(250)
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
@@ -1971,11 +1922,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
         self.echelonPosition(250)
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
@@ -2109,11 +2055,6 @@ class Controleur:
                 TabPosition.append(self.pPositionIs_i.contents.value / mm2qc)
                 TabVitesse.append(self.pVelocityIs_i.contents.value)
                 TabCourant.append(self.pCurrentIs_i.contents.value)
-                i = i + 1
-                if i == 500:
-                    self.interface.actualisationAffichage(self.carteEpos.getPositionIs(self.controleur.pPositionIs_i,
-                                                                                       self.controleur.pErrorCode_i))  # si jamais ça ne marche pas le sortir de la boucle
-                    i = 0
         self.echelonPosition(250)
         return (Temps, [TabPosition, TabVitesse, TabCourant])
 
